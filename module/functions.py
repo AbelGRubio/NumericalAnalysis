@@ -80,6 +80,8 @@ def ShootingMethod(N, a, b, alpha, beta, funs, vfuns):
     :param vfuns: son las funciones p(x) y q(x) de la ecuacion de segundo grado
     :return: devuelve los valores y(x) y su derivada a la ecuacion planteada
     """
+
+    """ STEP 1: """
     h = (b - a) / N
     u10 = alpha
     u20 = 0
@@ -90,13 +92,13 @@ def ShootingMethod(N, a, b, alpha, beta, funs, vfuns):
     v1 = [v10]
     v2 = [v20]
     X = [a]
-    # u1i = u10
-    # u2i = u20
-    # v1i = v10
-    # v2i = v20
 
+    """ STEP 2: """
     for i in range(N):
+        """ STEP 3: """
         x = a + i * h
+
+        """ STEP 4: """
         [u1i, u2i] = rungeKutta4(h, x, funs, [u1[i], u2[i]])
         u1.append(u1i)
         u2.append(u2i)
@@ -104,12 +106,15 @@ def ShootingMethod(N, a, b, alpha, beta, funs, vfuns):
         v1.append(v1i)
         v2.append(v2i)
 
+    """ STEP 5: """
     w10 = alpha
     w20 = (beta - u1[N]) / v1[N]
-    print('Beta value: ', beta)
-    print('u1N value: ', u1[N])
     if beta / u1[N] < 0.1:
         print("Round-off problem " + str(beta / u1[N]))
+        print('Beta value: ', beta)
+        print('u1N value: ', u1[N])
+
+    """ STEP 6: """
     W1 = [w10]
     W2 = [w20]
     for i in range(1, N+1):
@@ -120,11 +125,11 @@ def ShootingMethod(N, a, b, alpha, beta, funs, vfuns):
         x = a + i * h
         X.append(x)
 
-    # error stimation
-    error = []
-    for i in range(len(W1)):
-        val = abs(u1[i] - W1[i]) / (h**4 * abs(1+v1[i]/v1[N]))
-        error.append(val)
+    # # error stimation
+    # error = []
+    # for i in range(len(W1)):
+    #     val = abs(u1[i] - W1[i]) / (h**4 * abs(1+v1[i]/v1[N]))
+    #     error.append(val)
 
     return X, W1, W2
 
@@ -202,3 +207,88 @@ def defineEquation2(l):
     qfun = lambda x: -(1 + (x/l)**2) / l**2
     rfun = lambda x: 0
     return [pfun, qfun, rfun]
+
+
+def LinearFiniteDifference(N, a, b, alpha, beta, funs):
+    """
+
+    :param N:
+    :param a:
+    :param b:
+    :param alpha:
+    :param beta:
+    :param funs: son las funciones p(x), q(x) y r(x) de la ecuacion de segundo grado
+    :return:
+    """
+
+    """ STEP 1: """
+    h = (b - a) / (N + 1)
+    x = a + h
+    a1 = 2 + h**2 * funs[1](x)
+    A = [a1]
+    b1 = -1 + h/2 * funs[0](x)
+    B = [b1]
+    C = [0]  # este valor no se utiliza en ningun momento, solo es para que el vector C este a la par de los demás
+    d1 = -h**2 * funs[2](x)
+    D = [d1]
+
+    """ STEP 2: """
+    for i in range(1, N-1):
+        x = a + i*h
+        ai = 2 + h**2 * funs[1](x)
+        A.append(ai)
+        bi = -1 + h / 2 * funs[0](x)
+        B.append(bi)
+        ci = -1 - h / 2 * funs[0](x)
+        C.append(ci)
+        di = -h**2*funs[2](x)
+        D.append(di)
+
+    """ STEP 3: """
+    x = b - h
+    an = 2 + h**2 * funs[1](x)
+    A.append(an)
+    cn = -1 - h/2 * funs[0](x)
+    C.append(cn)
+    dn = -h**2 * funs[2](x) + (1 - (h / 2) * funs[0](x)) * beta
+    D.append(dn)
+
+    """ STEP 4: """
+    l1 = a1
+    u1 = b1 / a1
+    U = [u1]
+    z1 = d1 / l1
+    Z = [z1]
+
+    """ STEP 5: """
+    for i in range(1, N-1):
+        li = A[i] - C[i]*U[i-1]
+        ui = B[i] / li
+        U.append(ui)
+        zi = (D[i] - C[i]*Z[i-1])/li
+        Z.append(zi)
+
+    """ STEP 6: """
+    ln = an - cn*ui
+    zn = (dn - cn*zi)/ln
+    Z.append(zn)
+
+    """ STEP 7: """
+    w0 = alpha
+    wnplus1 = beta
+    wn = zn
+    W = [wnplus1, wn]
+
+    """ STEP 8: """
+    for i in range(N-2, -1, -1):
+        wi = Z[i] - U[i]*W[N-i-1]
+        W.append(wi)
+    W.append(w0)
+    W = W[::-1]
+
+    """ STEP 9: """
+    X = []
+    for i in range(N+2):
+        x = a + i * h
+        X.append(x)
+    return X, W
