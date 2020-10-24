@@ -38,10 +38,11 @@ def updateUs(Us, K1, K2):
 
 def rungeKutta4(h, x, funs, Us):
     """
-    Funcion que estima los valores de
-    :param h:
-    :param x:
-    :param funs:
+    Metodo que se utiliza en un proceso iterativo para obtener una solucion
+     a una ecuacion diferencial planteada
+    :param h: tamaño del paso
+    :param x: punto de la funcion
+    :param funs: funciones p(x), q(x) y r(x)
     :param Us: son los valores de la funcion y la derivada en el paso anterior
     :return:
     """
@@ -58,19 +59,52 @@ def rungeKutta4(h, x, funs, Us):
 
     k11 = funSub1(h, Us[1], 0)
     k12 = funSub2(h, [px, qx, rx], Us, [0, 0])
+
     k21 = funSub1(h, Us[1], 0.5 * k12)
     k22 = funSub2(h, [pxh2, qxh2, rxh2], Us, [0.5 * k11, 0.5 * k12])
+
     k31 = funSub1(h, Us[1], 0.5 * k22)
     k32 = funSub2(h, [pxh2, qxh2, rxh2], Us, [0.5 * k21, 0.5 * k22])
+
     k41 = funSub1(h, Us[1], k32)
     k42 = funSub2(h, [pxh, qxh, rxh], Us, [k31, k32])
+
     Us = updateUs(Us, [k11, k21, k31, k41], [k12, k22, k32, k42])
+
     return Us
+
+
+def defineEquation1(l, p0):
+    """
+    Funcion que define las funciones p(x), q(x) y r(x)
+    para el caso del primer problema de valores iniciales
+    :param l:
+    :param p0:
+    :return:
+    """
+    pfun = lambda x: 0
+    qfun = lambda x: -(1 + (x/l)**2) / l**2
+    rfun = lambda x: -p0
+    return [pfun, qfun, rfun]
+
+
+def defineEquation2(l):
+    """
+    Funcion que define las funciones p(x), q(x) y r(x) para
+    el caso del segundo problema de valores iniciales
+    :param l:
+    :return:
+    """
+    pfun = lambda x: 0
+    qfun = lambda x: -(1 + (x/l)**2) / l**2
+    rfun = lambda x: 0
+    return [pfun, qfun, rfun]
 
 
 def ShootingMethod(N, a, b, alpha, beta, funs, vfuns):
     """
-
+    Metodo del disparo para resolucion de ecuaciones diferenciales de segundo orden
+    utilizando la aproximación Runge Kutta de orden 4
     :param N: Numero de subintervalos
     :param a: valor minimo de x del intervalo a estudiar
     :param b: valor maximo de x del intervalo a estudiar
@@ -136,7 +170,8 @@ def ShootingMethod(N, a, b, alpha, beta, funs, vfuns):
 
 def ReverseShootingMethod(N, a, b, alpha, beta, funs, vfuns):
     """
-
+    Metodo del disparo para resolucion de ecuaciones diferenciales de segundo orden
+    utilizando la aproximación Runge Kutta de orden 4
     :param N: Numero de subintervalos
     :param a: valor minimo de x del intervalo a estudiar
     :param b: valor maximo de x del intervalo a estudiar
@@ -146,6 +181,8 @@ def ReverseShootingMethod(N, a, b, alpha, beta, funs, vfuns):
     :param vfuns: son las funciones p(x) y q(x) de la ecuacion de segundo grado
     :return: devuelve los valores y(x) y su derivada a la ecuacion planteada
     """
+
+    """ STEP 1: """
     h = (b - a) / N
     u10 = alpha
     u20 = 0
@@ -156,13 +193,12 @@ def ReverseShootingMethod(N, a, b, alpha, beta, funs, vfuns):
     v1 = [v10]
     v2 = [v20]
     X = [b]
-    # u1i = u10
-    # u2i = u20
-    # v1i = v10
-    # v2i = v20
 
+    """ STEP 2: """
     for i in range(N):
+        """ STEP 3: """
         x = b - i * h
+        """ STEP 4: """
         [u1i, u2i] = rungeKutta4(h, x, funs, [u1[i], u2[i]])
         u1.append(u1i)
         u2.append(u2i)
@@ -170,12 +206,15 @@ def ReverseShootingMethod(N, a, b, alpha, beta, funs, vfuns):
         v1.append(v1i)
         v2.append(v2i)
 
+    """ STEP 5: """
     w10 = alpha
     w20 = (beta - u1[N]) / v1[N]
-    print('Beta value: ', beta)
-    print('u1N value: ', u1[N])
     if beta / u1[N] < 0.1:
         print("Round-off problem " + str(beta / u1[N]))
+        print('Beta value: ', beta)
+        print('u1N value: ', u1[N])
+
+    """ STEP 5: """
     W1 = [w10]
     W2 = [w20]
     for i in range(1, N+1):
@@ -187,38 +226,24 @@ def ReverseShootingMethod(N, a, b, alpha, beta, funs, vfuns):
         X.append(x)
 
     # error stimation
-    error = []
-    for i in range(len(W1)):
-        val = abs(u1[i] - W1[i]) / (h**4 * abs(1+v1[i]/v1[N]))
-        error.append(val)
+    # error = []
+    # for i in range(len(W1)):
+    #     val = abs(u1[i] - W1[i]) / (h**4 * abs(1+v1[i]/v1[N]))
+    #     error.append(val)
 
     return X, W1, W2
 
 
-def defineEquation1(l, p0):
-    pfun = lambda x: 0
-    qfun = lambda x: -(1 + (x/l)**2) / l**2
-    rfun = lambda x: -p0
-    return [pfun, qfun, rfun]
-
-
-def defineEquation2(l):
-    pfun = lambda x: 0
-    qfun = lambda x: -(1 + (x/l)**2) / l**2
-    rfun = lambda x: 0
-    return [pfun, qfun, rfun]
-
-
 def LinearFiniteDifference(N, a, b, alpha, beta, funs):
     """
-
-    :param N:
-    :param a:
-    :param b:
-    :param alpha:
-    :param beta:
+    Método de diferencias finitas
+    :param N: Numero de subintervalos
+    :param a: valor minimo de x del intervalo a estudiar
+    :param b: valor maximo de x del intervalo a estudiar
+    :param alpha: condicion de contorno del problema de valor inicial para el punto a
+    :param beta: condicion de contorno del problema de valor inicial para el punto b
     :param funs: son las funciones p(x), q(x) y r(x) de la ecuacion de segundo grado
-    :return:
+    :return: devuele la solucion de la ecuacion de sgundo orden evaluada en todos los puntos
     """
 
     """ STEP 1: """
@@ -269,8 +294,8 @@ def LinearFiniteDifference(N, a, b, alpha, beta, funs):
         Z.append(zi)
 
     """ STEP 6: """
-    ln = an - cn*ui
-    zn = (dn - cn*zi)/ln
+    ln = an - cn*U[len(U)-1]
+    zn = (dn - cn*Z[len(Z)-1])/ln
     Z.append(zn)
 
     """ STEP 7: """
