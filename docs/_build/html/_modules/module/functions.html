@@ -1,0 +1,590 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="es" >
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>module.functions &mdash; documentación de Análisis numérico: Tema 1 - 0.0.1</title>
+  
+
+  
+  <link rel="stylesheet" href="../../_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+
+  
+  
+  
+  
+
+  
+  <!--[if lt IE 9]>
+    <script src="../../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="../../" src="../../_static/documentation_options.js"></script>
+        <script src="../../_static/jquery.js"></script>
+        <script src="../../_static/underscore.js"></script>
+        <script src="../../_static/doctools.js"></script>
+        <script src="../../_static/language_data.js"></script>
+        <script src="../../_static/translations.js"></script>
+        <script async="async" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.7/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    
+    <script type="text/javascript" src="../../_static/js/theme.js"></script>
+
+    
+    <link rel="index" title="Índice" href="../../genindex.html" />
+    <link rel="search" title="Búsqueda" href="../../search.html" /> 
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+          
+
+          
+            <a href="../../index.html" class="icon icon-home" alt="Documentation Home"> Análisis numérico: Tema 1
+          
+
+          
+          </a>
+
+          
+            
+            
+              <div class="version">
+                0.0.1
+              </div>
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <p class="caption"><span class="caption-text">Contenidos:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../main.html">main module</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../module.html">module.functions Módulo</a></li>
+</ul>
+
+            
+          
+        </div>
+        
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../index.html">Análisis numérico: Tema 1</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../../index.html" class="icon icon-home"></a> &raquo;</li>
+        
+          <li><a href="../index.html">Código de módulo</a> &raquo;</li>
+        
+      <li>module.functions</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <h1>Código fuente para module.functions</h1><div class="highlight"><pre>
+<span></span><span class="kn">import</span> <span class="nn">os</span>
+
+
+<div class="viewcode-block" id="funSub2"><a class="viewcode-back" href="../../module.html#module.functions.funSub2">[documentos]</a><span class="k">def</span> <span class="nf">funSub2</span><span class="p">(</span><span class="n">h</span><span class="p">,</span> <span class="n">values</span><span class="p">,</span> <span class="n">Us</span><span class="p">,</span> <span class="n">Ks</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Esta funcion calcula los valores de K con subindice i,2 con i = 1,2,3,4</span>
+
+<span class="sd">    .. math::</span>
+<span class="sd">        h*(f(x)*(u_1+K_{i,2})+q(x)*(u_2+K_{i,1})+r(x))</span>
+
+
+<span class="sd">    :parameter h: valor del step</span>
+<span class="sd">    :parameter values: son los valores de las funciones p, q y r evaluadas en x [p(x), q(x), r(x)]</span>
+<span class="sd">    :parameter Us: son los valores de la funcion y la derivada en el paso anterior</span>
+<span class="sd">    :parameter Ks: valores de las constantes k con subindices Ki1, y Ki2 respectivamente con i = 1,2,3,4</span>
+
+<span class="sd">    :return: devuelve un valor</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">return</span> <span class="n">h</span> <span class="o">*</span> <span class="p">(</span><span class="n">values</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">*</span> <span class="p">(</span><span class="n">Us</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">+</span> <span class="n">Ks</span><span class="p">[</span><span class="mi">1</span><span class="p">])</span> <span class="o">+</span> <span class="n">values</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">*</span> <span class="p">(</span><span class="n">Us</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">+</span> <span class="n">Ks</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span> <span class="o">+</span> <span class="n">values</span><span class="p">[</span><span class="mi">2</span><span class="p">])</span></div>
+
+
+<div class="viewcode-block" id="funSub1"><a class="viewcode-back" href="../../module.html#module.functions.funSub1">[documentos]</a><span class="k">def</span> <span class="nf">funSub1</span><span class="p">(</span><span class="n">h</span><span class="p">,</span> <span class="n">u</span><span class="p">,</span> <span class="n">k</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Esta funcion calcula los valores de K con subindice i,1 con i = 1,2,3,4</span>
+
+<span class="sd">    :parameter h: valor del step</span>
+<span class="sd">    :parameter u: valor de la funcion o la derivada en el paso anterior</span>
+<span class="sd">    :parameter k: valor de la constante k</span>
+
+<span class="sd">    :return: devuelve un valor</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">return</span> <span class="n">h</span> <span class="o">*</span> <span class="p">(</span><span class="n">u</span> <span class="o">+</span> <span class="n">k</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="updateUs"><a class="viewcode-back" href="../../module.html#module.functions.updateUs">[documentos]</a><span class="k">def</span> <span class="nf">updateUs</span><span class="p">(</span><span class="n">Us</span><span class="p">,</span> <span class="n">K1</span><span class="p">,</span> <span class="n">K2</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Actualiza los valores de la funcion para la siguiente iteracion</span>
+
+<span class="sd">    :parameter Us: son los valores de la funcion y de la derivada en el paso anterior</span>
+<span class="sd">    :parameter K1: valores de la constantes para actualizar el valor de la funcion</span>
+<span class="sd">    :parameter K2: valores de las constantes para actualizar el valor de la derivada</span>
+
+<span class="sd">    :return: devuelve una lista con valores</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">u1</span> <span class="o">=</span> <span class="n">Us</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">+</span> <span class="mi">1</span><span class="o">/</span><span class="mi">6</span> <span class="o">*</span> <span class="p">(</span><span class="n">K1</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">+</span> <span class="mi">2</span> <span class="o">*</span> <span class="n">K1</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">+</span> <span class="mi">2</span> <span class="o">*</span> <span class="n">K1</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span> <span class="o">+</span> <span class="n">K1</span><span class="p">[</span><span class="mi">3</span><span class="p">])</span>
+    <span class="n">u2</span> <span class="o">=</span> <span class="n">Us</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">+</span> <span class="mi">1</span><span class="o">/</span><span class="mi">6</span> <span class="o">*</span> <span class="p">(</span><span class="n">K2</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">+</span> <span class="mi">2</span> <span class="o">*</span> <span class="n">K2</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">+</span> <span class="mi">2</span> <span class="o">*</span> <span class="n">K2</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span> <span class="o">+</span> <span class="n">K2</span><span class="p">[</span><span class="mi">3</span><span class="p">])</span>
+    <span class="k">return</span> <span class="p">[</span><span class="n">u1</span><span class="p">,</span> <span class="n">u2</span><span class="p">]</span></div>
+
+
+<div class="viewcode-block" id="rungeKutta4"><a class="viewcode-back" href="../../module.html#module.functions.rungeKutta4">[documentos]</a><span class="k">def</span> <span class="nf">rungeKutta4</span><span class="p">(</span><span class="n">h</span><span class="p">,</span> <span class="n">x</span><span class="p">,</span> <span class="n">funs</span><span class="p">,</span> <span class="n">Us</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Metodo que se utiliza en un proceso iterativo para obtener una solucion</span>
+<span class="sd">    a una ecuacion diferencial planteada. El orden de convergencia es del O(h^5)</span>
+
+<span class="sd">    :parameter h: tamaño del paso</span>
+<span class="sd">    :parameter x: punto de la funcion</span>
+<span class="sd">    :parameter funs: funciones p(x), q(x) y r(x)</span>
+<span class="sd">    :parameter Us: son los valores de la funcion y la derivada en el paso anterior</span>
+
+<span class="sd">    :return: devuelve una lista con los valores de la funcion y la derivada actualizados</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">px</span> <span class="o">=</span> <span class="n">funs</span><span class="p">[</span><span class="mi">0</span><span class="p">](</span><span class="n">x</span><span class="p">)</span>
+    <span class="n">qx</span> <span class="o">=</span> <span class="n">funs</span><span class="p">[</span><span class="mi">1</span><span class="p">](</span><span class="n">x</span><span class="p">)</span>
+    <span class="n">rx</span> <span class="o">=</span> <span class="n">funs</span><span class="p">[</span><span class="mi">2</span><span class="p">](</span><span class="n">x</span><span class="p">)</span>
+    <span class="n">pxh2</span> <span class="o">=</span> <span class="n">funs</span><span class="p">[</span><span class="mi">0</span><span class="p">](</span><span class="n">x</span><span class="o">+</span><span class="n">h</span><span class="o">/</span><span class="mi">2</span><span class="p">)</span>
+    <span class="n">qxh2</span> <span class="o">=</span> <span class="n">funs</span><span class="p">[</span><span class="mi">1</span><span class="p">](</span><span class="n">x</span><span class="o">+</span><span class="n">h</span><span class="o">/</span><span class="mi">2</span><span class="p">)</span>
+    <span class="n">rxh2</span> <span class="o">=</span> <span class="n">funs</span><span class="p">[</span><span class="mi">2</span><span class="p">](</span><span class="n">x</span><span class="o">+</span><span class="n">h</span><span class="o">/</span><span class="mi">2</span><span class="p">)</span>
+    <span class="n">pxh</span> <span class="o">=</span> <span class="n">funs</span><span class="p">[</span><span class="mi">0</span><span class="p">](</span><span class="n">x</span><span class="o">+</span><span class="n">h</span><span class="p">)</span>
+    <span class="n">qxh</span> <span class="o">=</span> <span class="n">funs</span><span class="p">[</span><span class="mi">1</span><span class="p">](</span><span class="n">x</span><span class="o">+</span><span class="n">h</span><span class="p">)</span>
+    <span class="n">rxh</span> <span class="o">=</span> <span class="n">funs</span><span class="p">[</span><span class="mi">2</span><span class="p">](</span><span class="n">x</span><span class="o">+</span><span class="n">h</span><span class="p">)</span>
+
+    <span class="n">k11</span> <span class="o">=</span> <span class="n">funSub1</span><span class="p">(</span><span class="n">h</span><span class="p">,</span> <span class="n">Us</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span> <span class="mi">0</span><span class="p">)</span>
+    <span class="n">k12</span> <span class="o">=</span> <span class="n">funSub2</span><span class="p">(</span><span class="n">h</span><span class="p">,</span> <span class="p">[</span><span class="n">px</span><span class="p">,</span> <span class="n">qx</span><span class="p">,</span> <span class="n">rx</span><span class="p">],</span> <span class="n">Us</span><span class="p">,</span> <span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">])</span>
+
+    <span class="n">k21</span> <span class="o">=</span> <span class="n">funSub1</span><span class="p">(</span><span class="n">h</span><span class="p">,</span> <span class="n">Us</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span> <span class="mf">0.5</span> <span class="o">*</span> <span class="n">k12</span><span class="p">)</span>
+    <span class="n">k22</span> <span class="o">=</span> <span class="n">funSub2</span><span class="p">(</span><span class="n">h</span><span class="p">,</span> <span class="p">[</span><span class="n">pxh2</span><span class="p">,</span> <span class="n">qxh2</span><span class="p">,</span> <span class="n">rxh2</span><span class="p">],</span> <span class="n">Us</span><span class="p">,</span> <span class="p">[</span><span class="mf">0.5</span> <span class="o">*</span> <span class="n">k11</span><span class="p">,</span> <span class="mf">0.5</span> <span class="o">*</span> <span class="n">k12</span><span class="p">])</span>
+
+    <span class="n">k31</span> <span class="o">=</span> <span class="n">funSub1</span><span class="p">(</span><span class="n">h</span><span class="p">,</span> <span class="n">Us</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span> <span class="mf">0.5</span> <span class="o">*</span> <span class="n">k22</span><span class="p">)</span>
+    <span class="n">k32</span> <span class="o">=</span> <span class="n">funSub2</span><span class="p">(</span><span class="n">h</span><span class="p">,</span> <span class="p">[</span><span class="n">pxh2</span><span class="p">,</span> <span class="n">qxh2</span><span class="p">,</span> <span class="n">rxh2</span><span class="p">],</span> <span class="n">Us</span><span class="p">,</span> <span class="p">[</span><span class="mf">0.5</span> <span class="o">*</span> <span class="n">k21</span><span class="p">,</span> <span class="mf">0.5</span> <span class="o">*</span> <span class="n">k22</span><span class="p">])</span>
+
+    <span class="n">k41</span> <span class="o">=</span> <span class="n">funSub1</span><span class="p">(</span><span class="n">h</span><span class="p">,</span> <span class="n">Us</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span> <span class="n">k32</span><span class="p">)</span>
+    <span class="n">k42</span> <span class="o">=</span> <span class="n">funSub2</span><span class="p">(</span><span class="n">h</span><span class="p">,</span> <span class="p">[</span><span class="n">pxh</span><span class="p">,</span> <span class="n">qxh</span><span class="p">,</span> <span class="n">rxh</span><span class="p">],</span> <span class="n">Us</span><span class="p">,</span> <span class="p">[</span><span class="n">k31</span><span class="p">,</span> <span class="n">k32</span><span class="p">])</span>
+
+    <span class="n">Us</span> <span class="o">=</span> <span class="n">updateUs</span><span class="p">(</span><span class="n">Us</span><span class="p">,</span> <span class="p">[</span><span class="n">k11</span><span class="p">,</span> <span class="n">k21</span><span class="p">,</span> <span class="n">k31</span><span class="p">,</span> <span class="n">k41</span><span class="p">],</span> <span class="p">[</span><span class="n">k12</span><span class="p">,</span> <span class="n">k22</span><span class="p">,</span> <span class="n">k32</span><span class="p">,</span> <span class="n">k42</span><span class="p">])</span>
+
+    <span class="k">return</span> <span class="n">Us</span></div>
+
+
+<div class="viewcode-block" id="createFolder"><a class="viewcode-back" href="../../module.html#module.functions.createFolder">[documentos]</a><span class="k">def</span> <span class="nf">createFolder</span><span class="p">(</span><span class="n">N</span><span class="p">,</span> <span class="n">l</span><span class="p">,</span> <span class="n">p0</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Crea una carpeta con el nombre resultadosN&lt;value&gt;P&lt;value&gt;l&lt;value&gt;</span>
+
+<span class="sd">    :param N: Número de intervalos</span>
+<span class="sd">    :param l: longitud de la viga</span>
+<span class="sd">    :param p0: presion vertical</span>
+
+<span class="sd">    :return: devuelve el nombre y el sufijo utilizado</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">sufix</span> <span class="o">=</span> <span class="s2">&quot;N&quot;</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="n">N</span><span class="p">)</span> <span class="o">+</span> <span class="s2">&quot;P&quot;</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="n">p0</span><span class="p">)</span> <span class="o">+</span> <span class="s2">&quot;l&quot;</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="n">l</span><span class="p">)</span>
+    <span class="n">resultFolder</span> <span class="o">=</span> <span class="s2">&quot;resultados&quot;</span>
+    <span class="k">if</span> <span class="ow">not</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">isdir</span><span class="p">(</span><span class="n">resultFolder</span><span class="p">):</span>
+        <span class="n">os</span><span class="o">.</span><span class="n">mkdir</span><span class="p">(</span><span class="n">resultFolder</span><span class="p">)</span>
+    <span class="k">if</span> <span class="ow">not</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">isdir</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">resultFolder</span><span class="p">,</span> <span class="n">sufix</span><span class="p">)):</span>
+        <span class="n">os</span><span class="o">.</span><span class="n">mkdir</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">resultFolder</span><span class="p">,</span> <span class="n">sufix</span><span class="p">))</span>
+    <span class="k">return</span> <span class="n">resultFolder</span><span class="p">,</span> <span class="n">sufix</span></div>
+
+
+<div class="viewcode-block" id="ModuleConvergencia"><a class="viewcode-back" href="../../module.html#module.functions.ModuleConvergencia">[documentos]</a><span class="k">def</span> <span class="nf">ModuleConvergencia</span><span class="p">(</span><span class="n">N</span><span class="o">=</span><span class="mi">100</span><span class="p">,</span> <span class="n">l</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">p0</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">alfa</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">beta</span><span class="o">=</span><span class="mi">0</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Convergencia hacia la solucion de la ecuacion diferencial.</span>
+
+<span class="sd">    :param N: numero de intervalos</span>
+<span class="sd">    :param l: longitud de la viga</span>
+<span class="sd">    :param p0: presion vertial</span>
+<span class="sd">    :param alfa: condicion de contorno</span>
+<span class="sd">    :param beta: condicion de contorno</span>
+
+<span class="sd">    :return: Devuelve la diferencia entre los outputs de ambos algoritmos.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">NVector</span> <span class="o">=</span> <span class="p">[</span><span class="n">i</span><span class="o">*</span><span class="n">N</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="nb">int</span><span class="p">(</span><span class="n">N</span><span class="o">/</span><span class="mi">4</span><span class="p">))]</span>
+    <span class="n">DiffVector</span> <span class="o">=</span> <span class="p">[]</span>
+    <span class="k">for</span> <span class="n">NValue</span> <span class="ow">in</span> <span class="n">NVector</span><span class="p">:</span>
+        <span class="n">result</span> <span class="o">=</span> <span class="n">ShootingMethod</span><span class="p">(</span><span class="n">NValue</span><span class="p">,</span> <span class="o">-</span><span class="n">l</span><span class="p">,</span> <span class="n">l</span><span class="p">,</span> <span class="n">alfa</span><span class="p">,</span> <span class="n">beta</span><span class="p">,</span> <span class="n">defineEquation1</span><span class="p">(</span><span class="n">l</span><span class="p">,</span> <span class="n">p0</span><span class="p">),</span> <span class="n">defineEquation2</span><span class="p">(</span><span class="n">l</span><span class="p">))</span>
+        <span class="n">linearResult</span> <span class="o">=</span> <span class="n">LinearFiniteDifference</span><span class="p">(</span><span class="n">NValue</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="o">-</span><span class="n">l</span><span class="p">,</span> <span class="n">l</span><span class="p">,</span> <span class="n">alfa</span><span class="p">,</span> <span class="n">beta</span><span class="p">,</span> <span class="n">defineEquation1</span><span class="p">(</span><span class="n">l</span><span class="p">,</span> <span class="n">p0</span><span class="p">))</span>
+        <span class="n">diff</span> <span class="o">=</span> <span class="p">[</span><span class="nb">abs</span><span class="p">(</span><span class="n">val1</span> <span class="o">-</span> <span class="n">val2</span><span class="p">)</span> <span class="k">for</span> <span class="n">val1</span><span class="p">,</span> <span class="n">val2</span> <span class="ow">in</span> <span class="nb">zip</span><span class="p">(</span><span class="n">result</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span> <span class="n">linearResult</span><span class="p">[</span><span class="mi">1</span><span class="p">])]</span>
+        <span class="n">sumdiff</span> <span class="o">=</span> <span class="nb">sum</span><span class="p">(</span><span class="n">diff</span><span class="p">)</span><span class="o">/</span><span class="nb">len</span><span class="p">(</span><span class="n">diff</span><span class="p">)</span>
+        <span class="n">DiffVector</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">sumdiff</span><span class="p">)</span>
+
+    <span class="k">return</span> <span class="n">NVector</span><span class="p">,</span> <span class="n">DiffVector</span></div>
+
+
+<div class="viewcode-block" id="defineEquation1"><a class="viewcode-back" href="../../module.html#module.functions.defineEquation1">[documentos]</a><span class="k">def</span> <span class="nf">defineEquation1</span><span class="p">(</span><span class="n">l</span><span class="p">,</span> <span class="n">p0</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Funcion que define las funciones p(x), q(x) y r(x)</span>
+<span class="sd">    para el caso del primer problema de valores iniciales</span>
+
+<span class="sd">    :parameter l: longitud de la viga</span>
+<span class="sd">    :parameter p0: presion vertical aplicada</span>
+
+<span class="sd">    :return: devuelve una lista con las funciones</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">pfun</span> <span class="o">=</span> <span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="mi">0</span>
+    <span class="n">qfun</span> <span class="o">=</span> <span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="o">-</span><span class="p">(</span><span class="mi">1</span> <span class="o">+</span> <span class="p">(</span><span class="n">x</span><span class="o">/</span><span class="n">l</span><span class="p">)</span><span class="o">**</span><span class="mi">2</span><span class="p">)</span> <span class="o">/</span> <span class="n">l</span><span class="o">**</span><span class="mi">2</span>
+    <span class="n">rfun</span> <span class="o">=</span> <span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="o">-</span><span class="n">p0</span>
+    <span class="k">return</span> <span class="p">[</span><span class="n">pfun</span><span class="p">,</span> <span class="n">qfun</span><span class="p">,</span> <span class="n">rfun</span><span class="p">]</span></div>
+
+
+<div class="viewcode-block" id="defineEquation2"><a class="viewcode-back" href="../../module.html#module.functions.defineEquation2">[documentos]</a><span class="k">def</span> <span class="nf">defineEquation2</span><span class="p">(</span><span class="n">l</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Funcion que define las funciones p(x), q(x) y r(x) para</span>
+<span class="sd">    el caso del segundo problema de valores iniciales</span>
+
+<span class="sd">    :parameter l: longitud de la viga</span>
+
+<span class="sd">    :return:  devuelve una lista con las funciones</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">pfun</span> <span class="o">=</span> <span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="mi">0</span>
+    <span class="n">qfun</span> <span class="o">=</span> <span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="o">-</span><span class="p">(</span><span class="mi">1</span> <span class="o">+</span> <span class="p">(</span><span class="n">x</span><span class="o">/</span><span class="n">l</span><span class="p">)</span><span class="o">**</span><span class="mi">2</span><span class="p">)</span> <span class="o">/</span> <span class="n">l</span><span class="o">**</span><span class="mi">2</span>
+    <span class="n">rfun</span> <span class="o">=</span> <span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="mi">0</span>
+    <span class="k">return</span> <span class="p">[</span><span class="n">pfun</span><span class="p">,</span> <span class="n">qfun</span><span class="p">,</span> <span class="n">rfun</span><span class="p">]</span></div>
+
+
+<div class="viewcode-block" id="ShootingMethod"><a class="viewcode-back" href="../../module.html#module.functions.ShootingMethod">[documentos]</a><span class="k">def</span> <span class="nf">ShootingMethod</span><span class="p">(</span><span class="n">N</span><span class="p">,</span> <span class="n">a</span><span class="p">,</span> <span class="n">b</span><span class="p">,</span> <span class="n">alpha</span><span class="p">,</span> <span class="n">beta</span><span class="p">,</span> <span class="n">funs</span><span class="p">,</span> <span class="n">vfuns</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Método del disparo para resolución de ecuaciones diferenciales de segundo orden</span>
+<span class="sd">    utilizando la aproximación Runge Kutta de orden de convergencia es de O(h^5).</span>
+<span class="sd">    De modo que este proceso iterativo, con un orden de convergencia O(h^4)</span>
+
+<span class="sd">    :parameter N: Numero de subintervalos</span>
+<span class="sd">    :parameter a: valor mínimo de x del intervalo a estudiar</span>
+<span class="sd">    :parameter b: valor maximo de x del intervalo a estudiar</span>
+<span class="sd">    :parameter alpha: condición de contorno del problema de valor inicial para el punto a</span>
+<span class="sd">    :parameter beta: condición de contorno del problema de valor inicial para el punto b</span>
+<span class="sd">    :parameter funs: son las funciones p(x), q(x) y r(x) de la ecuación de segundo grado</span>
+<span class="sd">    :parameter vfuns: son las funciones p(x) y q(x) de la ecuación de segundo grado</span>
+
+<span class="sd">    :return: devuelve los valores y(x) y su derivada a la ecuación planteada</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="sd">&quot;&quot;&quot; STEP 1: &quot;&quot;&quot;</span>
+    <span class="n">h</span> <span class="o">=</span> <span class="p">(</span><span class="n">b</span> <span class="o">-</span> <span class="n">a</span><span class="p">)</span> <span class="o">/</span> <span class="n">N</span>
+    <span class="n">u10</span> <span class="o">=</span> <span class="n">alpha</span>
+    <span class="n">u20</span> <span class="o">=</span> <span class="mi">0</span>
+    <span class="n">v10</span> <span class="o">=</span> <span class="mi">0</span>
+    <span class="n">v20</span> <span class="o">=</span> <span class="mi">1</span>
+    <span class="n">u1</span> <span class="o">=</span> <span class="p">[</span><span class="n">u10</span><span class="p">]</span>
+    <span class="n">u2</span> <span class="o">=</span> <span class="p">[</span><span class="n">u20</span><span class="p">]</span>
+    <span class="n">v1</span> <span class="o">=</span> <span class="p">[</span><span class="n">v10</span><span class="p">]</span>
+    <span class="n">v2</span> <span class="o">=</span> <span class="p">[</span><span class="n">v20</span><span class="p">]</span>
+    <span class="n">X</span> <span class="o">=</span> <span class="p">[</span><span class="n">a</span><span class="p">]</span>
+
+    <span class="sd">&quot;&quot;&quot; STEP 2: &quot;&quot;&quot;</span>
+    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">N</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot; STEP 3: &quot;&quot;&quot;</span>
+        <span class="n">x</span> <span class="o">=</span> <span class="n">a</span> <span class="o">+</span> <span class="n">i</span> <span class="o">*</span> <span class="n">h</span>
+
+        <span class="sd">&quot;&quot;&quot; STEP 4: &quot;&quot;&quot;</span>
+        <span class="p">[</span><span class="n">u1i</span><span class="p">,</span> <span class="n">u2i</span><span class="p">]</span> <span class="o">=</span> <span class="n">rungeKutta4</span><span class="p">(</span><span class="n">h</span><span class="p">,</span> <span class="n">x</span><span class="p">,</span> <span class="n">funs</span><span class="p">,</span> <span class="p">[</span><span class="n">u1</span><span class="p">[</span><span class="n">i</span><span class="p">],</span> <span class="n">u2</span><span class="p">[</span><span class="n">i</span><span class="p">]])</span>
+        <span class="n">u1</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">u1i</span><span class="p">)</span>
+        <span class="n">u2</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">u2i</span><span class="p">)</span>
+        <span class="p">[</span><span class="n">v1i</span><span class="p">,</span> <span class="n">v2i</span><span class="p">]</span> <span class="o">=</span> <span class="n">rungeKutta4</span><span class="p">(</span><span class="n">h</span><span class="p">,</span> <span class="n">x</span><span class="p">,</span> <span class="n">vfuns</span><span class="p">,</span> <span class="p">[</span><span class="n">v1</span><span class="p">[</span><span class="n">i</span><span class="p">],</span> <span class="n">v2</span><span class="p">[</span><span class="n">i</span><span class="p">]])</span>
+        <span class="n">v1</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">v1i</span><span class="p">)</span>
+        <span class="n">v2</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">v2i</span><span class="p">)</span>
+
+    <span class="sd">&quot;&quot;&quot; STEP 5: &quot;&quot;&quot;</span>
+    <span class="n">w10</span> <span class="o">=</span> <span class="n">alpha</span>
+    <span class="n">w20</span> <span class="o">=</span> <span class="p">(</span><span class="n">beta</span> <span class="o">-</span> <span class="n">u1</span><span class="p">[</span><span class="n">N</span><span class="p">])</span> <span class="o">/</span> <span class="n">v1</span><span class="p">[</span><span class="n">N</span><span class="p">]</span>
+    <span class="c1"># if beta / u1[N] &lt; 0.1:</span>
+    <span class="c1">#     print(&quot;Round-off problem &quot; + str(beta / u1[N]))</span>
+    <span class="c1">#     print(&#39;Beta value: &#39;, beta)</span>
+    <span class="c1">#     print(&#39;u1N value: &#39;, u1[N])</span>
+
+    <span class="sd">&quot;&quot;&quot; STEP 6: &quot;&quot;&quot;</span>
+    <span class="n">W1</span> <span class="o">=</span> <span class="p">[</span><span class="n">w10</span><span class="p">]</span>
+    <span class="n">W2</span> <span class="o">=</span> <span class="p">[</span><span class="n">w20</span><span class="p">]</span>
+    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="n">N</span><span class="o">+</span><span class="mi">1</span><span class="p">):</span>
+        <span class="n">aux1</span> <span class="o">=</span> <span class="n">u1</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">+</span> <span class="n">w20</span> <span class="o">*</span> <span class="n">v1</span><span class="p">[</span><span class="n">i</span><span class="p">]</span>
+        <span class="n">W1</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">aux1</span><span class="p">)</span>
+        <span class="n">aux2</span> <span class="o">=</span> <span class="n">u2</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">+</span> <span class="n">w20</span> <span class="o">*</span> <span class="n">v2</span><span class="p">[</span><span class="n">i</span><span class="p">]</span>
+        <span class="n">W2</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">aux2</span><span class="p">)</span>
+        <span class="n">x</span> <span class="o">=</span> <span class="n">a</span> <span class="o">+</span> <span class="n">i</span> <span class="o">*</span> <span class="n">h</span>
+        <span class="n">X</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
+
+    <span class="c1"># # error stimation</span>
+    <span class="c1"># error = []</span>
+    <span class="c1"># for i in range(len(W1)):</span>
+    <span class="c1">#     val = abs(u1[i] - W1[i]) / (h**4 * abs(1+v1[i]/v1[N]))</span>
+    <span class="c1">#     error.append(val)</span>
+
+    <span class="k">return</span> <span class="n">X</span><span class="p">,</span> <span class="n">W1</span><span class="p">,</span> <span class="n">W2</span></div>
+
+
+<div class="viewcode-block" id="ReverseShootingMethod"><a class="viewcode-back" href="../../module.html#module.functions.ReverseShootingMethod">[documentos]</a><span class="k">def</span> <span class="nf">ReverseShootingMethod</span><span class="p">(</span><span class="n">N</span><span class="p">,</span> <span class="n">a</span><span class="p">,</span> <span class="n">b</span><span class="p">,</span> <span class="n">alpha</span><span class="p">,</span> <span class="n">beta</span><span class="p">,</span> <span class="n">funs</span><span class="p">,</span> <span class="n">vfuns</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Metodo del disparo para resolucion de ecuaciones diferenciales de segundo orden</span>
+<span class="sd">    utilizando la aproximación Runge Kutta de orden 4</span>
+
+<span class="sd">    :parameter N: Numero de subintervalos</span>
+<span class="sd">    :parameter a: valor minimo de x del intervalo a estudiar</span>
+<span class="sd">    :parameter b: valor maximo de x del intervalo a estudiar</span>
+<span class="sd">    :parameter alpha: condicion de contorno del problema de valor inicial para el punto a</span>
+<span class="sd">    :parameter beta: condicion de contorno del problema de valor inicial para el punto b</span>
+<span class="sd">    :parameter funs: son las funciones p(x), q(x) y r(x) de la ecuacion de segundo grado</span>
+<span class="sd">    :parameter vfuns: son las funciones p(x) y q(x) de la ecuacion de segundo grado</span>
+
+<span class="sd">    :return: devuelve los valores y(x) y su derivada a la ecuacion planteada</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="sd">&quot;&quot;&quot; STEP 1: &quot;&quot;&quot;</span>
+    <span class="n">h</span> <span class="o">=</span> <span class="p">(</span><span class="n">b</span> <span class="o">-</span> <span class="n">a</span><span class="p">)</span> <span class="o">/</span> <span class="n">N</span>
+    <span class="n">u10</span> <span class="o">=</span> <span class="n">alpha</span>
+    <span class="n">u20</span> <span class="o">=</span> <span class="mi">0</span>
+    <span class="n">v10</span> <span class="o">=</span> <span class="mi">0</span>
+    <span class="n">v20</span> <span class="o">=</span> <span class="mi">1</span>
+    <span class="n">u1</span> <span class="o">=</span> <span class="p">[</span><span class="n">u10</span><span class="p">]</span>
+    <span class="n">u2</span> <span class="o">=</span> <span class="p">[</span><span class="n">u20</span><span class="p">]</span>
+    <span class="n">v1</span> <span class="o">=</span> <span class="p">[</span><span class="n">v10</span><span class="p">]</span>
+    <span class="n">v2</span> <span class="o">=</span> <span class="p">[</span><span class="n">v20</span><span class="p">]</span>
+    <span class="n">X</span> <span class="o">=</span> <span class="p">[</span><span class="n">b</span><span class="p">]</span>
+
+    <span class="sd">&quot;&quot;&quot; STEP 2: &quot;&quot;&quot;</span>
+    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">N</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot; STEP 3: &quot;&quot;&quot;</span>
+        <span class="n">x</span> <span class="o">=</span> <span class="n">b</span> <span class="o">-</span> <span class="n">i</span> <span class="o">*</span> <span class="n">h</span>
+        <span class="sd">&quot;&quot;&quot; STEP 4: &quot;&quot;&quot;</span>
+        <span class="p">[</span><span class="n">u1i</span><span class="p">,</span> <span class="n">u2i</span><span class="p">]</span> <span class="o">=</span> <span class="n">rungeKutta4</span><span class="p">(</span><span class="n">h</span><span class="p">,</span> <span class="n">x</span><span class="p">,</span> <span class="n">funs</span><span class="p">,</span> <span class="p">[</span><span class="n">u1</span><span class="p">[</span><span class="n">i</span><span class="p">],</span> <span class="n">u2</span><span class="p">[</span><span class="n">i</span><span class="p">]])</span>
+        <span class="n">u1</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">u1i</span><span class="p">)</span>
+        <span class="n">u2</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">u2i</span><span class="p">)</span>
+        <span class="p">[</span><span class="n">v1i</span><span class="p">,</span> <span class="n">v2i</span><span class="p">]</span> <span class="o">=</span> <span class="n">rungeKutta4</span><span class="p">(</span><span class="n">h</span><span class="p">,</span> <span class="n">x</span><span class="p">,</span> <span class="n">vfuns</span><span class="p">,</span> <span class="p">[</span><span class="n">v1</span><span class="p">[</span><span class="n">i</span><span class="p">],</span> <span class="n">v2</span><span class="p">[</span><span class="n">i</span><span class="p">]])</span>
+        <span class="n">v1</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">v1i</span><span class="p">)</span>
+        <span class="n">v2</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">v2i</span><span class="p">)</span>
+
+    <span class="sd">&quot;&quot;&quot; STEP 5: &quot;&quot;&quot;</span>
+    <span class="n">w10</span> <span class="o">=</span> <span class="n">alpha</span>
+    <span class="n">w20</span> <span class="o">=</span> <span class="p">(</span><span class="n">beta</span> <span class="o">-</span> <span class="n">u1</span><span class="p">[</span><span class="n">N</span><span class="p">])</span> <span class="o">/</span> <span class="n">v1</span><span class="p">[</span><span class="n">N</span><span class="p">]</span>
+    <span class="c1"># if beta / u1[N] &lt; 0.1:</span>
+    <span class="c1">#     print(&quot;Round-off problem &quot; + str(beta / u1[N]))</span>
+    <span class="c1">#     print(&#39;Beta value: &#39;, beta)</span>
+    <span class="c1">#     print(&#39;u1N value: &#39;, u1[N])</span>
+
+    <span class="sd">&quot;&quot;&quot; STEP 5: &quot;&quot;&quot;</span>
+    <span class="n">W1</span> <span class="o">=</span> <span class="p">[</span><span class="n">w10</span><span class="p">]</span>
+    <span class="n">W2</span> <span class="o">=</span> <span class="p">[</span><span class="n">w20</span><span class="p">]</span>
+    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="n">N</span><span class="o">+</span><span class="mi">1</span><span class="p">):</span>
+        <span class="n">aux1</span> <span class="o">=</span> <span class="n">u1</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">+</span> <span class="n">w20</span> <span class="o">*</span> <span class="n">v1</span><span class="p">[</span><span class="n">i</span><span class="p">]</span>
+        <span class="n">W1</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">aux1</span><span class="p">)</span>
+        <span class="n">aux2</span> <span class="o">=</span> <span class="n">u2</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">+</span> <span class="n">w20</span> <span class="o">*</span> <span class="n">v2</span><span class="p">[</span><span class="n">i</span><span class="p">]</span>
+        <span class="n">W2</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">aux2</span><span class="p">)</span>
+        <span class="n">x</span> <span class="o">=</span> <span class="n">b</span> <span class="o">-</span> <span class="n">i</span> <span class="o">*</span> <span class="n">h</span>
+        <span class="n">X</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
+
+    <span class="c1"># error stimation</span>
+    <span class="c1"># error = []</span>
+    <span class="c1"># for i in range(len(W1)):</span>
+    <span class="c1">#     val = abs(u1[i] - W1[i]) / (h**4 * abs(1+v1[i]/v1[N]))</span>
+    <span class="c1">#     error.append(val)</span>
+
+    <span class="k">return</span> <span class="n">X</span><span class="p">,</span> <span class="n">W1</span><span class="p">,</span> <span class="n">W2</span></div>
+
+
+<div class="viewcode-block" id="LinearFiniteDifference"><a class="viewcode-back" href="../../module.html#module.functions.LinearFiniteDifference">[documentos]</a><span class="k">def</span> <span class="nf">LinearFiniteDifference</span><span class="p">(</span><span class="n">N</span><span class="p">,</span> <span class="n">a</span><span class="p">,</span> <span class="n">b</span><span class="p">,</span> <span class="n">alpha</span><span class="p">,</span> <span class="n">beta</span><span class="p">,</span> <span class="n">funs</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Método de diferencias finitas</span>
+
+<span class="sd">    :parameter N: Numero de subintervalos</span>
+<span class="sd">    :parameter a: valor minimo de x del intervalo a estudiar</span>
+<span class="sd">    :parameter b: valor maximo de x del intervalo a estudiar</span>
+<span class="sd">    :parameter alpha: condicion de contorno del problema de valor inicial para el punto a</span>
+<span class="sd">    :parameter beta: condicion de contorno del problema de valor inicial para el punto b</span>
+<span class="sd">    :parameter funs: son las funciones p(x), q(x) y r(x) de la ecuacion de segundo grado</span>
+
+<span class="sd">    :return: devuele la solucion de la ecuacion de sgundo orden evaluada en todos los puntos</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="sd">&quot;&quot;&quot; STEP 1: &quot;&quot;&quot;</span>
+    <span class="n">h</span> <span class="o">=</span> <span class="p">(</span><span class="n">b</span> <span class="o">-</span> <span class="n">a</span><span class="p">)</span> <span class="o">/</span> <span class="p">(</span><span class="n">N</span> <span class="o">+</span> <span class="mi">1</span><span class="p">)</span>
+    <span class="n">x</span> <span class="o">=</span> <span class="n">a</span> <span class="o">+</span> <span class="n">h</span>
+    <span class="n">a1</span> <span class="o">=</span> <span class="mi">2</span> <span class="o">+</span> <span class="n">h</span><span class="o">**</span><span class="mi">2</span> <span class="o">*</span> <span class="n">funs</span><span class="p">[</span><span class="mi">1</span><span class="p">](</span><span class="n">x</span><span class="p">)</span>
+    <span class="n">A</span> <span class="o">=</span> <span class="p">[</span><span class="n">a1</span><span class="p">]</span>
+    <span class="n">b1</span> <span class="o">=</span> <span class="o">-</span><span class="mi">1</span> <span class="o">+</span> <span class="n">h</span><span class="o">/</span><span class="mi">2</span> <span class="o">*</span> <span class="n">funs</span><span class="p">[</span><span class="mi">0</span><span class="p">](</span><span class="n">x</span><span class="p">)</span>
+    <span class="n">B</span> <span class="o">=</span> <span class="p">[</span><span class="n">b1</span><span class="p">]</span>
+    <span class="n">C</span> <span class="o">=</span> <span class="p">[</span><span class="mi">0</span><span class="p">]</span>  <span class="c1"># este valor no se utiliza en ningun momento, solo es para que el vector C este a la par de los demás</span>
+    <span class="n">d1</span> <span class="o">=</span> <span class="o">-</span><span class="n">h</span><span class="o">**</span><span class="mi">2</span> <span class="o">*</span> <span class="n">funs</span><span class="p">[</span><span class="mi">2</span><span class="p">](</span><span class="n">x</span><span class="p">)</span>
+    <span class="n">D</span> <span class="o">=</span> <span class="p">[</span><span class="n">d1</span><span class="p">]</span>
+
+    <span class="sd">&quot;&quot;&quot; STEP 2: &quot;&quot;&quot;</span>
+    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="n">N</span><span class="o">-</span><span class="mi">1</span><span class="p">):</span>
+        <span class="n">x</span> <span class="o">=</span> <span class="n">a</span> <span class="o">+</span> <span class="n">i</span><span class="o">*</span><span class="n">h</span>
+        <span class="n">ai</span> <span class="o">=</span> <span class="mi">2</span> <span class="o">+</span> <span class="n">h</span><span class="o">**</span><span class="mi">2</span> <span class="o">*</span> <span class="n">funs</span><span class="p">[</span><span class="mi">1</span><span class="p">](</span><span class="n">x</span><span class="p">)</span>
+        <span class="n">A</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">ai</span><span class="p">)</span>
+        <span class="n">bi</span> <span class="o">=</span> <span class="o">-</span><span class="mi">1</span> <span class="o">+</span> <span class="n">h</span> <span class="o">/</span> <span class="mi">2</span> <span class="o">*</span> <span class="n">funs</span><span class="p">[</span><span class="mi">0</span><span class="p">](</span><span class="n">x</span><span class="p">)</span>
+        <span class="n">B</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">bi</span><span class="p">)</span>
+        <span class="n">ci</span> <span class="o">=</span> <span class="o">-</span><span class="mi">1</span> <span class="o">-</span> <span class="n">h</span> <span class="o">/</span> <span class="mi">2</span> <span class="o">*</span> <span class="n">funs</span><span class="p">[</span><span class="mi">0</span><span class="p">](</span><span class="n">x</span><span class="p">)</span>
+        <span class="n">C</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">ci</span><span class="p">)</span>
+        <span class="n">di</span> <span class="o">=</span> <span class="o">-</span><span class="n">h</span><span class="o">**</span><span class="mi">2</span><span class="o">*</span><span class="n">funs</span><span class="p">[</span><span class="mi">2</span><span class="p">](</span><span class="n">x</span><span class="p">)</span>
+        <span class="n">D</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">di</span><span class="p">)</span>
+
+    <span class="sd">&quot;&quot;&quot; STEP 3: &quot;&quot;&quot;</span>
+    <span class="n">x</span> <span class="o">=</span> <span class="n">b</span> <span class="o">-</span> <span class="n">h</span>
+    <span class="n">an</span> <span class="o">=</span> <span class="mi">2</span> <span class="o">+</span> <span class="n">h</span><span class="o">**</span><span class="mi">2</span> <span class="o">*</span> <span class="n">funs</span><span class="p">[</span><span class="mi">1</span><span class="p">](</span><span class="n">x</span><span class="p">)</span>
+    <span class="n">A</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">an</span><span class="p">)</span>
+    <span class="n">cn</span> <span class="o">=</span> <span class="o">-</span><span class="mi">1</span> <span class="o">-</span> <span class="n">h</span><span class="o">/</span><span class="mi">2</span> <span class="o">*</span> <span class="n">funs</span><span class="p">[</span><span class="mi">0</span><span class="p">](</span><span class="n">x</span><span class="p">)</span>
+    <span class="n">C</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">cn</span><span class="p">)</span>
+    <span class="n">dn</span> <span class="o">=</span> <span class="o">-</span><span class="n">h</span><span class="o">**</span><span class="mi">2</span> <span class="o">*</span> <span class="n">funs</span><span class="p">[</span><span class="mi">2</span><span class="p">](</span><span class="n">x</span><span class="p">)</span> <span class="o">+</span> <span class="p">(</span><span class="mi">1</span> <span class="o">-</span> <span class="p">(</span><span class="n">h</span> <span class="o">/</span> <span class="mi">2</span><span class="p">)</span> <span class="o">*</span> <span class="n">funs</span><span class="p">[</span><span class="mi">0</span><span class="p">](</span><span class="n">x</span><span class="p">))</span> <span class="o">*</span> <span class="n">beta</span>
+    <span class="n">D</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">dn</span><span class="p">)</span>
+
+    <span class="sd">&quot;&quot;&quot; STEP 4: &quot;&quot;&quot;</span>
+    <span class="n">l1</span> <span class="o">=</span> <span class="n">a1</span>
+    <span class="n">u1</span> <span class="o">=</span> <span class="n">b1</span> <span class="o">/</span> <span class="n">a1</span>
+    <span class="n">U</span> <span class="o">=</span> <span class="p">[</span><span class="n">u1</span><span class="p">]</span>
+    <span class="n">z1</span> <span class="o">=</span> <span class="n">d1</span> <span class="o">/</span> <span class="n">l1</span>
+    <span class="n">Z</span> <span class="o">=</span> <span class="p">[</span><span class="n">z1</span><span class="p">]</span>
+
+    <span class="sd">&quot;&quot;&quot; STEP 5: &quot;&quot;&quot;</span>
+    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="n">N</span><span class="o">-</span><span class="mi">1</span><span class="p">):</span>
+        <span class="n">li</span> <span class="o">=</span> <span class="n">A</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">-</span> <span class="n">C</span><span class="p">[</span><span class="n">i</span><span class="p">]</span><span class="o">*</span><span class="n">U</span><span class="p">[</span><span class="n">i</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span>
+        <span class="n">ui</span> <span class="o">=</span> <span class="n">B</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">/</span> <span class="n">li</span>
+        <span class="n">U</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">ui</span><span class="p">)</span>
+        <span class="n">zi</span> <span class="o">=</span> <span class="p">(</span><span class="n">D</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">-</span> <span class="n">C</span><span class="p">[</span><span class="n">i</span><span class="p">]</span><span class="o">*</span><span class="n">Z</span><span class="p">[</span><span class="n">i</span><span class="o">-</span><span class="mi">1</span><span class="p">])</span><span class="o">/</span><span class="n">li</span>
+        <span class="n">Z</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">zi</span><span class="p">)</span>
+
+    <span class="sd">&quot;&quot;&quot; STEP 6: &quot;&quot;&quot;</span>
+    <span class="n">ln</span> <span class="o">=</span> <span class="n">an</span> <span class="o">-</span> <span class="n">cn</span><span class="o">*</span><span class="n">U</span><span class="p">[</span><span class="nb">len</span><span class="p">(</span><span class="n">U</span><span class="p">)</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span>
+    <span class="n">zn</span> <span class="o">=</span> <span class="p">(</span><span class="n">dn</span> <span class="o">-</span> <span class="n">cn</span><span class="o">*</span><span class="n">Z</span><span class="p">[</span><span class="nb">len</span><span class="p">(</span><span class="n">Z</span><span class="p">)</span><span class="o">-</span><span class="mi">1</span><span class="p">])</span><span class="o">/</span><span class="n">ln</span>
+    <span class="n">Z</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">zn</span><span class="p">)</span>
+
+    <span class="sd">&quot;&quot;&quot; STEP 7: &quot;&quot;&quot;</span>
+    <span class="n">w0</span> <span class="o">=</span> <span class="n">alpha</span>
+    <span class="n">wnplus1</span> <span class="o">=</span> <span class="n">beta</span>
+    <span class="n">wn</span> <span class="o">=</span> <span class="n">zn</span>
+    <span class="n">W</span> <span class="o">=</span> <span class="p">[</span><span class="n">wnplus1</span><span class="p">,</span> <span class="n">wn</span><span class="p">]</span>
+
+    <span class="sd">&quot;&quot;&quot; STEP 8: &quot;&quot;&quot;</span>
+    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">N</span><span class="o">-</span><span class="mi">2</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="p">):</span>
+        <span class="n">wi</span> <span class="o">=</span> <span class="n">Z</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">-</span> <span class="n">U</span><span class="p">[</span><span class="n">i</span><span class="p">]</span><span class="o">*</span><span class="n">W</span><span class="p">[</span><span class="n">N</span><span class="o">-</span><span class="n">i</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span>
+        <span class="n">W</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">wi</span><span class="p">)</span>
+    <span class="n">W</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">w0</span><span class="p">)</span>
+    <span class="n">W</span> <span class="o">=</span> <span class="n">W</span><span class="p">[::</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span>
+
+    <span class="sd">&quot;&quot;&quot; STEP 9: &quot;&quot;&quot;</span>
+    <span class="n">X</span> <span class="o">=</span> <span class="p">[]</span>
+    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">N</span><span class="o">+</span><span class="mi">2</span><span class="p">):</span>
+        <span class="n">x</span> <span class="o">=</span> <span class="n">a</span> <span class="o">+</span> <span class="n">i</span> <span class="o">*</span> <span class="n">h</span>
+        <span class="n">X</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">X</span><span class="p">,</span> <span class="n">W</span></div>
+</pre></div>
+
+           </div>
+           
+          </div>
+          <footer>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        
+        &copy; Copyright 2020, Abel Garcia Rubio
+
+    </p>
+  </div>
+    
+    
+    
+    Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a
+    
+    <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a>
+    
+    provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+   
+
+</body>
+</html>

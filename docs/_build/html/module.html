@@ -1,0 +1,433 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="es" >
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>module.functions Módulo &mdash; documentación de Análisis numérico: Tema 1 - 0.0.1</title>
+  
+
+  
+  <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+
+  
+  
+  
+  
+
+  
+  <!--[if lt IE 9]>
+    <script src="_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
+        <script src="_static/jquery.js"></script>
+        <script src="_static/underscore.js"></script>
+        <script src="_static/doctools.js"></script>
+        <script src="_static/language_data.js"></script>
+        <script src="_static/translations.js"></script>
+        <script async="async" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.7/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    
+    <script type="text/javascript" src="_static/js/theme.js"></script>
+
+    
+    <link rel="index" title="Índice" href="genindex.html" />
+    <link rel="search" title="Búsqueda" href="search.html" />
+    <link rel="prev" title="main module" href="main.html" /> 
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+          
+
+          
+            <a href="index.html" class="icon icon-home" alt="Documentation Home"> Análisis numérico: Tema 1
+          
+
+          
+          </a>
+
+          
+            
+            
+              <div class="version">
+                0.0.1
+              </div>
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <p class="caption"><span class="caption-text">Contenidos:</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="main.html">main module</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">module.functions Módulo</a></li>
+</ul>
+
+            
+          
+        </div>
+        
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="index.html">Análisis numérico: Tema 1</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="index.html" class="icon icon-home"></a> &raquo;</li>
+        
+      <li>module.functions Módulo</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+            
+            <a href="_sources/module.rst.txt" rel="nofollow"> View page source</a>
+          
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="module-module.functions">
+<span id="module-functions-modulo"></span><h1>module.functions Módulo<a class="headerlink" href="#module-module.functions" title="Enlazar permanentemente con este título">¶</a></h1>
+<dl class="py function">
+<dt id="module.functions.LinearFiniteDifference">
+<code class="sig-prename descclassname">module.functions.</code><code class="sig-name descname">LinearFiniteDifference</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">N</span></em>, <em class="sig-param"><span class="n">a</span></em>, <em class="sig-param"><span class="n">b</span></em>, <em class="sig-param"><span class="n">alpha</span></em>, <em class="sig-param"><span class="n">beta</span></em>, <em class="sig-param"><span class="n">funs</span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/module/functions.html#LinearFiniteDifference"><span class="viewcode-link">[fuente]</span></a><a class="headerlink" href="#module.functions.LinearFiniteDifference" title="Enlazar permanentemente con esta definición">¶</a></dt>
+<dd><p>Método de diferencias finitas</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parámetros</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>N</strong> – Numero de subintervalos</p></li>
+<li><p><strong>a</strong> – valor minimo de x del intervalo a estudiar</p></li>
+<li><p><strong>b</strong> – valor maximo de x del intervalo a estudiar</p></li>
+<li><p><strong>alpha</strong> – condicion de contorno del problema de valor inicial para el punto a</p></li>
+<li><p><strong>beta</strong> – condicion de contorno del problema de valor inicial para el punto b</p></li>
+<li><p><strong>funs</strong> – son las funciones p(x), q(x) y r(x) de la ecuacion de segundo grado</p></li>
+</ul>
+</dd>
+<dt class="field-even">Devuelve</dt>
+<dd class="field-even"><p>devuele la solucion de la ecuacion de sgundo orden evaluada en todos los puntos</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt id="module.functions.ModuleConvergencia">
+<code class="sig-prename descclassname">module.functions.</code><code class="sig-name descname">ModuleConvergencia</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">N</span><span class="o">=</span><span class="default_value">100</span></em>, <em class="sig-param"><span class="n">l</span><span class="o">=</span><span class="default_value">1</span></em>, <em class="sig-param"><span class="n">p0</span><span class="o">=</span><span class="default_value">1</span></em>, <em class="sig-param"><span class="n">alfa</span><span class="o">=</span><span class="default_value">0</span></em>, <em class="sig-param"><span class="n">beta</span><span class="o">=</span><span class="default_value">0</span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/module/functions.html#ModuleConvergencia"><span class="viewcode-link">[fuente]</span></a><a class="headerlink" href="#module.functions.ModuleConvergencia" title="Enlazar permanentemente con esta definición">¶</a></dt>
+<dd><p>Convergencia hacia la solucion de la ecuacion diferencial.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parámetros</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>N</strong> – numero de intervalos</p></li>
+<li><p><strong>l</strong> – longitud de la viga</p></li>
+<li><p><strong>p0</strong> – presion vertial</p></li>
+<li><p><strong>alfa</strong> – condicion de contorno</p></li>
+<li><p><strong>beta</strong> – condicion de contorno</p></li>
+</ul>
+</dd>
+<dt class="field-even">Devuelve</dt>
+<dd class="field-even"><p>Devuelve la diferencia entre los outputs de ambos algoritmos.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt id="module.functions.ReverseShootingMethod">
+<code class="sig-prename descclassname">module.functions.</code><code class="sig-name descname">ReverseShootingMethod</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">N</span></em>, <em class="sig-param"><span class="n">a</span></em>, <em class="sig-param"><span class="n">b</span></em>, <em class="sig-param"><span class="n">alpha</span></em>, <em class="sig-param"><span class="n">beta</span></em>, <em class="sig-param"><span class="n">funs</span></em>, <em class="sig-param"><span class="n">vfuns</span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/module/functions.html#ReverseShootingMethod"><span class="viewcode-link">[fuente]</span></a><a class="headerlink" href="#module.functions.ReverseShootingMethod" title="Enlazar permanentemente con esta definición">¶</a></dt>
+<dd><p>Metodo del disparo para resolucion de ecuaciones diferenciales de segundo orden
+utilizando la aproximación Runge Kutta de orden 4</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parámetros</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>N</strong> – Numero de subintervalos</p></li>
+<li><p><strong>a</strong> – valor minimo de x del intervalo a estudiar</p></li>
+<li><p><strong>b</strong> – valor maximo de x del intervalo a estudiar</p></li>
+<li><p><strong>alpha</strong> – condicion de contorno del problema de valor inicial para el punto a</p></li>
+<li><p><strong>beta</strong> – condicion de contorno del problema de valor inicial para el punto b</p></li>
+<li><p><strong>funs</strong> – son las funciones p(x), q(x) y r(x) de la ecuacion de segundo grado</p></li>
+<li><p><strong>vfuns</strong> – son las funciones p(x) y q(x) de la ecuacion de segundo grado</p></li>
+</ul>
+</dd>
+<dt class="field-even">Devuelve</dt>
+<dd class="field-even"><p>devuelve los valores y(x) y su derivada a la ecuacion planteada</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt id="module.functions.ShootingMethod">
+<code class="sig-prename descclassname">module.functions.</code><code class="sig-name descname">ShootingMethod</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">N</span></em>, <em class="sig-param"><span class="n">a</span></em>, <em class="sig-param"><span class="n">b</span></em>, <em class="sig-param"><span class="n">alpha</span></em>, <em class="sig-param"><span class="n">beta</span></em>, <em class="sig-param"><span class="n">funs</span></em>, <em class="sig-param"><span class="n">vfuns</span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/module/functions.html#ShootingMethod"><span class="viewcode-link">[fuente]</span></a><a class="headerlink" href="#module.functions.ShootingMethod" title="Enlazar permanentemente con esta definición">¶</a></dt>
+<dd><p>Método del disparo para resolución de ecuaciones diferenciales de segundo orden
+utilizando la aproximación Runge Kutta de orden de convergencia es de O(h^5).
+De modo que este proceso iterativo, con un orden de convergencia O(h^4)</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parámetros</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>N</strong> – Numero de subintervalos</p></li>
+<li><p><strong>a</strong> – valor mínimo de x del intervalo a estudiar</p></li>
+<li><p><strong>b</strong> – valor maximo de x del intervalo a estudiar</p></li>
+<li><p><strong>alpha</strong> – condición de contorno del problema de valor inicial para el punto a</p></li>
+<li><p><strong>beta</strong> – condición de contorno del problema de valor inicial para el punto b</p></li>
+<li><p><strong>funs</strong> – son las funciones p(x), q(x) y r(x) de la ecuación de segundo grado</p></li>
+<li><p><strong>vfuns</strong> – son las funciones p(x) y q(x) de la ecuación de segundo grado</p></li>
+</ul>
+</dd>
+<dt class="field-even">Devuelve</dt>
+<dd class="field-even"><p>devuelve los valores y(x) y su derivada a la ecuación planteada</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt id="module.functions.createFolder">
+<code class="sig-prename descclassname">module.functions.</code><code class="sig-name descname">createFolder</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">N</span></em>, <em class="sig-param"><span class="n">l</span></em>, <em class="sig-param"><span class="n">p0</span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/module/functions.html#createFolder"><span class="viewcode-link">[fuente]</span></a><a class="headerlink" href="#module.functions.createFolder" title="Enlazar permanentemente con esta definición">¶</a></dt>
+<dd><p>Crea una carpeta con el nombre resultadosN&lt;value&gt;P&lt;value&gt;l&lt;value&gt;</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parámetros</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>N</strong> – Número de intervalos</p></li>
+<li><p><strong>l</strong> – longitud de la viga</p></li>
+<li><p><strong>p0</strong> – presion vertical</p></li>
+</ul>
+</dd>
+<dt class="field-even">Devuelve</dt>
+<dd class="field-even"><p>devuelve el nombre y el sufijo utilizado</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt id="module.functions.defineEquation1">
+<code class="sig-prename descclassname">module.functions.</code><code class="sig-name descname">defineEquation1</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">l</span></em>, <em class="sig-param"><span class="n">p0</span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/module/functions.html#defineEquation1"><span class="viewcode-link">[fuente]</span></a><a class="headerlink" href="#module.functions.defineEquation1" title="Enlazar permanentemente con esta definición">¶</a></dt>
+<dd><p>Funcion que define las funciones p(x), q(x) y r(x)
+para el caso del primer problema de valores iniciales</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parámetros</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>l</strong> – longitud de la viga</p></li>
+<li><p><strong>p0</strong> – presion vertical aplicada</p></li>
+</ul>
+</dd>
+<dt class="field-even">Devuelve</dt>
+<dd class="field-even"><p>devuelve una lista con las funciones</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt id="module.functions.defineEquation2">
+<code class="sig-prename descclassname">module.functions.</code><code class="sig-name descname">defineEquation2</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">l</span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/module/functions.html#defineEquation2"><span class="viewcode-link">[fuente]</span></a><a class="headerlink" href="#module.functions.defineEquation2" title="Enlazar permanentemente con esta definición">¶</a></dt>
+<dd><p>Funcion que define las funciones p(x), q(x) y r(x) para
+el caso del segundo problema de valores iniciales</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parámetros</dt>
+<dd class="field-odd"><p><strong>l</strong> – longitud de la viga</p>
+</dd>
+<dt class="field-even">Devuelve</dt>
+<dd class="field-even"><p>devuelve una lista con las funciones</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt id="module.functions.funSub1">
+<code class="sig-prename descclassname">module.functions.</code><code class="sig-name descname">funSub1</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">h</span></em>, <em class="sig-param"><span class="n">u</span></em>, <em class="sig-param"><span class="n">k</span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/module/functions.html#funSub1"><span class="viewcode-link">[fuente]</span></a><a class="headerlink" href="#module.functions.funSub1" title="Enlazar permanentemente con esta definición">¶</a></dt>
+<dd><p>Esta funcion calcula los valores de K con subindice i,1 con i = 1,2,3,4</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parámetros</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>h</strong> – valor del step</p></li>
+<li><p><strong>u</strong> – valor de la funcion o la derivada en el paso anterior</p></li>
+<li><p><strong>k</strong> – valor de la constante k</p></li>
+</ul>
+</dd>
+<dt class="field-even">Devuelve</dt>
+<dd class="field-even"><p>devuelve un valor</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt id="module.functions.funSub2">
+<code class="sig-prename descclassname">module.functions.</code><code class="sig-name descname">funSub2</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">h</span></em>, <em class="sig-param"><span class="n">values</span></em>, <em class="sig-param"><span class="n">Us</span></em>, <em class="sig-param"><span class="n">Ks</span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/module/functions.html#funSub2"><span class="viewcode-link">[fuente]</span></a><a class="headerlink" href="#module.functions.funSub2" title="Enlazar permanentemente con esta definición">¶</a></dt>
+<dd><p>Esta funcion calcula los valores de K con subindice i,2 con i = 1,2,3,4</p>
+<div class="math notranslate nohighlight">
+\[h*(f(x)*(u_1+K_{i,2})+q(x)*(u_2+K_{i,1})+r(x))\]</div>
+<dl class="field-list simple">
+<dt class="field-odd">Parámetros</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>h</strong> – valor del step</p></li>
+<li><p><strong>values</strong> – son los valores de las funciones p, q y r evaluadas en x [p(x), q(x), r(x)]</p></li>
+<li><p><strong>Us</strong> – son los valores de la funcion y la derivada en el paso anterior</p></li>
+<li><p><strong>Ks</strong> – valores de las constantes k con subindices Ki1, y Ki2 respectivamente con i = 1,2,3,4</p></li>
+</ul>
+</dd>
+<dt class="field-even">Devuelve</dt>
+<dd class="field-even"><p>devuelve un valor</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt id="module.functions.rungeKutta4">
+<code class="sig-prename descclassname">module.functions.</code><code class="sig-name descname">rungeKutta4</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">h</span></em>, <em class="sig-param"><span class="n">x</span></em>, <em class="sig-param"><span class="n">funs</span></em>, <em class="sig-param"><span class="n">Us</span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/module/functions.html#rungeKutta4"><span class="viewcode-link">[fuente]</span></a><a class="headerlink" href="#module.functions.rungeKutta4" title="Enlazar permanentemente con esta definición">¶</a></dt>
+<dd><p>Metodo que se utiliza en un proceso iterativo para obtener una solucion
+a una ecuacion diferencial planteada. El orden de convergencia es del O(h^5)</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parámetros</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>h</strong> – tamaño del paso</p></li>
+<li><p><strong>x</strong> – punto de la funcion</p></li>
+<li><p><strong>funs</strong> – funciones p(x), q(x) y r(x)</p></li>
+<li><p><strong>Us</strong> – son los valores de la funcion y la derivada en el paso anterior</p></li>
+</ul>
+</dd>
+<dt class="field-even">Devuelve</dt>
+<dd class="field-even"><p>devuelve una lista con los valores de la funcion y la derivada actualizados</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt id="module.functions.updateUs">
+<code class="sig-prename descclassname">module.functions.</code><code class="sig-name descname">updateUs</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">Us</span></em>, <em class="sig-param"><span class="n">K1</span></em>, <em class="sig-param"><span class="n">K2</span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/module/functions.html#updateUs"><span class="viewcode-link">[fuente]</span></a><a class="headerlink" href="#module.functions.updateUs" title="Enlazar permanentemente con esta definición">¶</a></dt>
+<dd><p>Actualiza los valores de la funcion para la siguiente iteracion</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parámetros</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>Us</strong> – son los valores de la funcion y de la derivada en el paso anterior</p></li>
+<li><p><strong>K1</strong> – valores de la constantes para actualizar el valor de la funcion</p></li>
+<li><p><strong>K2</strong> – valores de las constantes para actualizar el valor de la derivada</p></li>
+</ul>
+</dd>
+<dt class="field-even">Devuelve</dt>
+<dd class="field-even"><p>devuelve una lista con valores</p>
+</dd>
+</dl>
+</dd></dl>
+
+</div>
+
+
+           </div>
+           
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+      
+        <a href="main.html" class="btn btn-neutral float-left" title="main module" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        
+        &copy; Copyright 2020, Abel Garcia Rubio
+
+    </p>
+  </div>
+    
+    
+    
+    Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a
+    
+    <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a>
+    
+    provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+   
+
+</body>
+</html>

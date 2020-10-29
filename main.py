@@ -375,8 +375,26 @@ def resolucionConvergencia():
 
 
 if __name__ == '__main__':
-    resolucionApartadoA()
-    resolucionApartadoB()
-    resolucionComparativa()
-    resolucionConvergencia()
+    import sys
+    if len(sys.argv) > 1:
+        try:
+            modo = int(sys.argv[1])
+            if modo == 1:
+                print("Has elegido el apartado A\n")
+                resolucionApartadoA()
+            elif modo == 2:
+                print("Has elegido el apartado B\n")
+                resolucionApartadoB()
+            elif modo == 3:
+                print("Has elegido el apartado de comparativa\n")
+                resolucionComparativa()
+            elif modo == 4:
+                print("Has elegido el apartado de estudio de convergencia\n")
+                resolucionConvergencia()
+            else:
+                print("Elige otra funcion diferente\n")
+        except ValueError:
+            print("Por favor, selecciona un apartado para obtener un resultado.\n")
+    else:
+        print("Por favor, selecciona un apartado para obtener un resultado.\n")
 
