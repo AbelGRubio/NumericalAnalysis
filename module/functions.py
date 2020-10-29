@@ -7,10 +7,11 @@ import os
 
 def funSub2(h, values, Us, Ks):
     """
-    Esta función calcula los valores de K con subindice i,2 con i = 1,2,3,4
+    Esta función calcula los valores de K con subindice j,2 con j = 1,2,3,4
+    el subíndice i indica el paso iterativo en el que nos encontramos
 
     .. math::
-        h·(f(x)·(u_{2,i}+K_{i,2})+q(x)·(u_{1,i}+K_{i,1})+r(x))
+        h·(f(x)·(u_{2,i}+K_{j,2})+q(x)·(u_{1,i}+K_{j,1})+r(x))
 
     :parameter h: valor del step
     :parameter values: son los valores de las funciones p, q y r evaluadas en x [p(x), q(x), r(x)]
@@ -25,6 +26,7 @@ def funSub2(h, values, Us, Ks):
 def funSub1(h, u, k):
     """
     Esta función calcula los valores de K con subíndice j,1 con j = 1,2,3,4
+    el subíndice i indica el paso iterativo en el que nos encontramos
 
     .. math::
         h·(u_{2,i}+K_{j,2})
@@ -208,10 +210,10 @@ def ShootingMethod(N, a, b, alpha, beta, funs, vfuns):
         x = a + i * h
 
         """ STEP 4: """
-        [u1i, u2i] = rungeKutta4(h, x, funs, [u1[i], u2[i]])
+        [u1i, u2i] = rungeKutta4(h, x, funs, [u1[i], u2[i]])  # estimación de los valores del primer problema
         u1.append(u1i)
         u2.append(u2i)
-        [v1i, v2i] = rungeKutta4(h, x, vfuns, [v1[i], v2[i]])
+        [v1i, v2i] = rungeKutta4(h, x, vfuns, [v1[i], v2[i]])  # estimación de los valores del segundo problema
         v1.append(v1i)
         v2.append(v2i)
 

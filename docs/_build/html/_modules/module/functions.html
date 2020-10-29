@@ -163,10 +163,11 @@
 
 <div class="viewcode-block" id="funSub2"><a class="viewcode-back" href="../../module.html#module.functions.funSub2">[documentos]</a><span class="k">def</span> <span class="nf">funSub2</span><span class="p">(</span><span class="n">h</span><span class="p">,</span> <span class="n">values</span><span class="p">,</span> <span class="n">Us</span><span class="p">,</span> <span class="n">Ks</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">    Esta función calcula los valores de K con subindice i,2 con i = 1,2,3,4</span>
+<span class="sd">    Esta función calcula los valores de K con subindice j,2 con j = 1,2,3,4</span>
+<span class="sd">    el subíndice i indica el paso iterativo en el que nos encontramos</span>
 
 <span class="sd">    .. math::</span>
-<span class="sd">        h·(f(x)·(u_{2,i}+K_{i,2})+q(x)·(u_{1,i}+K_{i,1})+r(x))</span>
+<span class="sd">        h·(f(x)·(u_{2,i}+K_{j,2})+q(x)·(u_{1,i}+K_{j,1})+r(x))</span>
 
 <span class="sd">    :parameter h: valor del step</span>
 <span class="sd">    :parameter values: son los valores de las funciones p, q y r evaluadas en x [p(x), q(x), r(x)]</span>
@@ -181,6 +182,7 @@
 <div class="viewcode-block" id="funSub1"><a class="viewcode-back" href="../../module.html#module.functions.funSub1">[documentos]</a><span class="k">def</span> <span class="nf">funSub1</span><span class="p">(</span><span class="n">h</span><span class="p">,</span> <span class="n">u</span><span class="p">,</span> <span class="n">k</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Esta función calcula los valores de K con subíndice j,1 con j = 1,2,3,4</span>
+<span class="sd">    el subíndice i indica el paso iterativo en el que nos encontramos</span>
 
 <span class="sd">    .. math::</span>
 <span class="sd">        h·(u_{2,i}+K_{j,2})</span>
@@ -364,10 +366,10 @@
         <span class="n">x</span> <span class="o">=</span> <span class="n">a</span> <span class="o">+</span> <span class="n">i</span> <span class="o">*</span> <span class="n">h</span>
 
         <span class="sd">&quot;&quot;&quot; STEP 4: &quot;&quot;&quot;</span>
-        <span class="p">[</span><span class="n">u1i</span><span class="p">,</span> <span class="n">u2i</span><span class="p">]</span> <span class="o">=</span> <span class="n">rungeKutta4</span><span class="p">(</span><span class="n">h</span><span class="p">,</span> <span class="n">x</span><span class="p">,</span> <span class="n">funs</span><span class="p">,</span> <span class="p">[</span><span class="n">u1</span><span class="p">[</span><span class="n">i</span><span class="p">],</span> <span class="n">u2</span><span class="p">[</span><span class="n">i</span><span class="p">]])</span>
+        <span class="p">[</span><span class="n">u1i</span><span class="p">,</span> <span class="n">u2i</span><span class="p">]</span> <span class="o">=</span> <span class="n">rungeKutta4</span><span class="p">(</span><span class="n">h</span><span class="p">,</span> <span class="n">x</span><span class="p">,</span> <span class="n">funs</span><span class="p">,</span> <span class="p">[</span><span class="n">u1</span><span class="p">[</span><span class="n">i</span><span class="p">],</span> <span class="n">u2</span><span class="p">[</span><span class="n">i</span><span class="p">]])</span>  <span class="c1"># estimación de los valores del primer problema</span>
         <span class="n">u1</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">u1i</span><span class="p">)</span>
         <span class="n">u2</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">u2i</span><span class="p">)</span>
-        <span class="p">[</span><span class="n">v1i</span><span class="p">,</span> <span class="n">v2i</span><span class="p">]</span> <span class="o">=</span> <span class="n">rungeKutta4</span><span class="p">(</span><span class="n">h</span><span class="p">,</span> <span class="n">x</span><span class="p">,</span> <span class="n">vfuns</span><span class="p">,</span> <span class="p">[</span><span class="n">v1</span><span class="p">[</span><span class="n">i</span><span class="p">],</span> <span class="n">v2</span><span class="p">[</span><span class="n">i</span><span class="p">]])</span>
+        <span class="p">[</span><span class="n">v1i</span><span class="p">,</span> <span class="n">v2i</span><span class="p">]</span> <span class="o">=</span> <span class="n">rungeKutta4</span><span class="p">(</span><span class="n">h</span><span class="p">,</span> <span class="n">x</span><span class="p">,</span> <span class="n">vfuns</span><span class="p">,</span> <span class="p">[</span><span class="n">v1</span><span class="p">[</span><span class="n">i</span><span class="p">],</span> <span class="n">v2</span><span class="p">[</span><span class="n">i</span><span class="p">]])</span>  <span class="c1"># estimación de los valores del segundo problema</span>
         <span class="n">v1</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">v1i</span><span class="p">)</span>
         <span class="n">v2</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">v2i</span><span class="p">)</span>
 
@@ -408,7 +410,7 @@
 <span class="sd">    el valor de w20 del paso STEP 5 se convierte en un cociente, ya que se desprecia el valor de beta y por ende</span>
 <span class="sd">    se incluyen errores adicionales en la estimación de la ecuación.</span>
 
-<span class="sd">    Así pues, la solución que propone el libro para solventar este problema es que calculemos</span>
+<span class="sd">    Así pues, la solución que propone el libro para solventar este problema es</span>
 <span class="sd">    que realicemos el procedimiento empezando por el final del intervalo.</span>
 
 <span class="sd">    :parameter N: número de subintervalos</span>

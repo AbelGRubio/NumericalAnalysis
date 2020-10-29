@@ -210,7 +210,7 @@ los problemas de debidos al redondeo. En el libro de Análisis numérico de Burd
 para solventar el problema de Round-off, (surge cuando beta es pequeño en comparación con U_{1,N}),
 el valor de w20 del paso STEP 5 se convierte en un cociente, ya que se desprecia el valor de beta y por ende
 se incluyen errores adicionales en la estimación de la ecuación.</p>
-<p>Así pues, la solución que propone el libro para solventar este problema es que calculemos
+<p>Así pues, la solución que propone el libro para solventar este problema es
 que realicemos el procedimiento empezando por el final del intervalo.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parámetros</dt>
@@ -309,7 +309,8 @@ el caso del segundo problema de valores iniciales</p>
 <dl class="py function">
 <dt id="module.functions.funSub1">
 <code class="sig-prename descclassname">module.functions.</code><code class="sig-name descname">funSub1</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">h</span></em>, <em class="sig-param"><span class="n">u</span></em>, <em class="sig-param"><span class="n">k</span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/module/functions.html#funSub1"><span class="viewcode-link">[fuente]</span></a><a class="headerlink" href="#module.functions.funSub1" title="Enlazar permanentemente con esta definición">¶</a></dt>
-<dd><p>Esta función calcula los valores de K con subíndice j,1 con j = 1,2,3,4</p>
+<dd><p>Esta función calcula los valores de K con subíndice j,1 con j = 1,2,3,4
+el subíndice i indica el paso iterativo en el que nos encontramos</p>
 <div class="math notranslate nohighlight">
 \[h·(u_{2,i}+K_{j,2})\]</div>
 <dl class="field-list simple">
@@ -329,9 +330,10 @@ el caso del segundo problema de valores iniciales</p>
 <dl class="py function">
 <dt id="module.functions.funSub2">
 <code class="sig-prename descclassname">module.functions.</code><code class="sig-name descname">funSub2</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">h</span></em>, <em class="sig-param"><span class="n">values</span></em>, <em class="sig-param"><span class="n">Us</span></em>, <em class="sig-param"><span class="n">Ks</span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/module/functions.html#funSub2"><span class="viewcode-link">[fuente]</span></a><a class="headerlink" href="#module.functions.funSub2" title="Enlazar permanentemente con esta definición">¶</a></dt>
-<dd><p>Esta función calcula los valores de K con subindice i,2 con i = 1,2,3,4</p>
+<dd><p>Esta función calcula los valores de K con subindice j,2 con j = 1,2,3,4
+el subíndice i indica el paso iterativo en el que nos encontramos</p>
 <div class="math notranslate nohighlight">
-\[h·(f(x)·(u_{2,i}+K_{i,2})+q(x)·(u_{1,i}+K_{i,1})+r(x))\]</div>
+\[h·(f(x)·(u_{2,i}+K_{j,2})+q(x)·(u_{1,i}+K_{j,1})+r(x))\]</div>
 <dl class="field-list simple">
 <dt class="field-odd">Parámetros</dt>
 <dd class="field-odd"><ul class="simple">
