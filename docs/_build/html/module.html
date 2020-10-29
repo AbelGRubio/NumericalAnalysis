@@ -163,6 +163,7 @@
 <dt id="module.functions.LinearFiniteDifference">
 <code class="sig-prename descclassname">module.functions.</code><code class="sig-name descname">LinearFiniteDifference</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">N</span></em>, <em class="sig-param"><span class="n">a</span></em>, <em class="sig-param"><span class="n">b</span></em>, <em class="sig-param"><span class="n">alpha</span></em>, <em class="sig-param"><span class="n">beta</span></em>, <em class="sig-param"><span class="n">funs</span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/module/functions.html#LinearFiniteDifference"><span class="viewcode-link">[fuente]</span></a><a class="headerlink" href="#module.functions.LinearFiniteDifference" title="Enlazar permanentemente con esta definición">¶</a></dt>
 <dd><p>Método de diferencias finitas</p>
+<p>Algoritmo obtenido del libro «Numerical analysis by Burden &amp; Faires, pág 687».</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parámetros</dt>
 <dd class="field-odd"><ul class="simple">
@@ -171,7 +172,7 @@
 <li><p><strong>b</strong> – valor maximo de x del intervalo a estudiar</p></li>
 <li><p><strong>alpha</strong> – condición de contorno del problema de valor inicial para el punto a</p></li>
 <li><p><strong>beta</strong> – condición de contorno del problema de valor inicial para el punto b</p></li>
-<li><p><strong>funs</strong> – son las funciónes p(x), q(x) y r(x) de la ecuación de segundo grado</p></li>
+<li><p><strong>funs</strong> – son las funciones p(x), q(x) y r(x) de la ecuación de segundo grado</p></li>
 </ul>
 </dd>
 <dt class="field-even">Devuelve</dt>
@@ -183,13 +184,13 @@
 <dl class="py function">
 <dt id="module.functions.ModuleConvergencia">
 <code class="sig-prename descclassname">module.functions.</code><code class="sig-name descname">ModuleConvergencia</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">N</span><span class="o">=</span><span class="default_value">100</span></em>, <em class="sig-param"><span class="n">l</span><span class="o">=</span><span class="default_value">1</span></em>, <em class="sig-param"><span class="n">p0</span><span class="o">=</span><span class="default_value">1</span></em>, <em class="sig-param"><span class="n">alfa</span><span class="o">=</span><span class="default_value">0</span></em>, <em class="sig-param"><span class="n">beta</span><span class="o">=</span><span class="default_value">0</span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/module/functions.html#ModuleConvergencia"><span class="viewcode-link">[fuente]</span></a><a class="headerlink" href="#module.functions.ModuleConvergencia" title="Enlazar permanentemente con esta definición">¶</a></dt>
-<dd><p>Convergencia hacia la solución de la ecuación diferencial.</p>
+<dd><p>Convergencia hacia la solución de la ecuación diferencial, para distintos subtinervalos multiplos de N</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parámetros</dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>N</strong> – número de intervalos</p></li>
-<li><p><strong>l</strong> – longitud de la viga</p></li>
-<li><p><strong>p0</strong> – presion vertial</p></li>
+<li><p><strong>N</strong> – número de intervalos, por defecto M = 100</p></li>
+<li><p><strong>l</strong> – posición de una de la bisagra respectro al centro, por defecto l=1</p></li>
+<li><p><strong>p0</strong> – presion vertical, por defecto p=1</p></li>
 <li><p><strong>alfa</strong> – condición de contorno</p></li>
 <li><p><strong>beta</strong> – condición de contorno</p></li>
 </ul>
@@ -204,7 +205,13 @@
 <dt id="module.functions.ReverseShootingMethod">
 <code class="sig-prename descclassname">module.functions.</code><code class="sig-name descname">ReverseShootingMethod</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">N</span></em>, <em class="sig-param"><span class="n">a</span></em>, <em class="sig-param"><span class="n">b</span></em>, <em class="sig-param"><span class="n">alpha</span></em>, <em class="sig-param"><span class="n">beta</span></em>, <em class="sig-param"><span class="n">funs</span></em>, <em class="sig-param"><span class="n">vfuns</span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/module/functions.html#ReverseShootingMethod"><span class="viewcode-link">[fuente]</span></a><a class="headerlink" href="#module.functions.ReverseShootingMethod" title="Enlazar permanentemente con esta definición">¶</a></dt>
 <dd><p>Metodo del disparo para resolución de ecuaciones diferenciales de segundo orden
-utilizando la aproximación Runge Kutta de orden 4</p>
+utilizando la aproximación Runge Kutta de orden 4. Este algoritmo esta escrito para solvertan
+los problemas de debidos al redondeo. En el libro de Análisis numérico de Burden an Faires suguieren que
+para solventar el problema de Round-off, (surge cuando beta es pequeño en comparación con U_{1,N}),
+el valor de w20 del paso STEP 5 se convierte en un cociente, ya que se desprecia el valor de beta y por ende
+se incluyen errores adicionales en la estimación de la ecuación.</p>
+<p>Así pues, la solución que propone el libro para solventar este problema es que calculemos
+que realicemos el procedimiento empezando por el final del intervalo.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parámetros</dt>
 <dd class="field-odd"><ul class="simple">
@@ -213,8 +220,8 @@ utilizando la aproximación Runge Kutta de orden 4</p>
 <li><p><strong>b</strong> – valor maximo de x del intervalo a estudiar</p></li>
 <li><p><strong>alpha</strong> – condición de contorno del problema de valor inicial para el punto a</p></li>
 <li><p><strong>beta</strong> – condición de contorno del problema de valor inicial para el punto b</p></li>
-<li><p><strong>funs</strong> – son las funciónes p(x), q(x) y r(x) de la ecuación de segundo grado</p></li>
-<li><p><strong>vfuns</strong> – son las funciónes p(x) y q(x) de la ecuación de segundo grado</p></li>
+<li><p><strong>funs</strong> – son las funciones p(x), q(x) y r(x) de la ecuación de segundo grado</p></li>
+<li><p><strong>vfuns</strong> – son las funciones p(x) y q(x) de la ecuación de segundo grado</p></li>
 </ul>
 </dd>
 <dt class="field-even">Devuelve</dt>
@@ -228,7 +235,8 @@ utilizando la aproximación Runge Kutta de orden 4</p>
 <code class="sig-prename descclassname">module.functions.</code><code class="sig-name descname">ShootingMethod</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">N</span></em>, <em class="sig-param"><span class="n">a</span></em>, <em class="sig-param"><span class="n">b</span></em>, <em class="sig-param"><span class="n">alpha</span></em>, <em class="sig-param"><span class="n">beta</span></em>, <em class="sig-param"><span class="n">funs</span></em>, <em class="sig-param"><span class="n">vfuns</span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/module/functions.html#ShootingMethod"><span class="viewcode-link">[fuente]</span></a><a class="headerlink" href="#module.functions.ShootingMethod" title="Enlazar permanentemente con esta definición">¶</a></dt>
 <dd><p>Método del disparo para resolución de ecuaciones diferenciales de segundo orden
 utilizando la aproximación Runge Kutta de orden de convergencia es de O(h^5).
-De modo que en este proceso iterativo tenemos con un orden de convergencia O(h^4)</p>
+De modo que en este proceso iterativo tenemos con un orden de convergencia O(h^4).</p>
+<p>Algoritmo obtenido del libro «Numerical analysis by Burden &amp; Faires, pág 675».</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parámetros</dt>
 <dd class="field-odd"><ul class="simple">
@@ -237,8 +245,8 @@ De modo que en este proceso iterativo tenemos con un orden de convergencia O(h^4
 <li><p><strong>b</strong> – valor maximo de x del intervalo a estudiar</p></li>
 <li><p><strong>alpha</strong> – condición de contorno del problema de valor inicial para el punto a</p></li>
 <li><p><strong>beta</strong> – condición de contorno del problema de valor inicial para el punto b</p></li>
-<li><p><strong>funs</strong> – son las funciónes p(x), q(x) y r(x) de la ecuación de segundo grado</p></li>
-<li><p><strong>vfuns</strong> – son las funciónes p(x) y q(x) de la ecuación de segundo grado</p></li>
+<li><p><strong>funs</strong> – son las funciones p(x), q(x) y r(x) de la ecuación de segundo grado</p></li>
+<li><p><strong>vfuns</strong> – son las funciones p(x) y q(x) de la ecuación de segundo grado</p></li>
 </ul>
 </dd>
 <dt class="field-even">Devuelve</dt>
@@ -255,7 +263,7 @@ De modo que en este proceso iterativo tenemos con un orden de convergencia O(h^4
 <dt class="field-odd">Parámetros</dt>
 <dd class="field-odd"><ul class="simple">
 <li><p><strong>N</strong> – Número de intervalos</p></li>
-<li><p><strong>l</strong> – longitud de la viga</p></li>
+<li><p><strong>l</strong> – posición de una de la bisagra respectro al centro</p></li>
 <li><p><strong>p0</strong> – presion vertical</p></li>
 </ul>
 </dd>
@@ -268,17 +276,17 @@ De modo que en este proceso iterativo tenemos con un orden de convergencia O(h^4
 <dl class="py function">
 <dt id="module.functions.defineEquation1">
 <code class="sig-prename descclassname">module.functions.</code><code class="sig-name descname">defineEquation1</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">l</span></em>, <em class="sig-param"><span class="n">p0</span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/module/functions.html#defineEquation1"><span class="viewcode-link">[fuente]</span></a><a class="headerlink" href="#module.functions.defineEquation1" title="Enlazar permanentemente con esta definición">¶</a></dt>
-<dd><p>función que define las funciónes p(x), q(x) y r(x)
+<dd><p>Función que define las funciones p(x), q(x) y r(x)
 para el caso del primer problema de valores iniciales</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parámetros</dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>l</strong> – longitud de la viga</p></li>
+<li><p><strong>l</strong> – posición de una de la bisagra respectro al centro</p></li>
 <li><p><strong>p0</strong> – presion vertical aplicada</p></li>
 </ul>
 </dd>
 <dt class="field-even">Devuelve</dt>
-<dd class="field-even"><p>devuelve una lista con las funciónes</p>
+<dd class="field-even"><p>devuelve una lista con las funciones</p>
 </dd>
 </dl>
 </dd></dl>
@@ -286,14 +294,14 @@ para el caso del primer problema de valores iniciales</p>
 <dl class="py function">
 <dt id="module.functions.defineEquation2">
 <code class="sig-prename descclassname">module.functions.</code><code class="sig-name descname">defineEquation2</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">l</span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/module/functions.html#defineEquation2"><span class="viewcode-link">[fuente]</span></a><a class="headerlink" href="#module.functions.defineEquation2" title="Enlazar permanentemente con esta definición">¶</a></dt>
-<dd><p>función que define las funciónes p(x), q(x) y r(x) para
+<dd><p>función que define las funciones p(x), q(x) y r(x) para
 el caso del segundo problema de valores iniciales</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parámetros</dt>
-<dd class="field-odd"><p><strong>l</strong> – longitud de la viga</p>
+<dd class="field-odd"><p><strong>l</strong> – posición de una de la bisagra respectro al centro</p>
 </dd>
 <dt class="field-even">Devuelve</dt>
-<dd class="field-even"><p>devuelve una lista con las funciónes</p>
+<dd class="field-even"><p>devuelve una lista con las funciones</p>
 </dd>
 </dl>
 </dd></dl>
@@ -328,7 +336,7 @@ el caso del segundo problema de valores iniciales</p>
 <dt class="field-odd">Parámetros</dt>
 <dd class="field-odd"><ul class="simple">
 <li><p><strong>h</strong> – valor del step</p></li>
-<li><p><strong>values</strong> – son los valores de las funciónes p, q y r evaluadas en x [p(x), q(x), r(x)]</p></li>
+<li><p><strong>values</strong> – son los valores de las funciones p, q y r evaluadas en x [p(x), q(x), r(x)]</p></li>
 <li><p><strong>Us</strong> – son los valores de la función y la derivada en el paso anterior</p></li>
 <li><p><strong>Ks</strong> – valores de las constantes k con subindices Ki1, y Ki2 respectivamente con i = 1,2,3,4</p></li>
 </ul>
@@ -349,7 +357,7 @@ a una ecuación diferencial planteada. El orden de convergencia es del O(h^5)</p
 <dd class="field-odd"><ul class="simple">
 <li><p><strong>h</strong> – tamaño del paso</p></li>
 <li><p><strong>x</strong> – punto de la función</p></li>
-<li><p><strong>funs</strong> – funciónes p(x), q(x) y r(x)</p></li>
+<li><p><strong>funs</strong> – funciones p(x), q(x) y r(x)</p></li>
 <li><p><strong>Us</strong> – son los valores de la función y la derivada en el paso anterior</p></li>
 </ul>
 </dd>

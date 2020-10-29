@@ -13,7 +13,7 @@ def funSub2(h, values, Us, Ks):
         h·(f(x)·(u_{2,i}+K_{i,2})+q(x)·(u_{1,i}+K_{i,1})+r(x))
 
     :parameter h: valor del step
-    :parameter values: son los valores de las funciónes p, q y r evaluadas en x [p(x), q(x), r(x)]
+    :parameter values: son los valores de las funciones p, q y r evaluadas en x [p(x), q(x), r(x)]
     :parameter Us: son los valores de la función y la derivada en el paso anterior
     :parameter Ks: valores de las constantes k con subindices Ki1, y Ki2 respectivamente con i = 1,2,3,4
 
@@ -65,7 +65,7 @@ def rungeKutta4(h, x, funs, Us):
 
     :parameter h: tamaño del paso
     :parameter x: punto de la función
-    :parameter funs: funciónes p(x), q(x) y r(x)
+    :parameter funs: funciones p(x), q(x) y r(x)
     :parameter Us: son los valores de la función y la derivada en el paso anterior
 
     :return: devuelve una lista con los valores de la función y la derivada actualizados
@@ -102,7 +102,7 @@ def createFolder(N, l, p0):
     Crea una carpeta con el nombre resultadosN<value>P<value>l<value>
 
     :param N: Número de intervalos
-    :param l: longitud de la viga
+    :param l: posición de una de la bisagra respectro al centro
     :param p0: presion vertical
 
     :return: devuelve el nombre y el sufijo utilizado
@@ -118,11 +118,11 @@ def createFolder(N, l, p0):
 
 def ModuleConvergencia(N=100, l=1, p0=1, alfa=0, beta=0):
     """
-    Convergencia hacia la solución de la ecuación diferencial.
+    Convergencia hacia la solución de la ecuación diferencial, para distintos subtinervalos multiplos de N
 
-    :param N: número de intervalos
-    :param l: longitud de la viga
-    :param p0: presion vertial
+    :param N: número de intervalos, por defecto M = 100
+    :param l: posición de una de la bisagra respectro al centro, por defecto l=1
+    :param p0: presion vertical, por defecto p=1
     :param alfa: condición de contorno
     :param beta: condición de contorno
 
@@ -142,13 +142,13 @@ def ModuleConvergencia(N=100, l=1, p0=1, alfa=0, beta=0):
 
 def defineEquation1(l, p0):
     """
-    función que define las funciónes p(x), q(x) y r(x)
+    Función que define las funciones p(x), q(x) y r(x)
     para el caso del primer problema de valores iniciales
 
-    :parameter l: longitud de la viga
+    :parameter l: posición de una de la bisagra respectro al centro
     :parameter p0: presion vertical aplicada
 
-    :return: devuelve una lista con las funciónes
+    :return: devuelve una lista con las funciones
     """
     pfun = lambda x: 0
     qfun = lambda x: -(1 + (x/l)**2) / l**2
@@ -158,12 +158,12 @@ def defineEquation1(l, p0):
 
 def defineEquation2(l):
     """
-    función que define las funciónes p(x), q(x) y r(x) para
+    función que define las funciones p(x), q(x) y r(x) para
     el caso del segundo problema de valores iniciales
 
-    :parameter l: longitud de la viga
+    :parameter l: posición de una de la bisagra respectro al centro
 
-    :return:  devuelve una lista con las funciónes
+    :return:  devuelve una lista con las funciones
     """
     pfun = lambda x: 0
     qfun = lambda x: -(1 + (x/l)**2) / l**2
@@ -175,15 +175,17 @@ def ShootingMethod(N, a, b, alpha, beta, funs, vfuns):
     """
     Método del disparo para resolución de ecuaciones diferenciales de segundo orden
     utilizando la aproximación Runge Kutta de orden de convergencia es de O(h^5).
-    De modo que en este proceso iterativo tenemos con un orden de convergencia O(h^4)
+    De modo que en este proceso iterativo tenemos con un orden de convergencia O(h^4).
+
+    Algoritmo obtenido del libro "Numerical analysis by Burden & Faires, pág 675".
 
     :parameter N: número de subintervalos
     :parameter a: valor mínimo de x del intervalo a estudiar
     :parameter b: valor maximo de x del intervalo a estudiar
     :parameter alpha: condición de contorno del problema de valor inicial para el punto a
     :parameter beta: condición de contorno del problema de valor inicial para el punto b
-    :parameter funs: son las funciónes p(x), q(x) y r(x) de la ecuación de segundo grado
-    :parameter vfuns: son las funciónes p(x) y q(x) de la ecuación de segundo grado
+    :parameter funs: son las funciones p(x), q(x) y r(x) de la ecuación de segundo grado
+    :parameter vfuns: son las funciones p(x) y q(x) de la ecuación de segundo grado
 
     :return: devuelve los valores y(x) y su derivada a la ecuación planteada
     """
@@ -244,15 +246,22 @@ def ShootingMethod(N, a, b, alpha, beta, funs, vfuns):
 def ReverseShootingMethod(N, a, b, alpha, beta, funs, vfuns):
     """
     Metodo del disparo para resolución de ecuaciones diferenciales de segundo orden
-    utilizando la aproximación Runge Kutta de orden 4
+    utilizando la aproximación Runge Kutta de orden 4. Este algoritmo esta escrito para solvertan
+    los problemas de debidos al redondeo. En el libro de Análisis numérico de Burden an Faires suguieren que
+    para solventar el problema de Round-off, (surge cuando beta es pequeño en comparación con U_{1,N}),
+    el valor de w20 del paso STEP 5 se convierte en un cociente, ya que se desprecia el valor de beta y por ende
+    se incluyen errores adicionales en la estimación de la ecuación.
+
+    Así pues, la solución que propone el libro para solventar este problema es
+    que realicemos el procedimiento empezando por el final del intervalo.
 
     :parameter N: número de subintervalos
     :parameter a: valor minimo de x del intervalo a estudiar
     :parameter b: valor maximo de x del intervalo a estudiar
     :parameter alpha: condición de contorno del problema de valor inicial para el punto a
     :parameter beta: condición de contorno del problema de valor inicial para el punto b
-    :parameter funs: son las funciónes p(x), q(x) y r(x) de la ecuación de segundo grado
-    :parameter vfuns: son las funciónes p(x) y q(x) de la ecuación de segundo grado
+    :parameter funs: son las funciones p(x), q(x) y r(x) de la ecuación de segundo grado
+    :parameter vfuns: son las funciones p(x) y q(x) de la ecuación de segundo grado
 
     :return: devuelve los valores y(x) y su derivada a la ecuación planteada
     """
@@ -289,7 +298,7 @@ def ReverseShootingMethod(N, a, b, alpha, beta, funs, vfuns):
     #     print('Beta value: ', beta)
     #     print('u1N value: ', u1[N])
 
-    """ STEP 5: """
+    """ STEP 6: """
     W1 = [w10]
     W2 = [w20]
     for i in range(1, N+1):
@@ -313,12 +322,14 @@ def LinearFiniteDifference(N, a, b, alpha, beta, funs):
     """
     Método de diferencias finitas
 
+    Algoritmo obtenido del libro "Numerical analysis by Burden & Faires, pág 687".
+
     :parameter N: número de subintervalos
     :parameter a: valor minimo de x del intervalo a estudiar
     :parameter b: valor maximo de x del intervalo a estudiar
     :parameter alpha: condición de contorno del problema de valor inicial para el punto a
     :parameter beta: condición de contorno del problema de valor inicial para el punto b
-    :parameter funs: son las funciónes p(x), q(x) y r(x) de la ecuación de segundo grado
+    :parameter funs: son las funciones p(x), q(x) y r(x) de la ecuación de segundo grado
 
     :return: devuele la solución de la ecuación de segundo orden evaluada en todos los puntos
     """
