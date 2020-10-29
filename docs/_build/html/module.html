@@ -158,6 +158,7 @@
             
   <div class="section" id="module-module.functions">
 <span id="module-functions-modulo"></span><h1>module.functions Módulo<a class="headerlink" href="#module-module.functions" title="Enlazar permanentemente con este título">¶</a></h1>
+<p>Este módulo introduce las funciones necesarias para poder ejecutar el programa.</p>
 <dl class="py function">
 <dt id="module.functions.LinearFiniteDifference">
 <code class="sig-prename descclassname">module.functions.</code><code class="sig-name descname">LinearFiniteDifference</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">N</span></em>, <em class="sig-param"><span class="n">a</span></em>, <em class="sig-param"><span class="n">b</span></em>, <em class="sig-param"><span class="n">alpha</span></em>, <em class="sig-param"><span class="n">beta</span></em>, <em class="sig-param"><span class="n">funs</span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/module/functions.html#LinearFiniteDifference"><span class="viewcode-link">[fuente]</span></a><a class="headerlink" href="#module.functions.LinearFiniteDifference" title="Enlazar permanentemente con esta definición">¶</a></dt>
@@ -165,16 +166,16 @@
 <dl class="field-list simple">
 <dt class="field-odd">Parámetros</dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>N</strong> – Numero de subintervalos</p></li>
+<li><p><strong>N</strong> – número de subintervalos</p></li>
 <li><p><strong>a</strong> – valor minimo de x del intervalo a estudiar</p></li>
 <li><p><strong>b</strong> – valor maximo de x del intervalo a estudiar</p></li>
-<li><p><strong>alpha</strong> – condicion de contorno del problema de valor inicial para el punto a</p></li>
-<li><p><strong>beta</strong> – condicion de contorno del problema de valor inicial para el punto b</p></li>
-<li><p><strong>funs</strong> – son las funciones p(x), q(x) y r(x) de la ecuacion de segundo grado</p></li>
+<li><p><strong>alpha</strong> – condición de contorno del problema de valor inicial para el punto a</p></li>
+<li><p><strong>beta</strong> – condición de contorno del problema de valor inicial para el punto b</p></li>
+<li><p><strong>funs</strong> – son las funciónes p(x), q(x) y r(x) de la ecuación de segundo grado</p></li>
 </ul>
 </dd>
 <dt class="field-even">Devuelve</dt>
-<dd class="field-even"><p>devuele la solucion de la ecuacion de sgundo orden evaluada en todos los puntos</p>
+<dd class="field-even"><p>devuele la solución de la ecuación de segundo orden evaluada en todos los puntos</p>
 </dd>
 </dl>
 </dd></dl>
@@ -182,15 +183,15 @@
 <dl class="py function">
 <dt id="module.functions.ModuleConvergencia">
 <code class="sig-prename descclassname">module.functions.</code><code class="sig-name descname">ModuleConvergencia</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">N</span><span class="o">=</span><span class="default_value">100</span></em>, <em class="sig-param"><span class="n">l</span><span class="o">=</span><span class="default_value">1</span></em>, <em class="sig-param"><span class="n">p0</span><span class="o">=</span><span class="default_value">1</span></em>, <em class="sig-param"><span class="n">alfa</span><span class="o">=</span><span class="default_value">0</span></em>, <em class="sig-param"><span class="n">beta</span><span class="o">=</span><span class="default_value">0</span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/module/functions.html#ModuleConvergencia"><span class="viewcode-link">[fuente]</span></a><a class="headerlink" href="#module.functions.ModuleConvergencia" title="Enlazar permanentemente con esta definición">¶</a></dt>
-<dd><p>Convergencia hacia la solucion de la ecuacion diferencial.</p>
+<dd><p>Convergencia hacia la solución de la ecuación diferencial.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parámetros</dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>N</strong> – numero de intervalos</p></li>
+<li><p><strong>N</strong> – número de intervalos</p></li>
 <li><p><strong>l</strong> – longitud de la viga</p></li>
 <li><p><strong>p0</strong> – presion vertial</p></li>
-<li><p><strong>alfa</strong> – condicion de contorno</p></li>
-<li><p><strong>beta</strong> – condicion de contorno</p></li>
+<li><p><strong>alfa</strong> – condición de contorno</p></li>
+<li><p><strong>beta</strong> – condición de contorno</p></li>
 </ul>
 </dd>
 <dt class="field-even">Devuelve</dt>
@@ -202,22 +203,22 @@
 <dl class="py function">
 <dt id="module.functions.ReverseShootingMethod">
 <code class="sig-prename descclassname">module.functions.</code><code class="sig-name descname">ReverseShootingMethod</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">N</span></em>, <em class="sig-param"><span class="n">a</span></em>, <em class="sig-param"><span class="n">b</span></em>, <em class="sig-param"><span class="n">alpha</span></em>, <em class="sig-param"><span class="n">beta</span></em>, <em class="sig-param"><span class="n">funs</span></em>, <em class="sig-param"><span class="n">vfuns</span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/module/functions.html#ReverseShootingMethod"><span class="viewcode-link">[fuente]</span></a><a class="headerlink" href="#module.functions.ReverseShootingMethod" title="Enlazar permanentemente con esta definición">¶</a></dt>
-<dd><p>Metodo del disparo para resolucion de ecuaciones diferenciales de segundo orden
+<dd><p>Metodo del disparo para resolución de ecuaciones diferenciales de segundo orden
 utilizando la aproximación Runge Kutta de orden 4</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parámetros</dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>N</strong> – Numero de subintervalos</p></li>
+<li><p><strong>N</strong> – número de subintervalos</p></li>
 <li><p><strong>a</strong> – valor minimo de x del intervalo a estudiar</p></li>
 <li><p><strong>b</strong> – valor maximo de x del intervalo a estudiar</p></li>
-<li><p><strong>alpha</strong> – condicion de contorno del problema de valor inicial para el punto a</p></li>
-<li><p><strong>beta</strong> – condicion de contorno del problema de valor inicial para el punto b</p></li>
-<li><p><strong>funs</strong> – son las funciones p(x), q(x) y r(x) de la ecuacion de segundo grado</p></li>
-<li><p><strong>vfuns</strong> – son las funciones p(x) y q(x) de la ecuacion de segundo grado</p></li>
+<li><p><strong>alpha</strong> – condición de contorno del problema de valor inicial para el punto a</p></li>
+<li><p><strong>beta</strong> – condición de contorno del problema de valor inicial para el punto b</p></li>
+<li><p><strong>funs</strong> – son las funciónes p(x), q(x) y r(x) de la ecuación de segundo grado</p></li>
+<li><p><strong>vfuns</strong> – son las funciónes p(x) y q(x) de la ecuación de segundo grado</p></li>
 </ul>
 </dd>
 <dt class="field-even">Devuelve</dt>
-<dd class="field-even"><p>devuelve los valores y(x) y su derivada a la ecuacion planteada</p>
+<dd class="field-even"><p>devuelve los valores y(x) y su derivada a la ecuación planteada</p>
 </dd>
 </dl>
 </dd></dl>
@@ -227,17 +228,17 @@ utilizando la aproximación Runge Kutta de orden 4</p>
 <code class="sig-prename descclassname">module.functions.</code><code class="sig-name descname">ShootingMethod</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">N</span></em>, <em class="sig-param"><span class="n">a</span></em>, <em class="sig-param"><span class="n">b</span></em>, <em class="sig-param"><span class="n">alpha</span></em>, <em class="sig-param"><span class="n">beta</span></em>, <em class="sig-param"><span class="n">funs</span></em>, <em class="sig-param"><span class="n">vfuns</span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/module/functions.html#ShootingMethod"><span class="viewcode-link">[fuente]</span></a><a class="headerlink" href="#module.functions.ShootingMethod" title="Enlazar permanentemente con esta definición">¶</a></dt>
 <dd><p>Método del disparo para resolución de ecuaciones diferenciales de segundo orden
 utilizando la aproximación Runge Kutta de orden de convergencia es de O(h^5).
-De modo que este proceso iterativo, con un orden de convergencia O(h^4)</p>
+De modo que en este proceso iterativo tenemos con un orden de convergencia O(h^4)</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parámetros</dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>N</strong> – Numero de subintervalos</p></li>
+<li><p><strong>N</strong> – número de subintervalos</p></li>
 <li><p><strong>a</strong> – valor mínimo de x del intervalo a estudiar</p></li>
 <li><p><strong>b</strong> – valor maximo de x del intervalo a estudiar</p></li>
 <li><p><strong>alpha</strong> – condición de contorno del problema de valor inicial para el punto a</p></li>
 <li><p><strong>beta</strong> – condición de contorno del problema de valor inicial para el punto b</p></li>
-<li><p><strong>funs</strong> – son las funciones p(x), q(x) y r(x) de la ecuación de segundo grado</p></li>
-<li><p><strong>vfuns</strong> – son las funciones p(x) y q(x) de la ecuación de segundo grado</p></li>
+<li><p><strong>funs</strong> – son las funciónes p(x), q(x) y r(x) de la ecuación de segundo grado</p></li>
+<li><p><strong>vfuns</strong> – son las funciónes p(x) y q(x) de la ecuación de segundo grado</p></li>
 </ul>
 </dd>
 <dt class="field-even">Devuelve</dt>
@@ -267,7 +268,7 @@ De modo que este proceso iterativo, con un orden de convergencia O(h^4)</p>
 <dl class="py function">
 <dt id="module.functions.defineEquation1">
 <code class="sig-prename descclassname">module.functions.</code><code class="sig-name descname">defineEquation1</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">l</span></em>, <em class="sig-param"><span class="n">p0</span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/module/functions.html#defineEquation1"><span class="viewcode-link">[fuente]</span></a><a class="headerlink" href="#module.functions.defineEquation1" title="Enlazar permanentemente con esta definición">¶</a></dt>
-<dd><p>Funcion que define las funciones p(x), q(x) y r(x)
+<dd><p>función que define las funciónes p(x), q(x) y r(x)
 para el caso del primer problema de valores iniciales</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parámetros</dt>
@@ -277,7 +278,7 @@ para el caso del primer problema de valores iniciales</p>
 </ul>
 </dd>
 <dt class="field-even">Devuelve</dt>
-<dd class="field-even"><p>devuelve una lista con las funciones</p>
+<dd class="field-even"><p>devuelve una lista con las funciónes</p>
 </dd>
 </dl>
 </dd></dl>
@@ -285,14 +286,14 @@ para el caso del primer problema de valores iniciales</p>
 <dl class="py function">
 <dt id="module.functions.defineEquation2">
 <code class="sig-prename descclassname">module.functions.</code><code class="sig-name descname">defineEquation2</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">l</span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/module/functions.html#defineEquation2"><span class="viewcode-link">[fuente]</span></a><a class="headerlink" href="#module.functions.defineEquation2" title="Enlazar permanentemente con esta definición">¶</a></dt>
-<dd><p>Funcion que define las funciones p(x), q(x) y r(x) para
+<dd><p>función que define las funciónes p(x), q(x) y r(x) para
 el caso del segundo problema de valores iniciales</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parámetros</dt>
 <dd class="field-odd"><p><strong>l</strong> – longitud de la viga</p>
 </dd>
 <dt class="field-even">Devuelve</dt>
-<dd class="field-even"><p>devuelve una lista con las funciones</p>
+<dd class="field-even"><p>devuelve una lista con las funciónes</p>
 </dd>
 </dl>
 </dd></dl>
@@ -300,12 +301,14 @@ el caso del segundo problema de valores iniciales</p>
 <dl class="py function">
 <dt id="module.functions.funSub1">
 <code class="sig-prename descclassname">module.functions.</code><code class="sig-name descname">funSub1</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">h</span></em>, <em class="sig-param"><span class="n">u</span></em>, <em class="sig-param"><span class="n">k</span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/module/functions.html#funSub1"><span class="viewcode-link">[fuente]</span></a><a class="headerlink" href="#module.functions.funSub1" title="Enlazar permanentemente con esta definición">¶</a></dt>
-<dd><p>Esta funcion calcula los valores de K con subindice i,1 con i = 1,2,3,4</p>
+<dd><p>Esta función calcula los valores de K con subíndice j,1 con j = 1,2,3,4</p>
+<div class="math notranslate nohighlight">
+\[h·(u_{2,i}+K_{j,2})\]</div>
 <dl class="field-list simple">
 <dt class="field-odd">Parámetros</dt>
 <dd class="field-odd"><ul class="simple">
 <li><p><strong>h</strong> – valor del step</p></li>
-<li><p><strong>u</strong> – valor de la funcion o la derivada en el paso anterior</p></li>
+<li><p><strong>u</strong> – valor de la función o la derivada en el paso anterior</p></li>
 <li><p><strong>k</strong> – valor de la constante k</p></li>
 </ul>
 </dd>
@@ -318,15 +321,15 @@ el caso del segundo problema de valores iniciales</p>
 <dl class="py function">
 <dt id="module.functions.funSub2">
 <code class="sig-prename descclassname">module.functions.</code><code class="sig-name descname">funSub2</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">h</span></em>, <em class="sig-param"><span class="n">values</span></em>, <em class="sig-param"><span class="n">Us</span></em>, <em class="sig-param"><span class="n">Ks</span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/module/functions.html#funSub2"><span class="viewcode-link">[fuente]</span></a><a class="headerlink" href="#module.functions.funSub2" title="Enlazar permanentemente con esta definición">¶</a></dt>
-<dd><p>Esta funcion calcula los valores de K con subindice i,2 con i = 1,2,3,4</p>
+<dd><p>Esta función calcula los valores de K con subindice i,2 con i = 1,2,3,4</p>
 <div class="math notranslate nohighlight">
-\[h*(f(x)*(u_1+K_{i,2})+q(x)*(u_2+K_{i,1})+r(x))\]</div>
+\[h·(f(x)·(u_{2,i}+K_{i,2})+q(x)·(u_{1,i}+K_{i,1})+r(x))\]</div>
 <dl class="field-list simple">
 <dt class="field-odd">Parámetros</dt>
 <dd class="field-odd"><ul class="simple">
 <li><p><strong>h</strong> – valor del step</p></li>
-<li><p><strong>values</strong> – son los valores de las funciones p, q y r evaluadas en x [p(x), q(x), r(x)]</p></li>
-<li><p><strong>Us</strong> – son los valores de la funcion y la derivada en el paso anterior</p></li>
+<li><p><strong>values</strong> – son los valores de las funciónes p, q y r evaluadas en x [p(x), q(x), r(x)]</p></li>
+<li><p><strong>Us</strong> – son los valores de la función y la derivada en el paso anterior</p></li>
 <li><p><strong>Ks</strong> – valores de las constantes k con subindices Ki1, y Ki2 respectivamente con i = 1,2,3,4</p></li>
 </ul>
 </dd>
@@ -339,19 +342,19 @@ el caso del segundo problema de valores iniciales</p>
 <dl class="py function">
 <dt id="module.functions.rungeKutta4">
 <code class="sig-prename descclassname">module.functions.</code><code class="sig-name descname">rungeKutta4</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">h</span></em>, <em class="sig-param"><span class="n">x</span></em>, <em class="sig-param"><span class="n">funs</span></em>, <em class="sig-param"><span class="n">Us</span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/module/functions.html#rungeKutta4"><span class="viewcode-link">[fuente]</span></a><a class="headerlink" href="#module.functions.rungeKutta4" title="Enlazar permanentemente con esta definición">¶</a></dt>
-<dd><p>Metodo que se utiliza en un proceso iterativo para obtener una solucion
-a una ecuacion diferencial planteada. El orden de convergencia es del O(h^5)</p>
+<dd><p>Metodo que se utiliza en un proceso iterativo para obtener una solución
+a una ecuación diferencial planteada. El orden de convergencia es del O(h^5)</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parámetros</dt>
 <dd class="field-odd"><ul class="simple">
 <li><p><strong>h</strong> – tamaño del paso</p></li>
-<li><p><strong>x</strong> – punto de la funcion</p></li>
-<li><p><strong>funs</strong> – funciones p(x), q(x) y r(x)</p></li>
-<li><p><strong>Us</strong> – son los valores de la funcion y la derivada en el paso anterior</p></li>
+<li><p><strong>x</strong> – punto de la función</p></li>
+<li><p><strong>funs</strong> – funciónes p(x), q(x) y r(x)</p></li>
+<li><p><strong>Us</strong> – son los valores de la función y la derivada en el paso anterior</p></li>
 </ul>
 </dd>
 <dt class="field-even">Devuelve</dt>
-<dd class="field-even"><p>devuelve una lista con los valores de la funcion y la derivada actualizados</p>
+<dd class="field-even"><p>devuelve una lista con los valores de la función y la derivada actualizados</p>
 </dd>
 </dl>
 </dd></dl>
@@ -359,13 +362,15 @@ a una ecuacion diferencial planteada. El orden de convergencia es del O(h^5)</p>
 <dl class="py function">
 <dt id="module.functions.updateUs">
 <code class="sig-prename descclassname">module.functions.</code><code class="sig-name descname">updateUs</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">Us</span></em>, <em class="sig-param"><span class="n">K1</span></em>, <em class="sig-param"><span class="n">K2</span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/module/functions.html#updateUs"><span class="viewcode-link">[fuente]</span></a><a class="headerlink" href="#module.functions.updateUs" title="Enlazar permanentemente con esta definición">¶</a></dt>
-<dd><p>Actualiza los valores de la funcion para la siguiente iteracion</p>
+<dd><p>Actualiza los valores de la función para la siguiente iteración</p>
+<div class="math notranslate nohighlight">
+\[ \begin{align}\begin{aligned}u_1 = 1/6 · [k_{1,1} + 2 · K_{2,1} + 2 · k_{3,1} + k_{4,1}]\\u_2 = 1/6 · [k_{1,2} + 2 · K_{2,2} + 2 · k_{3,2} + k_{4,2}]\end{aligned}\end{align} \]</div>
 <dl class="field-list simple">
 <dt class="field-odd">Parámetros</dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>Us</strong> – son los valores de la funcion y de la derivada en el paso anterior</p></li>
-<li><p><strong>K1</strong> – valores de la constantes para actualizar el valor de la funcion</p></li>
-<li><p><strong>K2</strong> – valores de las constantes para actualizar el valor de la derivada</p></li>
+<li><p><strong>Us</strong> – son los valores de la función y de la derivada en el paso anterior</p></li>
+<li><p><strong>K1</strong> – valores de la constantes para actualizar el valor de la función, u_1</p></li>
+<li><p><strong>K2</strong> – valores de las constantes para actualizar el valor de la derivada, u_2</p></li>
 </ul>
 </dd>
 <dt class="field-even">Devuelve</dt>

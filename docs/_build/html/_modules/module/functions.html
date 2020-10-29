@@ -154,20 +154,23 @@
            <div itemprop="articleBody">
             
   <h1>Código fuente para module.functions</h1><div class="highlight"><pre>
-<span></span><span class="kn">import</span> <span class="nn">os</span>
+<span></span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Este módulo introduce las funciones necesarias para poder ejecutar el programa.</span>
+
+<span class="sd">&quot;&quot;&quot;</span>
+<span class="kn">import</span> <span class="nn">os</span>
 
 
 <div class="viewcode-block" id="funSub2"><a class="viewcode-back" href="../../module.html#module.functions.funSub2">[documentos]</a><span class="k">def</span> <span class="nf">funSub2</span><span class="p">(</span><span class="n">h</span><span class="p">,</span> <span class="n">values</span><span class="p">,</span> <span class="n">Us</span><span class="p">,</span> <span class="n">Ks</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">    Esta funcion calcula los valores de K con subindice i,2 con i = 1,2,3,4</span>
+<span class="sd">    Esta función calcula los valores de K con subindice i,2 con i = 1,2,3,4</span>
 
 <span class="sd">    .. math::</span>
-<span class="sd">        h*(f(x)*(u_1+K_{i,2})+q(x)*(u_2+K_{i,1})+r(x))</span>
-
+<span class="sd">        h·(f(x)·(u_{2,i}+K_{i,2})+q(x)·(u_{1,i}+K_{i,1})+r(x))</span>
 
 <span class="sd">    :parameter h: valor del step</span>
-<span class="sd">    :parameter values: son los valores de las funciones p, q y r evaluadas en x [p(x), q(x), r(x)]</span>
-<span class="sd">    :parameter Us: son los valores de la funcion y la derivada en el paso anterior</span>
+<span class="sd">    :parameter values: son los valores de las funciónes p, q y r evaluadas en x [p(x), q(x), r(x)]</span>
+<span class="sd">    :parameter Us: son los valores de la función y la derivada en el paso anterior</span>
 <span class="sd">    :parameter Ks: valores de las constantes k con subindices Ki1, y Ki2 respectivamente con i = 1,2,3,4</span>
 
 <span class="sd">    :return: devuelve un valor</span>
@@ -177,10 +180,13 @@
 
 <div class="viewcode-block" id="funSub1"><a class="viewcode-back" href="../../module.html#module.functions.funSub1">[documentos]</a><span class="k">def</span> <span class="nf">funSub1</span><span class="p">(</span><span class="n">h</span><span class="p">,</span> <span class="n">u</span><span class="p">,</span> <span class="n">k</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">    Esta funcion calcula los valores de K con subindice i,1 con i = 1,2,3,4</span>
+<span class="sd">    Esta función calcula los valores de K con subíndice j,1 con j = 1,2,3,4</span>
+
+<span class="sd">    .. math::</span>
+<span class="sd">        h·(u_{2,i}+K_{j,2})</span>
 
 <span class="sd">    :parameter h: valor del step</span>
-<span class="sd">    :parameter u: valor de la funcion o la derivada en el paso anterior</span>
+<span class="sd">    :parameter u: valor de la función o la derivada en el paso anterior</span>
 <span class="sd">    :parameter k: valor de la constante k</span>
 
 <span class="sd">    :return: devuelve un valor</span>
@@ -190,11 +196,16 @@
 
 <div class="viewcode-block" id="updateUs"><a class="viewcode-back" href="../../module.html#module.functions.updateUs">[documentos]</a><span class="k">def</span> <span class="nf">updateUs</span><span class="p">(</span><span class="n">Us</span><span class="p">,</span> <span class="n">K1</span><span class="p">,</span> <span class="n">K2</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">    Actualiza los valores de la funcion para la siguiente iteracion</span>
+<span class="sd">    Actualiza los valores de la función para la siguiente iteración</span>
 
-<span class="sd">    :parameter Us: son los valores de la funcion y de la derivada en el paso anterior</span>
-<span class="sd">    :parameter K1: valores de la constantes para actualizar el valor de la funcion</span>
-<span class="sd">    :parameter K2: valores de las constantes para actualizar el valor de la derivada</span>
+<span class="sd">    .. math::</span>
+<span class="sd">        u_1 = 1/6 · [k_{1,1} + 2 · K_{2,1} + 2 · k_{3,1} + k_{4,1}]</span>
+
+<span class="sd">        u_2 = 1/6 · [k_{1,2} + 2 · K_{2,2} + 2 · k_{3,2} + k_{4,2}]</span>
+
+<span class="sd">    :parameter Us: son los valores de la función y de la derivada en el paso anterior</span>
+<span class="sd">    :parameter K1: valores de la constantes para actualizar el valor de la función, u_1</span>
+<span class="sd">    :parameter K2: valores de las constantes para actualizar el valor de la derivada, u_2</span>
 
 <span class="sd">    :return: devuelve una lista con valores</span>
 <span class="sd">    &quot;&quot;&quot;</span>
@@ -205,15 +216,15 @@
 
 <div class="viewcode-block" id="rungeKutta4"><a class="viewcode-back" href="../../module.html#module.functions.rungeKutta4">[documentos]</a><span class="k">def</span> <span class="nf">rungeKutta4</span><span class="p">(</span><span class="n">h</span><span class="p">,</span> <span class="n">x</span><span class="p">,</span> <span class="n">funs</span><span class="p">,</span> <span class="n">Us</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">    Metodo que se utiliza en un proceso iterativo para obtener una solucion</span>
-<span class="sd">    a una ecuacion diferencial planteada. El orden de convergencia es del O(h^5)</span>
+<span class="sd">    Metodo que se utiliza en un proceso iterativo para obtener una solución</span>
+<span class="sd">    a una ecuación diferencial planteada. El orden de convergencia es del O(h^5)</span>
 
 <span class="sd">    :parameter h: tamaño del paso</span>
-<span class="sd">    :parameter x: punto de la funcion</span>
-<span class="sd">    :parameter funs: funciones p(x), q(x) y r(x)</span>
-<span class="sd">    :parameter Us: son los valores de la funcion y la derivada en el paso anterior</span>
+<span class="sd">    :parameter x: punto de la función</span>
+<span class="sd">    :parameter funs: funciónes p(x), q(x) y r(x)</span>
+<span class="sd">    :parameter Us: son los valores de la función y la derivada en el paso anterior</span>
 
-<span class="sd">    :return: devuelve una lista con los valores de la funcion y la derivada actualizados</span>
+<span class="sd">    :return: devuelve una lista con los valores de la función y la derivada actualizados</span>
 <span class="sd">    &quot;&quot;&quot;</span>
     <span class="n">px</span> <span class="o">=</span> <span class="n">funs</span><span class="p">[</span><span class="mi">0</span><span class="p">](</span><span class="n">x</span><span class="p">)</span>
     <span class="n">qx</span> <span class="o">=</span> <span class="n">funs</span><span class="p">[</span><span class="mi">1</span><span class="p">](</span><span class="n">x</span><span class="p">)</span>
@@ -263,13 +274,13 @@
 
 <div class="viewcode-block" id="ModuleConvergencia"><a class="viewcode-back" href="../../module.html#module.functions.ModuleConvergencia">[documentos]</a><span class="k">def</span> <span class="nf">ModuleConvergencia</span><span class="p">(</span><span class="n">N</span><span class="o">=</span><span class="mi">100</span><span class="p">,</span> <span class="n">l</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">p0</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">alfa</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">beta</span><span class="o">=</span><span class="mi">0</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">    Convergencia hacia la solucion de la ecuacion diferencial.</span>
+<span class="sd">    Convergencia hacia la solución de la ecuación diferencial.</span>
 
-<span class="sd">    :param N: numero de intervalos</span>
+<span class="sd">    :param N: número de intervalos</span>
 <span class="sd">    :param l: longitud de la viga</span>
 <span class="sd">    :param p0: presion vertial</span>
-<span class="sd">    :param alfa: condicion de contorno</span>
-<span class="sd">    :param beta: condicion de contorno</span>
+<span class="sd">    :param alfa: condición de contorno</span>
+<span class="sd">    :param beta: condición de contorno</span>
 
 <span class="sd">    :return: Devuelve la diferencia entre los outputs de ambos algoritmos.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
@@ -287,13 +298,13 @@
 
 <div class="viewcode-block" id="defineEquation1"><a class="viewcode-back" href="../../module.html#module.functions.defineEquation1">[documentos]</a><span class="k">def</span> <span class="nf">defineEquation1</span><span class="p">(</span><span class="n">l</span><span class="p">,</span> <span class="n">p0</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">    Funcion que define las funciones p(x), q(x) y r(x)</span>
+<span class="sd">    función que define las funciónes p(x), q(x) y r(x)</span>
 <span class="sd">    para el caso del primer problema de valores iniciales</span>
 
 <span class="sd">    :parameter l: longitud de la viga</span>
 <span class="sd">    :parameter p0: presion vertical aplicada</span>
 
-<span class="sd">    :return: devuelve una lista con las funciones</span>
+<span class="sd">    :return: devuelve una lista con las funciónes</span>
 <span class="sd">    &quot;&quot;&quot;</span>
     <span class="n">pfun</span> <span class="o">=</span> <span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="mi">0</span>
     <span class="n">qfun</span> <span class="o">=</span> <span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="o">-</span><span class="p">(</span><span class="mi">1</span> <span class="o">+</span> <span class="p">(</span><span class="n">x</span><span class="o">/</span><span class="n">l</span><span class="p">)</span><span class="o">**</span><span class="mi">2</span><span class="p">)</span> <span class="o">/</span> <span class="n">l</span><span class="o">**</span><span class="mi">2</span>
@@ -303,12 +314,12 @@
 
 <div class="viewcode-block" id="defineEquation2"><a class="viewcode-back" href="../../module.html#module.functions.defineEquation2">[documentos]</a><span class="k">def</span> <span class="nf">defineEquation2</span><span class="p">(</span><span class="n">l</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">    Funcion que define las funciones p(x), q(x) y r(x) para</span>
+<span class="sd">    función que define las funciónes p(x), q(x) y r(x) para</span>
 <span class="sd">    el caso del segundo problema de valores iniciales</span>
 
 <span class="sd">    :parameter l: longitud de la viga</span>
 
-<span class="sd">    :return:  devuelve una lista con las funciones</span>
+<span class="sd">    :return:  devuelve una lista con las funciónes</span>
 <span class="sd">    &quot;&quot;&quot;</span>
     <span class="n">pfun</span> <span class="o">=</span> <span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="mi">0</span>
     <span class="n">qfun</span> <span class="o">=</span> <span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="o">-</span><span class="p">(</span><span class="mi">1</span> <span class="o">+</span> <span class="p">(</span><span class="n">x</span><span class="o">/</span><span class="n">l</span><span class="p">)</span><span class="o">**</span><span class="mi">2</span><span class="p">)</span> <span class="o">/</span> <span class="n">l</span><span class="o">**</span><span class="mi">2</span>
@@ -320,15 +331,15 @@
     <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Método del disparo para resolución de ecuaciones diferenciales de segundo orden</span>
 <span class="sd">    utilizando la aproximación Runge Kutta de orden de convergencia es de O(h^5).</span>
-<span class="sd">    De modo que este proceso iterativo, con un orden de convergencia O(h^4)</span>
+<span class="sd">    De modo que en este proceso iterativo tenemos con un orden de convergencia O(h^4)</span>
 
-<span class="sd">    :parameter N: Numero de subintervalos</span>
+<span class="sd">    :parameter N: número de subintervalos</span>
 <span class="sd">    :parameter a: valor mínimo de x del intervalo a estudiar</span>
 <span class="sd">    :parameter b: valor maximo de x del intervalo a estudiar</span>
 <span class="sd">    :parameter alpha: condición de contorno del problema de valor inicial para el punto a</span>
 <span class="sd">    :parameter beta: condición de contorno del problema de valor inicial para el punto b</span>
-<span class="sd">    :parameter funs: son las funciones p(x), q(x) y r(x) de la ecuación de segundo grado</span>
-<span class="sd">    :parameter vfuns: son las funciones p(x) y q(x) de la ecuación de segundo grado</span>
+<span class="sd">    :parameter funs: son las funciónes p(x), q(x) y r(x) de la ecuación de segundo grado</span>
+<span class="sd">    :parameter vfuns: son las funciónes p(x) y q(x) de la ecuación de segundo grado</span>
 
 <span class="sd">    :return: devuelve los valores y(x) y su derivada a la ecuación planteada</span>
 <span class="sd">    &quot;&quot;&quot;</span>
@@ -388,18 +399,18 @@
 
 <div class="viewcode-block" id="ReverseShootingMethod"><a class="viewcode-back" href="../../module.html#module.functions.ReverseShootingMethod">[documentos]</a><span class="k">def</span> <span class="nf">ReverseShootingMethod</span><span class="p">(</span><span class="n">N</span><span class="p">,</span> <span class="n">a</span><span class="p">,</span> <span class="n">b</span><span class="p">,</span> <span class="n">alpha</span><span class="p">,</span> <span class="n">beta</span><span class="p">,</span> <span class="n">funs</span><span class="p">,</span> <span class="n">vfuns</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">    Metodo del disparo para resolucion de ecuaciones diferenciales de segundo orden</span>
+<span class="sd">    Metodo del disparo para resolución de ecuaciones diferenciales de segundo orden</span>
 <span class="sd">    utilizando la aproximación Runge Kutta de orden 4</span>
 
-<span class="sd">    :parameter N: Numero de subintervalos</span>
+<span class="sd">    :parameter N: número de subintervalos</span>
 <span class="sd">    :parameter a: valor minimo de x del intervalo a estudiar</span>
 <span class="sd">    :parameter b: valor maximo de x del intervalo a estudiar</span>
-<span class="sd">    :parameter alpha: condicion de contorno del problema de valor inicial para el punto a</span>
-<span class="sd">    :parameter beta: condicion de contorno del problema de valor inicial para el punto b</span>
-<span class="sd">    :parameter funs: son las funciones p(x), q(x) y r(x) de la ecuacion de segundo grado</span>
-<span class="sd">    :parameter vfuns: son las funciones p(x) y q(x) de la ecuacion de segundo grado</span>
+<span class="sd">    :parameter alpha: condición de contorno del problema de valor inicial para el punto a</span>
+<span class="sd">    :parameter beta: condición de contorno del problema de valor inicial para el punto b</span>
+<span class="sd">    :parameter funs: son las funciónes p(x), q(x) y r(x) de la ecuación de segundo grado</span>
+<span class="sd">    :parameter vfuns: son las funciónes p(x) y q(x) de la ecuación de segundo grado</span>
 
-<span class="sd">    :return: devuelve los valores y(x) y su derivada a la ecuacion planteada</span>
+<span class="sd">    :return: devuelve los valores y(x) y su derivada a la ecuación planteada</span>
 <span class="sd">    &quot;&quot;&quot;</span>
 
     <span class="sd">&quot;&quot;&quot; STEP 1: &quot;&quot;&quot;</span>
@@ -458,14 +469,14 @@
     <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Método de diferencias finitas</span>
 
-<span class="sd">    :parameter N: Numero de subintervalos</span>
+<span class="sd">    :parameter N: número de subintervalos</span>
 <span class="sd">    :parameter a: valor minimo de x del intervalo a estudiar</span>
 <span class="sd">    :parameter b: valor maximo de x del intervalo a estudiar</span>
-<span class="sd">    :parameter alpha: condicion de contorno del problema de valor inicial para el punto a</span>
-<span class="sd">    :parameter beta: condicion de contorno del problema de valor inicial para el punto b</span>
-<span class="sd">    :parameter funs: son las funciones p(x), q(x) y r(x) de la ecuacion de segundo grado</span>
+<span class="sd">    :parameter alpha: condición de contorno del problema de valor inicial para el punto a</span>
+<span class="sd">    :parameter beta: condición de contorno del problema de valor inicial para el punto b</span>
+<span class="sd">    :parameter funs: son las funciónes p(x), q(x) y r(x) de la ecuación de segundo grado</span>
 
-<span class="sd">    :return: devuele la solucion de la ecuacion de sgundo orden evaluada en todos los puntos</span>
+<span class="sd">    :return: devuele la solución de la ecuación de segundo orden evaluada en todos los puntos</span>
 <span class="sd">    &quot;&quot;&quot;</span>
 
     <span class="sd">&quot;&quot;&quot; STEP 1: &quot;&quot;&quot;</span>

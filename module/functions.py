@@ -1,17 +1,20 @@
+"""
+    Este módulo introduce las funciones necesarias para poder ejecutar el programa.
+
+"""
 import os
 
 
 def funSub2(h, values, Us, Ks):
     """
-    Esta funcion calcula los valores de K con subindice i,2 con i = 1,2,3,4
+    Esta función calcula los valores de K con subindice i,2 con i = 1,2,3,4
 
     .. math::
-        h*(f(x)*(u_1+K_{i,2})+q(x)*(u_2+K_{i,1})+r(x))
-
+        h·(f(x)·(u_{2,i}+K_{i,2})+q(x)·(u_{1,i}+K_{i,1})+r(x))
 
     :parameter h: valor del step
-    :parameter values: son los valores de las funciones p, q y r evaluadas en x [p(x), q(x), r(x)]
-    :parameter Us: son los valores de la funcion y la derivada en el paso anterior
+    :parameter values: son los valores de las funciónes p, q y r evaluadas en x [p(x), q(x), r(x)]
+    :parameter Us: son los valores de la función y la derivada en el paso anterior
     :parameter Ks: valores de las constantes k con subindices Ki1, y Ki2 respectivamente con i = 1,2,3,4
 
     :return: devuelve un valor
@@ -21,10 +24,13 @@ def funSub2(h, values, Us, Ks):
 
 def funSub1(h, u, k):
     """
-    Esta funcion calcula los valores de K con subindice i,1 con i = 1,2,3,4
+    Esta función calcula los valores de K con subíndice j,1 con j = 1,2,3,4
+
+    .. math::
+        h·(u_{2,i}+K_{j,2})
 
     :parameter h: valor del step
-    :parameter u: valor de la funcion o la derivada en el paso anterior
+    :parameter u: valor de la función o la derivada en el paso anterior
     :parameter k: valor de la constante k
 
     :return: devuelve un valor
@@ -34,11 +40,16 @@ def funSub1(h, u, k):
 
 def updateUs(Us, K1, K2):
     """
-    Actualiza los valores de la funcion para la siguiente iteracion
+    Actualiza los valores de la función para la siguiente iteración
 
-    :parameter Us: son los valores de la funcion y de la derivada en el paso anterior
-    :parameter K1: valores de la constantes para actualizar el valor de la funcion
-    :parameter K2: valores de las constantes para actualizar el valor de la derivada
+    .. math::
+        u_1 = 1/6 · [k_{1,1} + 2 · K_{2,1} + 2 · k_{3,1} + k_{4,1}]
+
+        u_2 = 1/6 · [k_{1,2} + 2 · K_{2,2} + 2 · k_{3,2} + k_{4,2}]
+
+    :parameter Us: son los valores de la función y de la derivada en el paso anterior
+    :parameter K1: valores de la constantes para actualizar el valor de la función, u_1
+    :parameter K2: valores de las constantes para actualizar el valor de la derivada, u_2
 
     :return: devuelve una lista con valores
     """
@@ -49,15 +60,15 @@ def updateUs(Us, K1, K2):
 
 def rungeKutta4(h, x, funs, Us):
     """
-    Metodo que se utiliza en un proceso iterativo para obtener una solucion
-    a una ecuacion diferencial planteada. El orden de convergencia es del O(h^5)
+    Metodo que se utiliza en un proceso iterativo para obtener una solución
+    a una ecuación diferencial planteada. El orden de convergencia es del O(h^5)
 
     :parameter h: tamaño del paso
-    :parameter x: punto de la funcion
-    :parameter funs: funciones p(x), q(x) y r(x)
-    :parameter Us: son los valores de la funcion y la derivada en el paso anterior
+    :parameter x: punto de la función
+    :parameter funs: funciónes p(x), q(x) y r(x)
+    :parameter Us: son los valores de la función y la derivada en el paso anterior
 
-    :return: devuelve una lista con los valores de la funcion y la derivada actualizados
+    :return: devuelve una lista con los valores de la función y la derivada actualizados
     """
     px = funs[0](x)
     qx = funs[1](x)
@@ -107,13 +118,13 @@ def createFolder(N, l, p0):
 
 def ModuleConvergencia(N=100, l=1, p0=1, alfa=0, beta=0):
     """
-    Convergencia hacia la solucion de la ecuacion diferencial.
+    Convergencia hacia la solución de la ecuación diferencial.
 
-    :param N: numero de intervalos
+    :param N: número de intervalos
     :param l: longitud de la viga
     :param p0: presion vertial
-    :param alfa: condicion de contorno
-    :param beta: condicion de contorno
+    :param alfa: condición de contorno
+    :param beta: condición de contorno
 
     :return: Devuelve la diferencia entre los outputs de ambos algoritmos.
     """
@@ -131,13 +142,13 @@ def ModuleConvergencia(N=100, l=1, p0=1, alfa=0, beta=0):
 
 def defineEquation1(l, p0):
     """
-    Funcion que define las funciones p(x), q(x) y r(x)
+    función que define las funciónes p(x), q(x) y r(x)
     para el caso del primer problema de valores iniciales
 
     :parameter l: longitud de la viga
     :parameter p0: presion vertical aplicada
 
-    :return: devuelve una lista con las funciones
+    :return: devuelve una lista con las funciónes
     """
     pfun = lambda x: 0
     qfun = lambda x: -(1 + (x/l)**2) / l**2
@@ -147,12 +158,12 @@ def defineEquation1(l, p0):
 
 def defineEquation2(l):
     """
-    Funcion que define las funciones p(x), q(x) y r(x) para
+    función que define las funciónes p(x), q(x) y r(x) para
     el caso del segundo problema de valores iniciales
 
     :parameter l: longitud de la viga
 
-    :return:  devuelve una lista con las funciones
+    :return:  devuelve una lista con las funciónes
     """
     pfun = lambda x: 0
     qfun = lambda x: -(1 + (x/l)**2) / l**2
@@ -164,15 +175,15 @@ def ShootingMethod(N, a, b, alpha, beta, funs, vfuns):
     """
     Método del disparo para resolución de ecuaciones diferenciales de segundo orden
     utilizando la aproximación Runge Kutta de orden de convergencia es de O(h^5).
-    De modo que este proceso iterativo, con un orden de convergencia O(h^4)
+    De modo que en este proceso iterativo tenemos con un orden de convergencia O(h^4)
 
-    :parameter N: Numero de subintervalos
+    :parameter N: número de subintervalos
     :parameter a: valor mínimo de x del intervalo a estudiar
     :parameter b: valor maximo de x del intervalo a estudiar
     :parameter alpha: condición de contorno del problema de valor inicial para el punto a
     :parameter beta: condición de contorno del problema de valor inicial para el punto b
-    :parameter funs: son las funciones p(x), q(x) y r(x) de la ecuación de segundo grado
-    :parameter vfuns: son las funciones p(x) y q(x) de la ecuación de segundo grado
+    :parameter funs: son las funciónes p(x), q(x) y r(x) de la ecuación de segundo grado
+    :parameter vfuns: son las funciónes p(x) y q(x) de la ecuación de segundo grado
 
     :return: devuelve los valores y(x) y su derivada a la ecuación planteada
     """
@@ -232,18 +243,18 @@ def ShootingMethod(N, a, b, alpha, beta, funs, vfuns):
 
 def ReverseShootingMethod(N, a, b, alpha, beta, funs, vfuns):
     """
-    Metodo del disparo para resolucion de ecuaciones diferenciales de segundo orden
+    Metodo del disparo para resolución de ecuaciones diferenciales de segundo orden
     utilizando la aproximación Runge Kutta de orden 4
 
-    :parameter N: Numero de subintervalos
+    :parameter N: número de subintervalos
     :parameter a: valor minimo de x del intervalo a estudiar
     :parameter b: valor maximo de x del intervalo a estudiar
-    :parameter alpha: condicion de contorno del problema de valor inicial para el punto a
-    :parameter beta: condicion de contorno del problema de valor inicial para el punto b
-    :parameter funs: son las funciones p(x), q(x) y r(x) de la ecuacion de segundo grado
-    :parameter vfuns: son las funciones p(x) y q(x) de la ecuacion de segundo grado
+    :parameter alpha: condición de contorno del problema de valor inicial para el punto a
+    :parameter beta: condición de contorno del problema de valor inicial para el punto b
+    :parameter funs: son las funciónes p(x), q(x) y r(x) de la ecuación de segundo grado
+    :parameter vfuns: son las funciónes p(x) y q(x) de la ecuación de segundo grado
 
-    :return: devuelve los valores y(x) y su derivada a la ecuacion planteada
+    :return: devuelve los valores y(x) y su derivada a la ecuación planteada
     """
 
     """ STEP 1: """
@@ -302,14 +313,14 @@ def LinearFiniteDifference(N, a, b, alpha, beta, funs):
     """
     Método de diferencias finitas
 
-    :parameter N: Numero de subintervalos
+    :parameter N: número de subintervalos
     :parameter a: valor minimo de x del intervalo a estudiar
     :parameter b: valor maximo de x del intervalo a estudiar
-    :parameter alpha: condicion de contorno del problema de valor inicial para el punto a
-    :parameter beta: condicion de contorno del problema de valor inicial para el punto b
-    :parameter funs: son las funciones p(x), q(x) y r(x) de la ecuacion de segundo grado
+    :parameter alpha: condición de contorno del problema de valor inicial para el punto a
+    :parameter beta: condición de contorno del problema de valor inicial para el punto b
+    :parameter funs: son las funciónes p(x), q(x) y r(x) de la ecuación de segundo grado
 
-    :return: devuele la solucion de la ecuacion de sgundo orden evaluada en todos los puntos
+    :return: devuele la solución de la ecuación de segundo orden evaluada en todos los puntos
     """
 
     """ STEP 1: """

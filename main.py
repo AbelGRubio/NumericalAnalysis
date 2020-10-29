@@ -1,3 +1,9 @@
+"""
+    Este módulo permite mostrar los resultados de los apartados.
+
+
+"""
+
 from module.functions import *
 import matplotlib.pyplot as plt
 import pandas as pd
@@ -209,7 +215,14 @@ import os
 #     print("1")
 #
 
+
 def resolucionApartadoA():
+    """
+    Esta función muestra los resultados obtenidos por el método de diferencias finitas
+    para l=1, N=20 y presión verital de 5 N/m
+
+    :return: Devuelve los datos del modelo y los muestra en una gráfica
+    """
     l = 1
     N = 20
     p0 = 5
@@ -219,13 +232,46 @@ def resolucionApartadoA():
         os.mkdir(resultFolder)
     if not os.path.isdir(os.path.join(resultFolder, prefix)):
         os.mkdir(os.path.join(resultFolder, prefix))
+    result = LinearFiniteDifference(N-1, -l, l, 0, 0, defineEquation1(l, p0))
+    fig1 = plt.figure(1)
+    plt.plot(result[0], result[1])
+    plt.legend(["Método de diferencias finitas"])
+    plt.title("Diagrama de momento flector de la barra de longitud " + str(2 * l) +
+              " m\npara una presión vertical de " + str(p0) + " N/m")
+    plt.xlabel("Longitud de la barra, ξ, m")
+    plt.ylabel("Momento flector, M(ξ), Nm")
+    name = os.path.normpath(''.join([resultFolder, "/", prefix, "/MetodoDisparo", prefix, ".png"]))
+    fig1.savefig(name)
+    DataFrame = pd.DataFrame([])
+    DataFrame['xi'] = result[0]
+    DataFrame['M'] = result[1]
+    print(DataFrame)
+    DataFrame.to_csv(''.join([resultFolder, "/", prefix, "/Diff", prefix, ".csv"]))
+    plt.show()
+
+
+def resolucionApartadoB():
+    """
+    Esta función muestra los resultados obtenidos por el método del disparo
+    para l=1, N=20 y presión verital de 5 N/m
+
+    :return: Devuelve los datos del modelo y los muestra en una gráfica
+    """
+    l = 1
+    N = 20
+    p0 = 5
+    prefix = "N" + str(N) + "P" + str(p0) + "l" + str(l)
+    resultFolder = "ApartadoB"
+    if not os.path.isdir(resultFolder):
+        os.mkdir(resultFolder)
+    if not os.path.isdir(os.path.join(resultFolder, prefix)):
+        os.mkdir(os.path.join(resultFolder, prefix))
     result = ShootingMethod(N, -l, l, 0, 0, defineEquation1(l, p0), defineEquation2(l))
     fig1 = plt.figure(1)
     plt.plot(result[0], result[1])
     plt.legend(["Método del disparo"])
-    plt.title("Diagrama de momento flector de la barra de longitud " + str(2 * l) + " m\n"
-                                                                                    "para una presión vertical de " + str(
-        p0) + " N/m")
+    plt.title("Diagrama de momento flector de la barra de longitud " + str(2 * l) +
+              " m\npara una presión vertical de " + str(p0) + " N/m")
     plt.xlabel("Longitud de la barra, ξ, m")
     plt.ylabel("Momento flector, M(ξ), Nm")
     name = os.path.normpath(''.join([resultFolder, "/", prefix, "/MetodoDisparo", prefix, ".png"]))
@@ -239,37 +285,17 @@ def resolucionApartadoA():
     plt.show()
 
 
-def resolucionApartadoB():
-
-    l = 1
-    N = 20
-    p0 = 5
-    prefix = "N" + str(N) + "P" + str(p0) + "l" + str(l)
-    resultFolder = "ApartadoB"
-    if not os.path.isdir(resultFolder):
-        os.mkdir(resultFolder)
-    if not os.path.isdir(os.path.join(resultFolder, prefix)):
-        os.mkdir(os.path.join(resultFolder, prefix))
-    result = LinearFiniteDifference(N-1, -l, l, 0, 0, defineEquation1(l, p0))
-    fig1 = plt.figure(1)
-    plt.plot(result[0], result[1])
-    plt.legend(["Método de diferencias finitas"])
-    plt.title("Diagrama de momento flector de la barra de longitud " + str(2 * l) + " m\n"
-                                                                                    "para una presión vertical de " + str(
-        p0) + " N/m")
-    plt.xlabel("Longitud de la barra, ξ, m")
-    plt.ylabel("Momento flector, M(ξ), Nm")
-    name = os.path.normpath(''.join([resultFolder, "/", prefix, "/MetodoDisparo", prefix, ".png"]))
-    fig1.savefig(name)
-    DataFrame = pd.DataFrame([])
-    DataFrame['xi'] = result[0]
-    DataFrame['M'] = result[1]
-    print(DataFrame)
-    DataFrame.to_csv(''.join([resultFolder, "/", prefix, "/Diff", prefix, ".csv"]))
-    plt.show()
-
-
 def resolucionComparativaCustom(N, l, p0):
+    """
+    Esta función muestra los resultados obtenidos por el método de diferencias finitas
+    para l=1, N=20 y presión verital de 5 N/m
+
+    :parameter N: Número de subintervalos
+    :parameter l: longitud de la viga
+    :parameter p0: presión vertical
+
+    :return: Devuelve los datos de los modelos, su diferencia y los muestra en una gráfica
+    """
     prefix = "N" + str(N) + "P" + str(p0) + "l" + str(l)
     resultFolder = "resolucionComparativa"
     if not os.path.isdir(resultFolder):
@@ -310,12 +336,24 @@ def resolucionComparativaCustom(N, l, p0):
 
 
 def resolucionComparativa():
+    """
+    :return: Muestra las comparativas entre los modelos para distintos valores de N y mismo valor de longitud de
+            la viga y presión vertical
+    """
     resolucionComparativaCustom(20, 1, 5)
     resolucionComparativaCustom(70, 1, 5)
     resolucionComparativaCustom(150, 1, 5)
 
 
 def convergencia(p0):
+    """
+    Muestra el estudio de convergencia para distintos valores de longitud de viga y número de subintervalos, para
+    una presión vertical determinada.
+
+    :parameter p0: valor de presión vertical aplicado sobre la viga
+
+    :return: guarda los resultados en su carpeta correspondiente
+    """
     resultFolder = "EstudioConvergencia"
     if not os.path.isdir(os.path.join(resultFolder)):
         os.mkdir(os.path.join(resultFolder))
@@ -368,6 +406,9 @@ def convergencia(p0):
 
 
 def resolucionConvergencia():
+    """
+    :return: Realiza un estudio de convergencia para los valores de presión vertical p=5 N/m y 16 N/m
+    """
     p = [5, 16]
     for i in p:
         print("Comparativa con carga vertical uniforme de p0 = " + str(i) + " N/m")

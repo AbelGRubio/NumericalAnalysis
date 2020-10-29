@@ -38,8 +38,8 @@
     
     <link rel="index" title="Índice" href="genindex.html" />
     <link rel="search" title="Búsqueda" href="search.html" />
-    <link rel="next" title="module package" href="module.html" />
-    <link rel="prev" title="Welcome to Análisis numérico: Tema 1’s documentation!" href="index.html" /> 
+    <link rel="next" title="module.functions Módulo" href="module.html" />
+    <link rel="prev" title="Bienvenido a la documentacion de Análisis numérico: Tema 1!" href="index.html" /> 
 </head>
 
 <body class="wy-body-for-nav">
@@ -88,10 +88,10 @@
               
             
             
-              <p class="caption"><span class="caption-text">Contents:</span></p>
+              <p class="caption"><span class="caption-text">Contenidos:</span></p>
 <ul class="current">
 <li class="toctree-l1 current"><a class="current reference internal" href="#">main module</a></li>
-<li class="toctree-l1"><a class="reference internal" href="module.html">module package</a></li>
+<li class="toctree-l1"><a class="reference internal" href="module.html">module.functions Módulo</a></li>
 </ul>
 
             
@@ -159,35 +159,85 @@
             
   <div class="section" id="module-main">
 <span id="main-module"></span><h1>main module<a class="headerlink" href="#module-main" title="Enlazar permanentemente con este título">¶</a></h1>
+<p>Este módulo permite mostrar los resultados de los apartados.</p>
 <dl class="py function">
 <dt id="main.convergencia">
 <code class="sig-prename descclassname">main.</code><code class="sig-name descname">convergencia</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">p0</span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/main.html#convergencia"><span class="viewcode-link">[fuente]</span></a><a class="headerlink" href="#main.convergencia" title="Enlazar permanentemente con esta definición">¶</a></dt>
-<dd></dd></dl>
+<dd><p>Muestra el estudio de convergencia para distintos valores de longitud de viga y número de subintervalos, para
+una presión vertical determinada.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parámetros</dt>
+<dd class="field-odd"><p><strong>p0</strong> – valor de presión vertical aplicado sobre la viga</p>
+</dd>
+<dt class="field-even">Devuelve</dt>
+<dd class="field-even"><p>guarda los resultados en su carpeta correspondiente</p>
+</dd>
+</dl>
+</dd></dl>
 
 <dl class="py function">
 <dt id="main.resolucionApartadoA">
 <code class="sig-prename descclassname">main.</code><code class="sig-name descname">resolucionApartadoA</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/main.html#resolucionApartadoA"><span class="viewcode-link">[fuente]</span></a><a class="headerlink" href="#main.resolucionApartadoA" title="Enlazar permanentemente con esta definición">¶</a></dt>
-<dd></dd></dl>
+<dd><p>Esta función muestra los resultados obtenidos por el método de diferencias finitas
+para l=1, N=20 y presión verital de 5 N/m</p>
+<dl class="field-list simple">
+<dt class="field-odd">Devuelve</dt>
+<dd class="field-odd"><p>Devuelve los datos del modelo y los muestra en una gráfica</p>
+</dd>
+</dl>
+</dd></dl>
 
 <dl class="py function">
 <dt id="main.resolucionApartadoB">
 <code class="sig-prename descclassname">main.</code><code class="sig-name descname">resolucionApartadoB</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/main.html#resolucionApartadoB"><span class="viewcode-link">[fuente]</span></a><a class="headerlink" href="#main.resolucionApartadoB" title="Enlazar permanentemente con esta definición">¶</a></dt>
-<dd></dd></dl>
+<dd><p>Esta función muestra los resultados obtenidos por el método del disparo
+para l=1, N=20 y presión verital de 5 N/m</p>
+<dl class="field-list simple">
+<dt class="field-odd">Devuelve</dt>
+<dd class="field-odd"><p>Devuelve los datos del modelo y los muestra en una gráfica</p>
+</dd>
+</dl>
+</dd></dl>
 
 <dl class="py function">
 <dt id="main.resolucionComparativa">
 <code class="sig-prename descclassname">main.</code><code class="sig-name descname">resolucionComparativa</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/main.html#resolucionComparativa"><span class="viewcode-link">[fuente]</span></a><a class="headerlink" href="#main.resolucionComparativa" title="Enlazar permanentemente con esta definición">¶</a></dt>
-<dd></dd></dl>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Devuelve</dt>
+<dd class="field-odd"><p>Muestra las comparativas entre los modelos para distintos valores de N y mismo valor de longitud de
+la viga y presión vertical</p>
+</dd>
+</dl>
+</dd></dl>
 
 <dl class="py function">
 <dt id="main.resolucionComparativaCustom">
 <code class="sig-prename descclassname">main.</code><code class="sig-name descname">resolucionComparativaCustom</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">N</span></em>, <em class="sig-param"><span class="n">l</span></em>, <em class="sig-param"><span class="n">p0</span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/main.html#resolucionComparativaCustom"><span class="viewcode-link">[fuente]</span></a><a class="headerlink" href="#main.resolucionComparativaCustom" title="Enlazar permanentemente con esta definición">¶</a></dt>
-<dd></dd></dl>
+<dd><p>Esta función muestra los resultados obtenidos por el método de diferencias finitas
+para l=1, N=20 y presión verital de 5 N/m</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parámetros</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>N</strong> – Número de subintervalos</p></li>
+<li><p><strong>l</strong> – longitud de la viga</p></li>
+<li><p><strong>p0</strong> – presión vertical</p></li>
+</ul>
+</dd>
+<dt class="field-even">Devuelve</dt>
+<dd class="field-even"><p>Devuelve los datos de los modelos, su diferencia y los muestra en una gráfica</p>
+</dd>
+</dl>
+</dd></dl>
 
 <dl class="py function">
 <dt id="main.resolucionConvergencia">
 <code class="sig-prename descclassname">main.</code><code class="sig-name descname">resolucionConvergencia</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/main.html#resolucionConvergencia"><span class="viewcode-link">[fuente]</span></a><a class="headerlink" href="#main.resolucionConvergencia" title="Enlazar permanentemente con esta definición">¶</a></dt>
-<dd></dd></dl>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Devuelve</dt>
+<dd class="field-odd"><p>Realiza un estudio de convergencia para los valores de presión vertical p=5 N/m y 16 N/m</p>
+</dd>
+</dl>
+</dd></dl>
 
 </div>
 
@@ -199,10 +249,10 @@
   
     <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
       
-        <a href="module.html" class="btn btn-neutral float-right" title="module package" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
+        <a href="module.html" class="btn btn-neutral float-right" title="module.functions Módulo" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
       
       
-        <a href="index.html" class="btn btn-neutral float-left" title="Welcome to Análisis numérico: Tema 1’s documentation!" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+        <a href="index.html" class="btn btn-neutral float-left" title="Bienvenido a la documentacion de Análisis numérico: Tema 1!" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
       
     </div>
   

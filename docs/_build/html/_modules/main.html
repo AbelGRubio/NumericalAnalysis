@@ -154,7 +154,13 @@
            <div itemprop="articleBody">
             
   <h1>Código fuente para main</h1><div class="highlight"><pre>
-<span></span><span class="kn">from</span> <span class="nn">module.functions</span> <span class="kn">import</span> <span class="o">*</span>
+<span></span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Este módulo permite mostrar los resultados de los apartados.</span>
+
+
+<span class="sd">&quot;&quot;&quot;</span>
+
+<span class="kn">from</span> <span class="nn">module.functions</span> <span class="kn">import</span> <span class="o">*</span>
 <span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="nn">plt</span>
 <span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
 <span class="kn">import</span> <span class="nn">os</span>
@@ -365,7 +371,14 @@
 <span class="c1">#     print(&quot;1&quot;)</span>
 <span class="c1">#</span>
 
+
 <div class="viewcode-block" id="resolucionApartadoA"><a class="viewcode-back" href="../main.html#main.resolucionApartadoA">[documentos]</a><span class="k">def</span> <span class="nf">resolucionApartadoA</span><span class="p">():</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Esta función muestra los resultados obtenidos por el método de diferencias finitas</span>
+<span class="sd">    para l=1, N=20 y presión verital de 5 N/m</span>
+
+<span class="sd">    :return: Devuelve los datos del modelo y los muestra en una gráfica</span>
+<span class="sd">    &quot;&quot;&quot;</span>
     <span class="n">l</span> <span class="o">=</span> <span class="mi">1</span>
     <span class="n">N</span> <span class="o">=</span> <span class="mi">20</span>
     <span class="n">p0</span> <span class="o">=</span> <span class="mi">5</span>
@@ -375,13 +388,46 @@
         <span class="n">os</span><span class="o">.</span><span class="n">mkdir</span><span class="p">(</span><span class="n">resultFolder</span><span class="p">)</span>
     <span class="k">if</span> <span class="ow">not</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">isdir</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">resultFolder</span><span class="p">,</span> <span class="n">prefix</span><span class="p">)):</span>
         <span class="n">os</span><span class="o">.</span><span class="n">mkdir</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">resultFolder</span><span class="p">,</span> <span class="n">prefix</span><span class="p">))</span>
+    <span class="n">result</span> <span class="o">=</span> <span class="n">LinearFiniteDifference</span><span class="p">(</span><span class="n">N</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="o">-</span><span class="n">l</span><span class="p">,</span> <span class="n">l</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="n">defineEquation1</span><span class="p">(</span><span class="n">l</span><span class="p">,</span> <span class="n">p0</span><span class="p">))</span>
+    <span class="n">fig1</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">result</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">result</span><span class="p">[</span><span class="mi">1</span><span class="p">])</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">legend</span><span class="p">([</span><span class="s2">&quot;Método de diferencias finitas&quot;</span><span class="p">])</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s2">&quot;Diagrama de momento flector de la barra de longitud &quot;</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="mi">2</span> <span class="o">*</span> <span class="n">l</span><span class="p">)</span> <span class="o">+</span>
+              <span class="s2">&quot; m</span><span class="se">\n</span><span class="s2">para una presión vertical de &quot;</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="n">p0</span><span class="p">)</span> <span class="o">+</span> <span class="s2">&quot; N/m&quot;</span><span class="p">)</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s2">&quot;Longitud de la barra, ξ, m&quot;</span><span class="p">)</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s2">&quot;Momento flector, M(ξ), Nm&quot;</span><span class="p">)</span>
+    <span class="n">name</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">normpath</span><span class="p">(</span><span class="s1">&#39;&#39;</span><span class="o">.</span><span class="n">join</span><span class="p">([</span><span class="n">resultFolder</span><span class="p">,</span> <span class="s2">&quot;/&quot;</span><span class="p">,</span> <span class="n">prefix</span><span class="p">,</span> <span class="s2">&quot;/MetodoDisparo&quot;</span><span class="p">,</span> <span class="n">prefix</span><span class="p">,</span> <span class="s2">&quot;.png&quot;</span><span class="p">]))</span>
+    <span class="n">fig1</span><span class="o">.</span><span class="n">savefig</span><span class="p">(</span><span class="n">name</span><span class="p">)</span>
+    <span class="n">DataFrame</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">([])</span>
+    <span class="n">DataFrame</span><span class="p">[</span><span class="s1">&#39;xi&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">result</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+    <span class="n">DataFrame</span><span class="p">[</span><span class="s1">&#39;M&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">result</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span>
+    <span class="nb">print</span><span class="p">(</span><span class="n">DataFrame</span><span class="p">)</span>
+    <span class="n">DataFrame</span><span class="o">.</span><span class="n">to_csv</span><span class="p">(</span><span class="s1">&#39;&#39;</span><span class="o">.</span><span class="n">join</span><span class="p">([</span><span class="n">resultFolder</span><span class="p">,</span> <span class="s2">&quot;/&quot;</span><span class="p">,</span> <span class="n">prefix</span><span class="p">,</span> <span class="s2">&quot;/Diff&quot;</span><span class="p">,</span> <span class="n">prefix</span><span class="p">,</span> <span class="s2">&quot;.csv&quot;</span><span class="p">]))</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span></div>
+
+
+<div class="viewcode-block" id="resolucionApartadoB"><a class="viewcode-back" href="../main.html#main.resolucionApartadoB">[documentos]</a><span class="k">def</span> <span class="nf">resolucionApartadoB</span><span class="p">():</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Esta función muestra los resultados obtenidos por el método del disparo</span>
+<span class="sd">    para l=1, N=20 y presión verital de 5 N/m</span>
+
+<span class="sd">    :return: Devuelve los datos del modelo y los muestra en una gráfica</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">l</span> <span class="o">=</span> <span class="mi">1</span>
+    <span class="n">N</span> <span class="o">=</span> <span class="mi">20</span>
+    <span class="n">p0</span> <span class="o">=</span> <span class="mi">5</span>
+    <span class="n">prefix</span> <span class="o">=</span> <span class="s2">&quot;N&quot;</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="n">N</span><span class="p">)</span> <span class="o">+</span> <span class="s2">&quot;P&quot;</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="n">p0</span><span class="p">)</span> <span class="o">+</span> <span class="s2">&quot;l&quot;</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="n">l</span><span class="p">)</span>
+    <span class="n">resultFolder</span> <span class="o">=</span> <span class="s2">&quot;ApartadoB&quot;</span>
+    <span class="k">if</span> <span class="ow">not</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">isdir</span><span class="p">(</span><span class="n">resultFolder</span><span class="p">):</span>
+        <span class="n">os</span><span class="o">.</span><span class="n">mkdir</span><span class="p">(</span><span class="n">resultFolder</span><span class="p">)</span>
+    <span class="k">if</span> <span class="ow">not</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">isdir</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">resultFolder</span><span class="p">,</span> <span class="n">prefix</span><span class="p">)):</span>
+        <span class="n">os</span><span class="o">.</span><span class="n">mkdir</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">resultFolder</span><span class="p">,</span> <span class="n">prefix</span><span class="p">))</span>
     <span class="n">result</span> <span class="o">=</span> <span class="n">ShootingMethod</span><span class="p">(</span><span class="n">N</span><span class="p">,</span> <span class="o">-</span><span class="n">l</span><span class="p">,</span> <span class="n">l</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="n">defineEquation1</span><span class="p">(</span><span class="n">l</span><span class="p">,</span> <span class="n">p0</span><span class="p">),</span> <span class="n">defineEquation2</span><span class="p">(</span><span class="n">l</span><span class="p">))</span>
     <span class="n">fig1</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
     <span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">result</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">result</span><span class="p">[</span><span class="mi">1</span><span class="p">])</span>
     <span class="n">plt</span><span class="o">.</span><span class="n">legend</span><span class="p">([</span><span class="s2">&quot;Método del disparo&quot;</span><span class="p">])</span>
-    <span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s2">&quot;Diagrama de momento flector de la barra de longitud &quot;</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="mi">2</span> <span class="o">*</span> <span class="n">l</span><span class="p">)</span> <span class="o">+</span> <span class="s2">&quot; m</span><span class="se">\n</span><span class="s2">&quot;</span>
-                                                                                    <span class="s2">&quot;para una presión vertical de &quot;</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span>
-        <span class="n">p0</span><span class="p">)</span> <span class="o">+</span> <span class="s2">&quot; N/m&quot;</span><span class="p">)</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s2">&quot;Diagrama de momento flector de la barra de longitud &quot;</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="mi">2</span> <span class="o">*</span> <span class="n">l</span><span class="p">)</span> <span class="o">+</span>
+              <span class="s2">&quot; m</span><span class="se">\n</span><span class="s2">para una presión vertical de &quot;</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="n">p0</span><span class="p">)</span> <span class="o">+</span> <span class="s2">&quot; N/m&quot;</span><span class="p">)</span>
     <span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s2">&quot;Longitud de la barra, ξ, m&quot;</span><span class="p">)</span>
     <span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s2">&quot;Momento flector, M(ξ), Nm&quot;</span><span class="p">)</span>
     <span class="n">name</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">normpath</span><span class="p">(</span><span class="s1">&#39;&#39;</span><span class="o">.</span><span class="n">join</span><span class="p">([</span><span class="n">resultFolder</span><span class="p">,</span> <span class="s2">&quot;/&quot;</span><span class="p">,</span> <span class="n">prefix</span><span class="p">,</span> <span class="s2">&quot;/MetodoDisparo&quot;</span><span class="p">,</span> <span class="n">prefix</span><span class="p">,</span> <span class="s2">&quot;.png&quot;</span><span class="p">]))</span>
@@ -395,37 +441,17 @@
     <span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span></div>
 
 
-<div class="viewcode-block" id="resolucionApartadoB"><a class="viewcode-back" href="../main.html#main.resolucionApartadoB">[documentos]</a><span class="k">def</span> <span class="nf">resolucionApartadoB</span><span class="p">():</span>
-
-    <span class="n">l</span> <span class="o">=</span> <span class="mi">1</span>
-    <span class="n">N</span> <span class="o">=</span> <span class="mi">20</span>
-    <span class="n">p0</span> <span class="o">=</span> <span class="mi">5</span>
-    <span class="n">prefix</span> <span class="o">=</span> <span class="s2">&quot;N&quot;</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="n">N</span><span class="p">)</span> <span class="o">+</span> <span class="s2">&quot;P&quot;</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="n">p0</span><span class="p">)</span> <span class="o">+</span> <span class="s2">&quot;l&quot;</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="n">l</span><span class="p">)</span>
-    <span class="n">resultFolder</span> <span class="o">=</span> <span class="s2">&quot;ApartadoB&quot;</span>
-    <span class="k">if</span> <span class="ow">not</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">isdir</span><span class="p">(</span><span class="n">resultFolder</span><span class="p">):</span>
-        <span class="n">os</span><span class="o">.</span><span class="n">mkdir</span><span class="p">(</span><span class="n">resultFolder</span><span class="p">)</span>
-    <span class="k">if</span> <span class="ow">not</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">isdir</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">resultFolder</span><span class="p">,</span> <span class="n">prefix</span><span class="p">)):</span>
-        <span class="n">os</span><span class="o">.</span><span class="n">mkdir</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">resultFolder</span><span class="p">,</span> <span class="n">prefix</span><span class="p">))</span>
-    <span class="n">result</span> <span class="o">=</span> <span class="n">LinearFiniteDifference</span><span class="p">(</span><span class="n">N</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="o">-</span><span class="n">l</span><span class="p">,</span> <span class="n">l</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="n">defineEquation1</span><span class="p">(</span><span class="n">l</span><span class="p">,</span> <span class="n">p0</span><span class="p">))</span>
-    <span class="n">fig1</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
-    <span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">result</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">result</span><span class="p">[</span><span class="mi">1</span><span class="p">])</span>
-    <span class="n">plt</span><span class="o">.</span><span class="n">legend</span><span class="p">([</span><span class="s2">&quot;Método de diferencias finitas&quot;</span><span class="p">])</span>
-    <span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s2">&quot;Diagrama de momento flector de la barra de longitud &quot;</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="mi">2</span> <span class="o">*</span> <span class="n">l</span><span class="p">)</span> <span class="o">+</span> <span class="s2">&quot; m</span><span class="se">\n</span><span class="s2">&quot;</span>
-                                                                                    <span class="s2">&quot;para una presión vertical de &quot;</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span>
-        <span class="n">p0</span><span class="p">)</span> <span class="o">+</span> <span class="s2">&quot; N/m&quot;</span><span class="p">)</span>
-    <span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s2">&quot;Longitud de la barra, ξ, m&quot;</span><span class="p">)</span>
-    <span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s2">&quot;Momento flector, M(ξ), Nm&quot;</span><span class="p">)</span>
-    <span class="n">name</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">normpath</span><span class="p">(</span><span class="s1">&#39;&#39;</span><span class="o">.</span><span class="n">join</span><span class="p">([</span><span class="n">resultFolder</span><span class="p">,</span> <span class="s2">&quot;/&quot;</span><span class="p">,</span> <span class="n">prefix</span><span class="p">,</span> <span class="s2">&quot;/MetodoDisparo&quot;</span><span class="p">,</span> <span class="n">prefix</span><span class="p">,</span> <span class="s2">&quot;.png&quot;</span><span class="p">]))</span>
-    <span class="n">fig1</span><span class="o">.</span><span class="n">savefig</span><span class="p">(</span><span class="n">name</span><span class="p">)</span>
-    <span class="n">DataFrame</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">([])</span>
-    <span class="n">DataFrame</span><span class="p">[</span><span class="s1">&#39;xi&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">result</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
-    <span class="n">DataFrame</span><span class="p">[</span><span class="s1">&#39;M&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">result</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span>
-    <span class="nb">print</span><span class="p">(</span><span class="n">DataFrame</span><span class="p">)</span>
-    <span class="n">DataFrame</span><span class="o">.</span><span class="n">to_csv</span><span class="p">(</span><span class="s1">&#39;&#39;</span><span class="o">.</span><span class="n">join</span><span class="p">([</span><span class="n">resultFolder</span><span class="p">,</span> <span class="s2">&quot;/&quot;</span><span class="p">,</span> <span class="n">prefix</span><span class="p">,</span> <span class="s2">&quot;/Diff&quot;</span><span class="p">,</span> <span class="n">prefix</span><span class="p">,</span> <span class="s2">&quot;.csv&quot;</span><span class="p">]))</span>
-    <span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span></div>
-
-
 <div class="viewcode-block" id="resolucionComparativaCustom"><a class="viewcode-back" href="../main.html#main.resolucionComparativaCustom">[documentos]</a><span class="k">def</span> <span class="nf">resolucionComparativaCustom</span><span class="p">(</span><span class="n">N</span><span class="p">,</span> <span class="n">l</span><span class="p">,</span> <span class="n">p0</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Esta función muestra los resultados obtenidos por el método de diferencias finitas</span>
+<span class="sd">    para l=1, N=20 y presión verital de 5 N/m</span>
+
+<span class="sd">    :parameter N: Número de subintervalos</span>
+<span class="sd">    :parameter l: longitud de la viga</span>
+<span class="sd">    :parameter p0: presión vertical</span>
+
+<span class="sd">    :return: Devuelve los datos de los modelos, su diferencia y los muestra en una gráfica</span>
+<span class="sd">    &quot;&quot;&quot;</span>
     <span class="n">prefix</span> <span class="o">=</span> <span class="s2">&quot;N&quot;</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="n">N</span><span class="p">)</span> <span class="o">+</span> <span class="s2">&quot;P&quot;</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="n">p0</span><span class="p">)</span> <span class="o">+</span> <span class="s2">&quot;l&quot;</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="n">l</span><span class="p">)</span>
     <span class="n">resultFolder</span> <span class="o">=</span> <span class="s2">&quot;resolucionComparativa&quot;</span>
     <span class="k">if</span> <span class="ow">not</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">isdir</span><span class="p">(</span><span class="n">resultFolder</span><span class="p">):</span>
@@ -466,12 +492,24 @@
 
 
 <div class="viewcode-block" id="resolucionComparativa"><a class="viewcode-back" href="../main.html#main.resolucionComparativa">[documentos]</a><span class="k">def</span> <span class="nf">resolucionComparativa</span><span class="p">():</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    :return: Muestra las comparativas entre los modelos para distintos valores de N y mismo valor de longitud de</span>
+<span class="sd">            la viga y presión vertical</span>
+<span class="sd">    &quot;&quot;&quot;</span>
     <span class="n">resolucionComparativaCustom</span><span class="p">(</span><span class="mi">20</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">5</span><span class="p">)</span>
     <span class="n">resolucionComparativaCustom</span><span class="p">(</span><span class="mi">70</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">5</span><span class="p">)</span>
     <span class="n">resolucionComparativaCustom</span><span class="p">(</span><span class="mi">150</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">5</span><span class="p">)</span></div>
 
 
 <div class="viewcode-block" id="convergencia"><a class="viewcode-back" href="../main.html#main.convergencia">[documentos]</a><span class="k">def</span> <span class="nf">convergencia</span><span class="p">(</span><span class="n">p0</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Muestra el estudio de convergencia para distintos valores de longitud de viga y número de subintervalos, para</span>
+<span class="sd">    una presión vertical determinada.</span>
+
+<span class="sd">    :parameter p0: valor de presión vertical aplicado sobre la viga</span>
+
+<span class="sd">    :return: guarda los resultados en su carpeta correspondiente</span>
+<span class="sd">    &quot;&quot;&quot;</span>
     <span class="n">resultFolder</span> <span class="o">=</span> <span class="s2">&quot;EstudioConvergencia&quot;</span>
     <span class="k">if</span> <span class="ow">not</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">isdir</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">resultFolder</span><span class="p">)):</span>
         <span class="n">os</span><span class="o">.</span><span class="n">mkdir</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">resultFolder</span><span class="p">))</span>
@@ -524,6 +562,9 @@
 
 
 <div class="viewcode-block" id="resolucionConvergencia"><a class="viewcode-back" href="../main.html#main.resolucionConvergencia">[documentos]</a><span class="k">def</span> <span class="nf">resolucionConvergencia</span><span class="p">():</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    :return: Realiza un estudio de convergencia para los valores de presión vertical p=5 N/m y 16 N/m</span>
+<span class="sd">    &quot;&quot;&quot;</span>
     <span class="n">p</span> <span class="o">=</span> <span class="p">[</span><span class="mi">5</span><span class="p">,</span> <span class="mi">16</span><span class="p">]</span>
     <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">p</span><span class="p">:</span>
         <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Comparativa con carga vertical uniforme de p0 = &quot;</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="n">i</span><span class="p">)</span> <span class="o">+</span> <span class="s2">&quot; N/m&quot;</span><span class="p">)</span>
