@@ -1,4 +1,8 @@
 """
+    .. attention::
+
+        Para ejecutar los ejecicios es necesario tener instalados los siguientes paquetes
+        ``matplotlib``, ``scipy``, ``pandas`` y ``numpy``.
 
     Este paquete contiene un modulo llamado ``funciones.py`` donde se pueden encontrar las funciones necesarias
     poder replicar los resultados del informe. A continuación mostramos como
@@ -24,8 +28,12 @@
           - 2
         * - resolucionComparativa()
           - 3
-        * - resolucionConvergencia()
+        * - resolucionNormaDiferenciasFinitas()
           - 4
+        * - resolucionNormaMetodoDisparo()
+          - 5
+        * - resolucionConvergencia()
+          - 6
 
     De modo que si queremos obtener los resultados del primer apartado deberíamos escribir lo siguiente:
 

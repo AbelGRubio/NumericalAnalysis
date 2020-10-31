@@ -7,6 +7,7 @@
 from module.functions import *
 import matplotlib.pyplot as plt
 import pandas as pd
+import numpy as np
 import os
 
 
@@ -325,7 +326,7 @@ def resolucionComparativaCustom(N, l, p0):
     ax.set_ylabel("Momento flector, M(ξ), Nm")
     ax2 = ax.twinx()
     ax2.plot(ComparationDataFrame['xi'], ComparationDataFrame['Modulo'], color='m')
-    ax2.set_ylabel("Módulo, M(ξ), Nm", color='m')
+    ax2.set_ylabel("Norma, M(ξ), Nm", color='m')
     ax.legend(["Método de diferencias finitas", "Método del disparo"])
     ax.set_title("Diagrama de momento flector para\n"
                  "l=" + str(2 * l) + " m, N=" + str(N) + " y p0=" + str(p0) + " N/m")
@@ -343,6 +344,134 @@ def resolucionComparativa():
     resolucionComparativaCustom(20, 1, 5)
     resolucionComparativaCustom(70, 1, 5)
     resolucionComparativaCustom(150, 1, 5)
+
+
+def resolucionNormaDiferenciasFinitas():
+    """
+    Calculo norma con n=4, p0=5 y l=1 para el método de diferencias finitas
+    :return: Muestra gráficamente y los valores de norma L_1 para distintos valores de N (siendo N=n,2n,3n...).
+    Realiza también un análisis cuantitativo.
+    """
+
+    n = 4
+    p0 = 5
+    l = 1
+    prefix = "P" + str(p0) + "l" + str(l)
+    resultFolder = "resolucionNormaDiferenciasFinitas"
+    if not os.path.isdir(resultFolder):
+        os.mkdir(resultFolder)
+    if not os.path.isdir(os.path.join(resultFolder, prefix)):
+        os.mkdir(os.path.join(resultFolder, prefix))
+
+    NVector = [n if i == 0 else i*n for i in range(0, 50, 2)]
+    DataFrame = pd.DataFrame([])
+    DataFrameDiff = pd.DataFrame([])
+
+    for j in range(len(NVector)):
+        N = NVector[j]
+        result = LinearFiniteDifference(N-1, -l, l, 0, 0, defineEquation1(l, p0))
+        print(N)
+        if N == n:
+            DataFrame['xi'] = result[0]
+            name = "M(xi) N=" + str(N)
+            DataFrame[name] = result[1]
+        else:
+            Vector2 = result[1]
+            VectorPar = [Vector2[i] for i in range(len(Vector2)) if i % (2*j) == 0]
+            name = "M(xi) N=" + str(N)
+            DataFrame[name] = VectorPar
+            col2name = "M(xi) N=" + str(NVector[j-1])
+            namediff = "N=" + str(NVector[j-1]) + "-" + str(N)
+            DataFrameDiff[namediff] = abs(DataFrame[name] - DataFrame[col2name])
+
+    NormaL1 = [sum(DataFrameDiff[colname]) for colname in DataFrameDiff.columns]
+    fig1 = plt.figure(1)
+    plt.plot(NormaL1)
+    funResiduo = lambda p, y, x: y - (1 / (x ** p))
+    funAjuste = lambda x, p: (1 / (x ** p))
+    from scipy.optimize import leastsq
+    popt = [1]
+    ajuste = leastsq(funResiduo, popt, args=(NormaL1, np.arange(1,25)))
+    print(ajuste[0])
+    model = [funAjuste(i, ajuste[0]) for i in np.arange(1, 26, 25/9000)]
+    print("Los valores del ajuste para una funcion x**beta son:", *popt)
+    plt.plot(np.arange(0, 25, 25/9000), model)
+    plt.ylim([0, 0.15])
+    plt.title("Estimación del orden de convergencia.\nAjuste de la función para el método de diferencias finitas"
+              "\npara l=" + str(l) + " m, y p0=" + str(p0) + " N/m")
+    plt.ylabel("Valor de la norma L1")
+    plt.legend(["Normas L1 calculadas",
+                "Ajuste a la función 1/x^p, p="+str(round(ajuste[0][len(ajuste[0])-1]))])
+    name = os.path.normpath(''.join([resultFolder, "/", prefix, "/NComparativaDiferenciasFinitas", prefix, ".png"]))
+    fig1.savefig(name)
+    DataFrame.to_csv(os.path.normpath(''.join([resultFolder, "/", prefix, "/NMetodosFinitosResultados", prefix, ".csv"])))
+    DataFrameDiff.to_csv(os.path.normpath(''.join([resultFolder, "/", prefix, "/NMetodosFinitosDiff", prefix, ".csv"])))
+    plt.show()
+    print("1")
+
+
+def resolucionNormaMetodoDisparo():
+    """
+    Calculo norma con n=4, p0=5 y l=1 para el método del disparo
+    :return: Muestra gráficamente y los valores de norma L_1 para distintos valores de N (siendo N=n,2n,3n...).
+    Realiza también un análisis cuantitativo.
+    """
+
+    n = 4
+    p0 = 5
+    l = 1
+    prefix = "P" + str(p0) + "l" + str(l)
+    resultFolder = "resolucionNormaDisparo"
+    if not os.path.isdir(resultFolder):
+        os.mkdir(resultFolder)
+    if not os.path.isdir(os.path.join(resultFolder, prefix)):
+        os.mkdir(os.path.join(resultFolder, prefix))
+
+    NVector = [n if i == 0 else i*n for i in range(0, 50, 2)]
+    DataFrame = pd.DataFrame([])
+    DataFrameDiff = pd.DataFrame([])
+
+    for j in range(len(NVector)):
+        N = NVector[j]
+        result = ShootingMethod(N, -l, l, 0, 0, defineEquation1(l, p0), defineEquation2(l))
+        print(N)
+        if N == n:
+            DataFrame['xi'] = result[0]
+            name = "M(xi) N=" + str(N)
+            DataFrame[name] = result[1]
+        else:
+            Vector2 = result[1]
+            VectorPar = [Vector2[i] for i in range(len(Vector2)) if i % (2*j) == 0]
+            name = "M(xi) N=" + str(N)
+            DataFrame[name] = VectorPar
+            col2name = "M(xi) N=" + str(NVector[j-1])
+            namediff = "N=" + str(NVector[j-1]) + "-" + str(N)
+            DataFrameDiff[namediff] = abs(DataFrame[name] - DataFrame[col2name])
+
+    NormaL1 = [sum(DataFrameDiff[colname]) for colname in DataFrameDiff.columns]
+    fig1 = plt.figure(1)
+    plt.plot(NormaL1)
+
+    funResiduo = lambda p, y, x: y - (1 / (x ** p))
+    funAjuste = lambda x, p: (1 / (x ** p))
+    from scipy.optimize import leastsq
+    popt = [1]
+    ajuste = leastsq(funResiduo, popt, args=(NormaL1, np.arange(1,25)))
+    print(ajuste)
+    model = [funAjuste(i, ajuste[0]) for i in np.arange(1, 26, 25/9000)]
+    plt.plot(np.arange(0, 25, 25/9000), model)
+    plt.ylim([0, 0.003])
+    plt.title("Estimación del orden de convergencia.\nAjuste de la función para el método del disparo"
+              "\npara l=" + str(l) + " m, y p0=" + str(p0) + " N/m")
+    plt.ylabel("Valor de la norma L1")
+    plt.legend(["Normas L1 calculadas", "Ajuste a la función 1/x^p, p="
+                +str(round(ajuste[0][len(ajuste[0])-1]))])
+    name = os.path.normpath(''.join([resultFolder, "/", prefix, "/NComparativaDisparo", prefix, ".png"]))
+    fig1.savefig(name)
+    DataFrame.to_csv(os.path.normpath(''.join([resultFolder, "/", prefix, "/NMetodoDisparoResultados", prefix, ".csv"])))
+    DataFrameDiff.to_csv(os.path.normpath(''.join([resultFolder, "/", prefix, "/NMetodoDisparoDiff", prefix, ".csv"])))
+    plt.show()
+    print("1")
 
 
 def convergencia(p0):
@@ -373,16 +502,16 @@ def convergencia(p0):
     # fig.suptitle("Convergencia hacia la solución")
     index = 0
     ax1.plot(Nvector, DiffVector[index])
-    ax1.set_title("Módulo entre modelos\n para una barra de longitud " + str(2 * L[index]) + " m\n"
+    ax1.set_title("Norma de la diferencia entre modelos\n para una barra de longitud " + str(2 * L[index]) + " m\n"
                   + "y una presión vertical de " + str(p0) + " N/m")
     ax1.set_xlabel("Número de subintervalos, N.")
-    ax1.set_ylabel("Módulo, M(ξ), Nm")
+    ax1.set_ylabel("Norma, M(ξ), Nm")
     index = len(L) - 1
     ax2.plot(Nvector, DiffVector[index])
-    ax2.set_title("Módulo entre modelos\n para una barra de longitud " + str(2 * L[index]) + " m\n"
+    ax2.set_title("Norma de la diferencia entre modelos\n para una barra de longitud " + str(2 * L[index]) + " m\n"
                   + "y una presión vertical de " + str(p0) + " N/m")
     ax2.set_xlabel("Número de subintervalos, N.")
-    ax2.set_ylabel("Módulo, M(ξ), Nm")
+    ax2.set_ylabel("Norma, M(ξ), Nm")
     name = os.path.normpath(''.join([resultFolder, "/", prefix,"/Diff2plot", prefix, ".png"]))
     fig.savefig(name)
 
@@ -391,10 +520,10 @@ def convergencia(p0):
     for i in range(len(L)):
         plt.plot(Nvector, DiffVector[i])
         leyenda.append(str(2 * L[i]) + " m")
-    plt.title("Módulo entre modelos\n para distintas longitudes\n"
+    plt.title("Norma de la diferencia entre modelos\n para distintas longitudes\n"
               + "y una presión vertical de " + str(p0) + " N/m")
     plt.xlabel("Número de subintervalos, N.")
-    plt.ylabel("Módulo, M(ξ), Nm")
+    plt.ylabel("Norma, M(ξ), Nm")
     plt.legend(leyenda)
     name = os.path.normpath(''.join([resultFolder, "/", prefix, "/DiffSamePlot", prefix, ".png"]))
     resultados = pd.DataFrame(DiffVector)
@@ -421,16 +550,22 @@ if __name__ == '__main__':
         try:
             modo = int(sys.argv[1])
             if modo == 1:
-                print("Has elegido el apartado A\n")
+                print("Has elegido el apartado A: Método de diferencias finitas\n")
                 resolucionApartadoA()
             elif modo == 2:
-                print("Has elegido el apartado B\n")
+                print("Has elegido el apartado B: Método del disparo\n")
                 resolucionApartadoB()
             elif modo == 3:
                 print("Has elegido el apartado de comparativa\n")
                 resolucionComparativa()
             elif modo == 4:
-                print("Has elegido el apartado de estudio de convergencia\n")
+                print("Has elegido el apartado de estudio de convergencia del método de diferencias finitas\n")
+                resolucionNormaDiferenciasFinitas()
+            elif modo == 5:
+                print("Has elegido el apartado de estudio de convergencia del método del disparo\n")
+                resolucionNormaMetodoDisparo()
+            elif modo == 6:
+                print("Has elegido el apartado de estudio de convergencia a la misma solución\n")
                 resolucionConvergencia()
             else:
                 print("Elige otra funcion diferente\n")
