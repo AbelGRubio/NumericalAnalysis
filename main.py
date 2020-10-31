@@ -370,7 +370,6 @@ def resolucionNormaDiferenciasFinitas():
     for j in range(len(NVector)):
         N = NVector[j]
         result = LinearFiniteDifference(N-1, -l, l, 0, 0, defineEquation1(l, p0))
-        print(N)
         if N == n:
             DataFrame['xi'] = result[0]
             name = "M(xi) N=" + str(N)
@@ -407,7 +406,6 @@ def resolucionNormaDiferenciasFinitas():
     DataFrame.to_csv(os.path.normpath(''.join([resultFolder, "/", prefix, "/NMetodosFinitosResultados", prefix, ".csv"])))
     DataFrameDiff.to_csv(os.path.normpath(''.join([resultFolder, "/", prefix, "/NMetodosFinitosDiff", prefix, ".csv"])))
     plt.show()
-    print("1")
 
 
 def resolucionNormaMetodoDisparo():
@@ -434,7 +432,6 @@ def resolucionNormaMetodoDisparo():
     for j in range(len(NVector)):
         N = NVector[j]
         result = ShootingMethod(N, -l, l, 0, 0, defineEquation1(l, p0), defineEquation2(l))
-        print(N)
         if N == n:
             DataFrame['xi'] = result[0]
             name = "M(xi) N=" + str(N)
@@ -471,7 +468,6 @@ def resolucionNormaMetodoDisparo():
     DataFrame.to_csv(os.path.normpath(''.join([resultFolder, "/", prefix, "/NMetodoDisparoResultados", prefix, ".csv"])))
     DataFrameDiff.to_csv(os.path.normpath(''.join([resultFolder, "/", prefix, "/NMetodoDisparoDiff", prefix, ".csv"])))
     plt.show()
-    print("1")
 
 
 def convergencia(p0):
