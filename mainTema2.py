@@ -20,10 +20,10 @@ def main():
     # print(QRMethod(a, b))
     print(PowerMethod(np.array([[-2, -3], [6, 7]])))
 
-    n = 10
-    a = (2 * np.ones(n)).tolist()
-    b = (-1 * np.ones(n-1)).tolist()
-    print(QRMethod(a, b))
+    # n = 10
+    # a = (2 * np.ones(n)).tolist()
+    # b = (-1 * np.ones(n-1)).tolist()
+    # print(QRMethod(a, b))
 
 
 if __name__ == '__main__':

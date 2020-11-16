@@ -1,7 +1,7 @@
 import numpy as np
 
 
-def QRMethod(*var, TOL: float = 1e-9, M: int = 500):
+def QRMethod(*args, TOL: float = 1e-9, M: int = 500):
     """
     Método que utiliza la descomposicion QR para calcular los autovectores de la matriz introducida
 
@@ -14,10 +14,10 @@ def QRMethod(*var, TOL: float = 1e-9, M: int = 500):
 
     :return: Devuelve los autovectores de A, el recomendado split de A, o un mensaje de número de iteraciones excedida
     """
-    assert 3 > len(var) > 0, "Has introducido mal los argumentos"
+    assert 3 > len(args) > 0, "Has introducido mal los argumentos"
 
-    if len(var) == 1:
-        A = var[0]
+    if len(args) == 1:
+        A = args[0]
         assert type(A) == np.ndarray, "No es un matrix del tipo " + str(np.ndarray)
         n, m = A.shape
         assert n == m, "No es una matriz cuadrada"
@@ -29,9 +29,9 @@ def QRMethod(*var, TOL: float = 1e-9, M: int = 500):
         b = B.diagonal()
         del B
         assert (len(a) - 1) == len(b), "Las longitudes de los vectores son incorrectas"
-    elif len(var) == 2:
-        a = var[0]
-        b = var[1]
+    elif len(args) == 2:
+        a = args[0]
+        b = args[1]
         assert (len(a) - 1) == len(b), "Las longitudes de los vectores son incorrectas"
     else:
         a = []
@@ -43,7 +43,10 @@ def QRMethod(*var, TOL: float = 1e-9, M: int = 500):
 
     # insertamos este elemento en b para que tenga la misma longitud de a y
     # por ende referirnos al mismo j en ambos vectores
-    b.insert(0, -1)
+    if type(b) == np.ndarray:
+        b = np.insert(b, 0, 0)
+    else:
+        b.insert(0, -1)
     OUTPUT = []
 
     # ########### STEP 1: ########################################

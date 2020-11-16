@@ -1,19 +1,19 @@
 import numpy as np
 
 
-def PowerMethod(*var, TOL: float = 1e-6, M: int = 5000):
+def PowerMethod(*args, TOL: float = 1e-6, M: int = 5000):
     """
 
-    :parameter var:
+    :parameter args:
     :parameter TOL: `float` valor de la tolerancia
     :parameter M: `int` número máximo de iteraciones
 
     :return: Devuelve los autovectores de A, el recomendado split de A, o un mensaje de número de iteraciones excedida
     """
-    assert 3 > len(var) > 0, "Has introducido mal los argumentos"
+    assert 4 > len(args) > 0, "Has introducido mal los argumentos"
 
-    if len(var) == 1:
-        A = var[0]
+    if len(args) == 1:
+        A = args[0]
         assert type(A) == np.ndarray, "No es un matrix del tipo " + str(np.ndarray)
         n, m = A.shape
         assert n == m, "No es una matriz cuadrada"
@@ -22,16 +22,38 @@ def PowerMethod(*var, TOL: float = 1e-6, M: int = 5000):
         x0 = np.zeros(n)
         x0[0] = 1
         del n, m
-    elif len(var) == 2:
-        A = var[0]
-        x0 = var[1]
-        assert type(A) == np.ndarray, "No es un matrix del tipo " + str(np.ndarray)
-        n, m = A.shape
-        assert n == m, "No es una matriz cuadrada"
-        print("La matriz introducida es: ")
-        print(A)
-        assert len(x0) == n, "Las longitudes de los vectores son incorrectas"
-        del n, m
+    elif len(args) == 2:
+        res = args[0]
+        try:
+            n, m = res.shape
+        except ValueError:
+            n = res.shape
+            m = 0
+        if n == m:
+            A = args[0]
+            x0 = args[1]
+            assert type(A) == np.ndarray, "No es un matrix del tipo " + str(np.ndarray)
+            n, m = A.shape
+            assert n == m, "No es una matriz cuadrada"
+            print("La matriz introducida es: ")
+            print(A)
+            assert len(x0) == n, "Las longitudes de los vectores son incorrectas"
+            del n, m
+        else:
+            a = args[0]
+            b = args[1]
+            A = np.diag(a) + np.diag(b, 1) + np.diag(b, -1)
+            n, m = A.shape
+            assert n == m, "No es una matriz cuadrada"
+            x0 = np.zeros(len(a))
+            x0[0] = 1
+            del n, m
+    elif len(args) == 3:
+        a = args[0]
+        b = args[1]
+        assert (len(a) - 1) == len(b), "Las longitudes de los vectores son incorrectas"
+        A = np.diag(a) + np.diag(b, 1) + np.diag(b, -1)
+        x0 = args[2]
     else:
         A = []
         x0 = []

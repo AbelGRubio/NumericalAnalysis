@@ -3,9 +3,8 @@
 
 
 """
-
-from Tema2.PowerMethod import PowerMethod
-from Tema2.QR import QRMethod
+from .PowerMethod import PowerMethod
+from .QR import QRMethod
 
 
 # __all__ = ["PowerMethod", "QR"]
