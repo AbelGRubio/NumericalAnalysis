@@ -1,3 +1,4 @@
+from .HH import HouseHolderMethod
 import numpy as np
 
 
@@ -5,7 +6,7 @@ def QRMethod(*args, TOL: float = 1e-9, M: int = 500):
     """
     Método que utiliza la descomposicion QR para calcular los autovectores de la matriz introducida
 
-    :parameter var: puede contener los vectores a y b.
+    :parameter args: puede contener los vectores a y b.
         Donde a es `List[float]` vector que representa la diagonal de A
         Donde b es `List[float]` vector que representa la diagonal superior e inferior de A
         O puede contener la matrix A
@@ -21,9 +22,10 @@ def QRMethod(*args, TOL: float = 1e-9, M: int = 500):
         assert type(A) == np.ndarray, "No es un matrix del tipo " + str(np.ndarray)
         n, m = A.shape
         assert n == m, "No es una matriz cuadrada"
+        assert (A == A.transpose()).all(), "No es una matriz simétrica"
         del n, m
-        print("La matriz introducida es: ")
-        print(A)
+        print("La matriz introducida el QR method es: ")
+        print(np.round(A, 2))
         a = A.diagonal()
         B = A[:-1, 1:]
         b = B.diagonal()
@@ -37,6 +39,8 @@ def QRMethod(*args, TOL: float = 1e-9, M: int = 500):
         a = []
         b = []
         assert False, "Error en los vectores introducidos"
+    a.setflags(write=1)
+    b.setflags(write=1)
 
     print("El vector a es: ", a)
     print("El vector b es: ", b)
@@ -166,3 +170,26 @@ def QRMethod(*args, TOL: float = 1e-9, M: int = 500):
 
     # ########### STEP 20: ########################################
     return ["Maximum number of iterations exceeded"]
+
+
+def GeneralizedQRMethod(*args, TOL: float = 1e-9, M: int = 500):
+    """
+    :parameter args:
+    :parameter TOL:
+    :parameter M:
+
+    :return
+    """
+    assert len(args) == 1, "Numero de variables incorrecto"
+    A = args[0]
+    assert type(A) == np.ndarray, "La variable no es del tipo " + str(np.ndarray)
+    assert (A == A.transpose()).all(), "No es una matriz simétrica"
+
+    print("La matriz introducida en QR Generalizado es: ")
+    print(np.round(A, 2))
+
+    HHMatrix = HouseHolderMethod(A)
+    print("La matriz tras Householder es:")
+    print(np.round(HHMatrix, 2))
+
+    return QRMethod(HHMatrix, TOL=TOL, M=M)
