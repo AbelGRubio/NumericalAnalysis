@@ -85,14 +85,13 @@ def HouseHolderMethod(A: np.ndarray):
     return Ak1
 
 
-
 def GeneralizedHouseHolderMethod(A: np.ndarray):
     """
-    Transforma una matriz no simétrica en una matriz simétrica.
+    Transforma una matriz no simétrica en una matriz triangular superior denominada Hessenberg
 
     :parameter A: Matrix cuadrada
 
-    :return: Matrix simétrica tridiagonal
+    :return: Matrix triangular superior
     """
 
     assert type(A) == np.ndarray, "No es un matrix del tipo " + str(np.ndarray)
@@ -143,7 +142,6 @@ def GeneralizedHouseHolderMethod(A: np.ndarray):
         for l in range(k+1, n):
 
             # ########### STEP 10: ########################################
-            # lim = k + 1 if k == 0 else k
             for j in range(k + 1):
                 Ak1[j, l] = A[j, l] - zVector[j] * vVector[l]
                 Ak1[l, j] = A[l, j] - yVector[j] * vVector[l]

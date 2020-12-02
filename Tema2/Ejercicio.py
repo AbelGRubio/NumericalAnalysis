@@ -3,8 +3,8 @@ from Tema2 import *
 from Tema2.WD import *
 # from .QR import QRMethod
 # from .PowerMethod import PowerMethod
-from Tema2.HH import HouseHolderMethod, GeneralizedHouseHolderMethod
-import pandas as pd
+# from Tema2.HH import HouseHolderMethod, GeneralizedHouseHolderMethod
+# import pandas as pd
 import numpy as np
 
 
@@ -35,7 +35,7 @@ def apartadoD():
     b = np.ones(n - 1)
     A = np.diag(a) + np.diag(b, 1) + np.diag(b, -1)
     for i in range(0, n):
-        print("Componente no nula en posicion ", str(i))
+        print("Ejemplo de vector inicial diferente ", str(i))
         # x0 = np.zeros_like(a)
         # x0[i] = 1
         x0 = np.random.random(10)
@@ -97,11 +97,13 @@ def apartadoE():
     print("Modo normal en términos de omega_0")
     print(np.sqrt(-resp[0]))
 
-    print("La matriz de entrada es")
-    print(A)
-    res = (np.round(GeneralizedQRMethod(A), 2))
-    print("La matriz de salida es")
-    print(res)
+    # HHG = GeneralizedHouseHolderMethod(A)
+    #
+    # print("La matriz de entrada es")
+    # print(A)
+    # res = (np.round(QRMethod(HHG), 2))
+    # print("los autovalores son")
+    # print(res)
 
 
 def apartadoF():
@@ -143,9 +145,10 @@ def realw():
     print("------------")
 
 
+
 if __name__ == '__main__':
     print("-------------  Apartado C")
-    # apartadoC()
+    apartadoC()
     print("-------------  Apartado D")
     # apartadoD()
     print("-------------  Apartado E")
@@ -153,21 +156,5 @@ if __name__ == '__main__':
     print("-------------  Apartado F")
     # apartadoF()
     print("------------- ")
-    N = 10
-    a = -2 * np.ones(N)
-    bu = np.ones(N - 1)
-    bd = np.ones(N-1)
-    for i in range(1, N, 2):
-        a[i] = a[i] / 10
-        if i == 9:
-            bd[i-1] = bd[i-1] / 10
-            break
-        bu[i] = bu[i] / 10
-        bd[i - 1] = bd[i - 1] / 10
-    A = np.diag(a) + np.diag(bu, 1) + np.diag(bd, -1)
 
-    print("La matriz de inicial es")
-    print(A)
-    res = (np.round(GeneralizedHouseHolderMethod(A), 2))
-    print("La matriz de salida es")
-    print(res)
+

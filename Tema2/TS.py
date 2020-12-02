@@ -26,19 +26,26 @@ import numpy as np
 
 
 def SimilarityTransformations():
+    """
+    Este algoritmo intenta resolver el sistema matricial para obtener una matriz semejante
+    :return:
+    """
     N = 10
     a = -2 * np.ones(N)
+    a2 = np.ones(N)
     bu = np.ones(N - 1)
     bd = np.ones(N - 1)
     A0 = np.diag(a) + np.diag(bu, 1) + np.diag(bd, -1)
     for i in range(1, N, 2):
         a[i] = a[i] / 10
+        a2[i] = a2[i] * 10
         if i == 9:
             bd[i - 1] = bd[i - 1] / 10
             break
         bu[i] = bu[i] / 10
         bd[i - 1] = bd[i - 1] / 10
     A = np.diag(a) + np.diag(bu, 1) + np.diag(bd, -1)
+    A2 = np.diag(a2)
     B = (A + A.T) / 2
 
     # print(A0)
@@ -50,15 +57,18 @@ def SimilarityTransformations():
     DA = np.diag(eigvalsA)
     # print(np.round(DA, 2))
     # print(np.round(eigvalsA, 2))
+    print(A)
     # print(np.round(eigvecsA @ DA @ la.inv(eigvecsA), 2).real)
+    print(A2 @ A @ la.inv(A2))
 
-    print(B)
-    eigvalsB, eigvecsB = la.eig(B)
-    Br = eigvecsB @ np.diag(eigvalsB) @ la.inv(eigvecsB)
-    print(np.round(Br, 2).real)
-    P = la.inv(eigvecsA) @ eigvecsB
 
-    Brp = la.inv(P) @ A @ P
+    # print(B)
+    # eigvalsB, eigvecsB = la.eig(B)
+    # Br = eigvecsB @ np.diag(eigvalsB) @ la.inv(eigvecsB)
+    # print(np.round(Br, 2).real)
+    # P = la.inv(eigvecsA) @ eigvecsB
+    #
+    # Brp = la.inv(P) @ A @ P
     # print(np.round(Brp, 2))
     # print(np.round(eigvecsA, 2))
     # print(np.round(eigvecsA[:, 1], 2))

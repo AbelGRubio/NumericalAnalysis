@@ -3,8 +3,15 @@ import numpy as np
 
 def PowerMethod(*args, TOL: float = 1e-9, M: int = 5000):
     """
+    Calcula el autovector del autovalor predominante.
 
-    :parameter args:
+    :parameter args: Acepta argumentos variables.
+        * Si introducimos solo un argumento, éste tiene que ser la matriz. El vector X_0 tomará uno sencillo
+        * Si introducimos dos argumentos, uno tiene que ser la matriz y el otro el vector
+        ambos del tipo np.ndarray. O simplemente dos vectores que indican la diagonal y la diagonal inferior
+        y/o superior respectivamente
+        * Si introducimos tres argumentos, el primero tiene que ser el vector de la diagonal, el segundo el vector
+        de la diagonal inferior y el ultimo el vector X_0
     :parameter TOL: `float` valor de la tolerancia
     :parameter M: `int` número máximo de iteraciones
 
@@ -105,8 +112,16 @@ def PowerMethod(*args, TOL: float = 1e-9, M: int = 5000):
 
 def InversePowerMethod(*args, TOL: float = 1e-6, M: int = 5000) -> list:
     """
-
-    :parameter args:
+    Este método esta implementado para poder utilizar el método de WielandtDeflaction y poder determinar el
+    segundo autovalor predominante de una matriz. Este método tiene una mejor convergencia respecto al método
+    de la potencial
+    :parameter args: Acepta argumentos variables.
+        * Si introducimos solo un argumento, éste tiene que ser la matriz. El vector X_0 tomará uno sencillo
+        * Si introducimos dos argumentos, uno tiene que ser la matriz y el otro el vector
+        ambos del tipo np.ndarray. O simplemente dos vectores que indican la diagonal y la diagonal inferior
+        y/o superior respectivamente
+        * Si introducimos tres argumentos, el primero tiene que ser el vector de la diagonal, el segundo el vector
+        de la diagonal inferior y el ultimo el vector X_0
     :parameter TOL: `float` valor de la tolerancia
     :parameter M: `int` número máximo de iteraciones
 

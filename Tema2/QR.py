@@ -22,7 +22,7 @@ def QRMethod(*args, TOL: float = 1e-9, M: int = 500):
         assert type(A) == np.ndarray, "No es un matrix del tipo " + str(np.ndarray)
         n, m = A.shape
         assert n == m, "No es una matriz cuadrada"
-        assert (A == A.transpose()).all(), "No es una matriz simétrica"
+        # assert (A == A.transpose()).all(), "No es una matriz simétrica"
         del n, m
         print("La matriz introducida el QR method es: ")
         print(np.round(A, 2))
@@ -183,7 +183,7 @@ def GeneralizedQRMethod(*args, TOL: float = 1e-9, M: int = 500):
     assert len(args) == 1, "Numero de variables incorrecto"
     A = args[0]
     assert type(A) == np.ndarray, "La variable no es del tipo " + str(np.ndarray)
-    assert (A == A.transpose()).all(), "No es una matriz simétrica"
+    # assert (A == A.transpose()).all(), "No es una matriz simétrica"
 
     print("La matriz introducida en QR Generalizado es: ")
     print(np.round(A, 2))

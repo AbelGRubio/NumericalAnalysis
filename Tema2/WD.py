@@ -4,8 +4,10 @@ import numpy as np
 
 def WielandtDeflaction(*args, TOL: float = 1e-9, M: int = 5000):
     """
-
-    :parameter args:
+    Estima el segundo autovalor predominante de una matriz a partir del primer autovector y autovalor predominante.
+    :parameter args: Acepta argumentos variables.
+        * Tenemos que introducir 4 argumentos indicando la matriz, el autovalor, autovector y el vector inicial
+        respectivamente
     :parameter TOL: `float` valor de la tolerancia
     :parameter M: `int` número máximo de iteraciones
 
