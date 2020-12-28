@@ -1,5 +1,6 @@
 from Tema3.GS import GaussSeidelIterative
 from Tema3.J import JacobiIterative
+from Tema3.SOR import SOR
 import numpy as np
 
 
@@ -17,7 +18,7 @@ def sumFact(T1: int, T0: int, k, rho: float, theta: float):
     return (T1 - T0)/((2*k+1)*np.pi)*rho**(2*k+1)*np.sin((2*k+1)*theta)
 
 
-def sumatorio(T1: int, T0: int, theta: float, rho: float, npoints: int = 800):
+def sumatorio(T1: int, T0: int, theta: float, rho: float, npoints: int = 1500):
     """
 
     :param T1:
@@ -30,7 +31,7 @@ def sumatorio(T1: int, T0: int, theta: float, rho: float, npoints: int = 800):
     return sum([sumFact(T1, T0, val, rho, theta) for val in range(npoints)])
 
 
-def solAnalitica(T1: int, T0: int, deltaRho: int=3, deltaTheta: int=6):
+def solAnalitica(T1: int, T0: int, deltaRho: int = 3, deltaTheta: int = 6):
     rhos = [rh/deltaRho for rh in range(deltaRho-1, 0, -1)]
 
     deltatheta = 1 / deltaTheta
@@ -42,7 +43,27 @@ def solAnalitica(T1: int, T0: int, deltaRho: int=3, deltaTheta: int=6):
         for rho in rhos:
             point = T0 + 4 * sumatorio(T1=T1, T0=T0, theta=np.pi * theta, rho=rho)
             us.append(point)
-            print("Punto {} en ({:.3f},{:.3f}\u03C0):\t {:.3f}º".format(idx, rho, theta, point))
+            # print("Punto {} en ({:.3f},{:.3f}\u03C0):\t {:.3f}º".format(idx, rho, theta, point))
+            idx += 1
+    return us
+
+
+def solAnaliticaCarte(T1: int, T0: int, deltaRho: int = 3):
+    rhosy = [rh/deltaRho for rh in range(deltaRho-1, 0, -1)]
+    rhosx = [rh/deltaRho for rh in range(deltaRho)]
+
+    us = []
+    idx = 1
+    for y in rhosy:
+        for x in rhosx:
+            try:
+                theta = np.arctan(y/x)
+            except ZeroDivisionError:
+                theta = np.pi/2
+            rho = np.sqrt(x**2+y**2)
+            point = T0 + 4 * sumatorio(T1=T1, T0=T0, theta=theta, rho=rho)
+            us.append(point)
+            print("Punto {} en ({:.3f},{:.3f}):\t {:.3f}º".format(idx, rho, theta, point))
             idx += 1
     return us
 
@@ -214,16 +235,30 @@ def generaMatrixbConvergencia(deltaTheta: int, deltaRho: int, T1, T0):
     return [valTemp if num % 2 == 0 else 0 for num in rhosfrac] * rep2Theta
 
 
+def getomega(Matrix: np.ndarray):
+    """
+    Obtiene el coeficiente de sobrerelajacion
+    :param Matrix:
+    :return:
+    """
+    Dinv = np.diag(1 / Matrix.diagonal())
+    L = - np.tril(Matrix) + np.diag(Matrix.diagonal())
+    U = - np.triu(Matrix) + np.diag(Matrix.diagonal())
+    T = np.dot(Dinv, (L + U))
+    eigenvalues, eigenvectors = np.linalg.eig(T)
+
+    return [2 / (1+np.sqrt(1-abs(val)**2)) if val < 1 else 0 for val in eigenvalues]
+
+
 def apartadoC():
     print("\n\nAsumiendo la simetria de los puntos ")
     Matrixv2 = generaMatrix(3)
     Bv2 = generab(100, 50, 3)
-    # print("\n\nMediante el método Jacobi")
-    # TempJacobi = JacobiIterative(Matrixv2, Bv2)
-    # for num, val in enumerate(TempJacobi[0]):
-    #     print("Punto {} Temp {}".format(num + 1, val + 50))
-    print("Mediante el método Gauss-Seidel")
-    TempGauss = GaussSeidelIterative(Matrixv2, Bv2)
+    print("Los valores de sobrerrelajación es: ")
+    values = getomega(Matrixv2)
+    print(values[0])
+    print("\nResultado utilizando el método de \nsobrerelajación con omega= {:.3f}".format(values[0]))
+    TempGauss = SOR(Matrixv2, Bv2, values[0])
     # for num, val in enumerate(TempGauss[0]):
     #     print("Punto {} Temp {:.3f}".format(num + 1, val + 50))
     rhos = [2/3, 1/3]
@@ -237,52 +272,54 @@ def apartadoC():
             print("Punto {} en ({:.3f},{:.3f}\u03C0):\t {:.3f}º".format(idx, rho, theta, Temperaturas[idx-1]+50))
             idx += 1
 
-
-    print("\n\nSolucion analiticva es: ")
+    print("\n\nSolucion analitica es: ")
     temps = solAnalitica(100, 50)
 
     error = sum([abs(anal-(gaus+50)) for anal, gaus in zip(temps, Temperaturas)])
-    print("\n\nEl error es de: {:.3f}".format(error))
+    print("\n\nEl error es de: {:.3f}".format(error/len(Temperaturas)))
     print("@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@")
-    # print("\n\n\nSin asumir la simetria de los puntos")
-    # Matrixv2 = generaMatrix(5)
-    # Bv2 = generab(100, 50, 5)
-    # # print("\n\nMediante el método Jacobi")
-    # # TempJacobi = JacobiIterative(Matrixv2, Bv2)
-    # # for num, val in enumerate(TempJacobi[0]):
-    # #     print("Punto {} Temp {}".format(num + 1, val + 50))
-    # print("Mediante el método Gauss-Seidel")
-    # TempGauss = GaussSeidelIterative(Matrixv2, Bv2)
-    # Temperaturas = TempGauss[0]
-    # idx = 1
-    # thetas = [deltatheta * factor for factor in range(1, 6)]
-    # for theta in thetas:
-    #     for rho in rhos:
-    #         print("Punto {} en ({:.3f},{:.3f}\u03C0):\t {:.3f}º".format(idx, rho, theta, Temperaturas[idx-1]+50))
-    #         idx += 1
-
-    AA = generaMatrixAConvergencia(12, 3)
-    bb = generaMatrixbConvergencia(12, 3, 100, 50)
-
-    print("\n\nAsumiendo la simetria de los puntos para convergencia")
-    print("Mediante el método Gauss-Seidel")
-    TempGauss = GaussSeidelIterative(AA, bb)
+    print("\n\n\nSin asumir la simetria de los puntos")
+    Matrixv2 = generaMatrix(5)
+    Bv2 = generab(100, 50, 5)
+    print("Los valores de sobrerrelajación es: ")
+    values = getomega(Matrixv2)
+    print(values)
+    print("\nResultado utilizando el método de \nsobrerelajación con omega= {:.3f}".format(values[0]))
+    TempGauss = SOR(Matrixv2, Bv2, values[0])
     Temperaturas = TempGauss[0]
     idx = 1
-    deltatheta = 1 / 12
-    thetas = [deltatheta * factor for factor in range(1, 7)]
+    thetas = [deltatheta * factor for factor in range(1, 6)]
     for theta in thetas:
         for rho in rhos:
             print("Punto {} en ({:.3f},{:.3f}\u03C0):\t {:.3f}º".format(idx, rho, theta, Temperaturas[idx-1]+50))
             idx += 1
-
-    print("\n\nSolucion analiticva es: ")
-    temps = solAnalitica(100, 50, deltaRho=3, deltaTheta=12)
-
     error = sum([abs(anal-(gaus+50)) for anal, gaus in zip(temps, Temperaturas)])
-    print("\n\nEl error es de: {:.3f}".format(error))
-    for anal, gaus in zip(temps, Temperaturas):
-        print("ana: {} -- gaus: {} -- error: {:.3f}".format(anal, (gaus+50), abs(anal-(gaus+50))))
+    print("\n\nEl error es de: {:.3f}".format(error/len(Temperaturas)))
+    print("@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@")
+
+    # convergencia del algoritmo
+    ranges = [1, 2, 4, 6, 8]
+    errors = []
+    for n in ranges:
+        AA = generaMatrixAConvergencia(n * 6, 3)
+        bb = generaMatrixbConvergencia(n * 6, 3, 100, 50)
+        omegas = getomega(AA)
+        TempGauss = SOR(AA, bb, omegas[0])
+        Temperaturas = TempGauss[0]
+        temps = np.array(solAnalitica(100, 50, deltaRho=3, deltaTheta=n * 6))
+        error = sum([abs(anal-(gaus+50)) for anal, gaus in zip(temps, Temperaturas)])
+        errors.append(error/len(Temperaturas))
+    print(errors)
+    import matplotlib.pyplot as plt
+    xvals = [6 * val for val in ranges]
+    errors2 = errors
+    xvals2 = xvals
+    plt.figure(2)
+    plt.plot((xvals2), (errors2))
+    plt.xlabel("Número de puntos")
+    plt.ylabel("Error medio absoluto")
+    plt.show()
+
 
 def GeneraMatrixD():
     diagonal = [-2, - (1 + 1/(2*(np.sqrt(2) - 1))), -2 / (np.sqrt(5) - 2),
@@ -305,15 +342,24 @@ def apartadoD():
     matrixA = GeneraMatrixD()
     b = generaBMatrixD(100, 50)
 
-    print("\nMediante el método Gauss-Seidel")
-    TempGauss = GaussSeidelIterative(matrixA, b)
+    print("Los valores de sobrerrelajacion es: ")
+    values = getomega(matrixA)
+    print(values)
+    print("\nResultado utilizando el método de \nsobrerelajación con omega= {:.3f}".format(values[0]))
+    TempGauss = SOR(matrixA, b, values[0])
     for num, val in enumerate(TempGauss[0]):
-        print("Punto {} Temp {:.3f}".format(num + 1, val + 50))
+        print("Punto {}: {:.3f}º".format(num + 1, val + 50))
+
+    print("\n\bLa solución analitica al problema es: ")
+    temps = solAnaliticaCarte(100, 50)
+    Temperaturas = TempGauss[0]
+    error = sum([abs(anal - (gaus + 50)) for anal, gaus in zip(temps, Temperaturas)])
+    print("\n\nEl error es de: {:.3f}".format(error/len(Temperaturas)))
 
 
 if __name__ == '__main__':
     apartadoC()
-    # print("\n\nLa solucion analitica del problema es: ")
-    # solAnalitica(100, 50)
     # apartadoD()
+
+
 
