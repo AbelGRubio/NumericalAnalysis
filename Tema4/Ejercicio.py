@@ -1,3 +1,4 @@
+import matplotlib.pyplot as plt
 import numpy as np
 
 
@@ -22,19 +23,18 @@ def delta(deltax, x):
     return val if -deltax < x < deltax else 0
 
 
-# h es el espacio 0.1 ---  k es el tiempo  0.0005
 def ejercicio(L: int = 1, mx: int = 10, mt: int = 1000, D: int = 1, C: int = 0):
     A = getMatrix(L, mx, mt, D, C)
     deltat = (L/2) / mt
     t = np.linspace(0, L/2, mt + 1)
     deltax = L / mx
+
+    condicion = 4 * D * deltat / (deltax ** 2) - C * deltat
+    estable = 2 >= condicion >= 0
+    print("Los resultados son estables? respuesta {} value {}".format(estable, condicion))
+
     x = np.linspace(-L/2, L/2, mx + 1)
     xvals = np.array([delta(deltax, xval) for xval in x])
-    # xvals = np.array([np.sin(np.pi * xval) for xval in x])
-    print(xvals)
-    print(sum(xvals * deltax))
-    import matplotlib.pyplot as plt
-    # plt.plot(xvals)
 
     dnmedio = []
     i = 0
@@ -44,15 +44,39 @@ def ejercicio(L: int = 1, mx: int = 10, mt: int = 1000, D: int = 1, C: int = 0):
         xvals[0] = 0
         xvals[len(xvals)-1] = 0
         dnmedio.append(sum(xvals) * deltax)
-        # plt.plot(xvals)
         i += 1
     print(xvals)
-    # plt.show()
     plt.figure(1)
     plt.plot(t, dnmedio)
-    plt.ylabel("Densidad promedio de neutrones")
-    plt.xlabel("Tiempo ")
+    plt.ylabel("Densidad promedio de neutrones [m^-1]")
+    plt.xlabel("Tiempo [s]")
+    plt.show()
+    plt.figure(2)
+    plt.plot(x, xvals)
+    plt.ylabel("Densidad de neutrones [m^-1]")
+    plt.xlabel("Distancia [m]")
+    plt.show()
+
+
+def cambio(L: int = 1, D: int = 1):
+
+    nbar = lambda C, t: np.exp((C - D*np.pi**2/(L**2))*t)
+    t = np.arange(0, L/2, 0.01)
+    cambio = D * (np.pi ** 2) / (L ** 2)
+    Cvalues = [cambio * 1.001, cambio, cambio * 0.999]
+    res = []
+    for cval in Cvalues:
+        nbarvals = nbar(cval, t)
+        res.append(nbarvals)
+        plt.plot(t, nbarvals)
+    plt.xlabel("Tiempo [s]")
+    plt.ylabel("Densidad promedio [m^-1]")
+    names = ['Explota', 'Limite de cambio', 'Acotada']
+    labels = ['{} {:.3f}'.format(nm, cval) for cval, nm in zip(Cvalues, names)]
+    plt.legend(labels)
+    plt.show()
 
 
 if __name__ == '__main__':
     ejercicio()
+    # cambio(1, 1)
