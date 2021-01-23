@@ -23,7 +23,7 @@ def delta(deltax, x):
     return val if -deltax < x < deltax else 0
 
 
-def ejercicio(L: int = 1, mx: int = 10, mt: int = 1000, D: int = 1, C: int = 0):
+def ejercicio(L: int = 1, mx: int = 20, mt: int = 100, D: int = 1, C: int = 0):
     A = getMatrix(L, mx, mt, D, C)
     deltat = (L/2) / mt
     t = np.linspace(0, L/2, mt + 1)
@@ -65,6 +65,22 @@ def cambio(L: int = 1, D: int = 1):
     cambio = D * (np.pi ** 2) / (L ** 2)
     Cvalues = [cambio * 1.001, cambio, cambio * 0.999]
     res = []
+    plt.figure(1)
+    for cval in Cvalues:
+        nbarvals = nbar(cval, t)
+        res.append(nbarvals)
+        plt.plot(t, nbarvals)
+    plt.xlabel("Tiempo [s]")
+    plt.ylabel("Densidad promedio [m^-1]")
+    names = ['Explota', 'Limite de cambio', 'Acotada']
+    labels = ['{} {:.3f}'.format(nm, cval) for cval, nm in zip(Cvalues, names)]
+    plt.legend(labels)
+    plt.show()
+
+    pctg = 0.4
+    Cvalues = [cambio * (1+pctg), cambio, cambio * (1-pctg)]
+    res = []
+    plt.figure(2)
     for cval in Cvalues:
         nbarvals = nbar(cval, t)
         res.append(nbarvals)
@@ -77,6 +93,33 @@ def cambio(L: int = 1, D: int = 1):
     plt.show()
 
 
+def solucionAnalitica(L: int = 1, mx: int = 10, mt: int = 1000, D: int = 1, C: int = 0):
+    """
+
+    :param L:
+    :param mx:
+    :param mt:
+    :param D:
+    :param C:
+    :return:
+    """
+    Tn = lambda n, t: np.exp((C - D * ((2*n+1) * np.pi / L) ** 2) * t)
+    Xn = lambda n, x: np.cos(((2*n+1) * np.pi / L) * x)
+    Nn = lambda n, x, t: Tn(n, t) * Xn(n, x)
+
+    nvalues = np.array(range(1, 1000))
+    Tiempo = np.linspace(0, L / 2, mt + 1)
+    x = np.linspace(-L/2, L/2, mx + 1)
+
+    ave = []
+    for t in Tiempo:
+        solucion = [sum(Nn(nvalues, xval, t))/len(nvalues) for xval in x]
+        ave.append(sum(solucion))
+    ave = np.array(ave)
+    plt.plot(ave)
+
+
 if __name__ == '__main__':
     ejercicio()
     # cambio(1, 1)
+    # solucionAnalitica()
