@@ -1,14 +1,14 @@
 from Tema5.SOR import SOR, getomega
+import matplotlib.pyplot as plt
 import pandas as pd
 import numpy as np
 
+
 def setk1(h: float):
-    # return 1 / h + h / 3
     return 1 / h - h / 3
 
 
 def setk2(h: float):
-    # return - 1 / h + h / 6
     return -(1 / h + h / 6)
 
 
@@ -35,9 +35,6 @@ def setsystem(E: int, range: float = 1):
     dia[0] = setk1(h)
     dia[E] = setk1(h)
     A = np.diag(dia) + np.diag(dia1, 1) + np.diag(dia1, -1)
-    # b = np.ones((E+1, )) * setf3(h)
-    # b[0] = setf1(h)
-    # b[E] = setf2(h)
     if E == 4:
         b = h ** 2 * np.array([1/6, 1, 2, 3, 11/6])
     else:
@@ -50,7 +47,6 @@ def funanal(x):
 
 
 def pltsolanal(E: int=4, range=1):
-    import matplotlib.pyplot as plt
     xvals = np.linspace(0, range, E + 1)
     yvals = [funanal(value) for value in xvals]
     E=8
@@ -65,22 +61,6 @@ def pltsolanal(E: int=4, range=1):
     plt.show()
 
 
-def phi1(x, h):
-    return 1 - x/h
-
-
-def phiE(x, h):
-    return x / h
-
-
-def phivect(E, x):
-    h = 1 / E
-    b = np.ones((E+1, ))
-    b[0] = phi1(x, h)
-    b[E] = phiE(x, h)
-    return b
-
-
 def apartadoA():
     E = 4
     [Matrix, b] = setsystem(E)
@@ -88,21 +68,30 @@ def apartadoA():
     print(np.round(b, 4))
 
     subMatrix = Matrix[1:, 1:]
-    # subb = np.array([-5/6, 1/2, 1/2, 1/2, 4/3])
     subb = b
     subb = subb[1:]
     values = getomega(subMatrix)
-    solucionsis = SOR(subMatrix, subb, values[0])
+    values = [value for value in values if not np.isnan(value)]
+    solucionsis = SOR(subMatrix, subb, values[0])[0]
     resGauss = [0]  # [0]
-    for element in solucionsis[0]:
+    for element in solucionsis:
         resGauss.append(element)
-    print(resGauss)
     xvals = np.linspace(0, 1, E + 1)
     yvals = [funanal(value) for value in xvals]
     errors = [abs(yanal-ysim) for yanal, ysim in zip(yvals, resGauss)]
     df = pd.DataFrame({'xvalues': xvals, 'Y sim': resGauss, 'Y real': yvals, 'Error': errors})
     print(df)
-    foo= 1
+    df.to_csv('apartadoA.txt', sep='\t', index=False)
+    print('Error apartado A: {}'.format(sum(errors)))
+    plt.plot(xvals, yvals, label='Sol. Anal')
+    plt.plot(xvals, resGauss, '--', label='Sol. Sim')
+    plt.title('Interpolación lineal con 4 elementos finitos')
+    plt.xlabel('X Range')
+    plt.ylabel('Y Range')
+    plt.legend()
+    plt.text(0.75, 0.05, 'Error {:.2e}'.format(sum(errors)/len(errors)), bbox=dict(facecolor='red', alpha=0.5))
+    plt.savefig('apartadoA.jpeg')
+    plt.show()
 
 
 def apartadoB():
@@ -114,15 +103,27 @@ def apartadoB():
     subMatrix = Matrix[1:, 1:]
     subb = b[1:]
     values = getomega(subMatrix)
-    solucionsis = SOR(subMatrix, subb, values[0])
+    values = [value for value in values if not np.isnan(value)]
+    solucionsis = SOR(subMatrix, subb, values[0])[0]
     resGauss = [0]  # [0]
-    for element in solucionsis[0]:
+    for element in solucionsis:
         resGauss.append(element)
     xvals = np.linspace(0, 1, E + 1)
     yvals = [funanal(value) for value in xvals]
     errors = [abs(yanal-ysim) for yanal, ysim in zip(yvals, resGauss)]
     df = pd.DataFrame({'xvalues': xvals, 'Y sim': resGauss, 'Y real': yvals, 'Error': errors})
     print(df)
+    df.to_csv('apartadoB.txt', sep='\t', index=False)
+    print('Error apartado B: {}'.format(sum(errors)))
+    plt.plot(xvals, yvals, label='Sol. Anal')
+    plt.plot(xvals, resGauss, '--', label='Sol. Sim')
+    plt.title('Interpolación lineal con 8 elementos finitos')
+    plt.xlabel('X Range')
+    plt.ylabel('Y Range')
+    plt.legend()
+    plt.text(0.75, 0.05, 'Error {:.2e}'.format(sum(errors)/len(errors)), bbox=dict(facecolor='red', alpha=0.5))
+    plt.savefig('apartadoB.jpeg')
+    plt.show()
 
 
 def setsystenCD(E: int=2, intervalo: int=1):
@@ -156,22 +157,6 @@ def setsystenCD(E: int=2, intervalo: int=1):
     return [A, b]
 
 
-def phi1c(x, h):
-    return 1 - x/h
-
-
-def phiEc(x, h):
-    return x / h
-
-
-def phivectc(E, x):
-    h = 1 / E
-    b = np.ones((E+1, ))
-    b[0] = phi1(x, h)
-    b[E] = phiE(x, h)
-    return b
-
-
 def apartadoC():
     E = 2
     [Matrix, b] = setsystenCD(E)
@@ -180,10 +165,10 @@ def apartadoC():
 
     subMatrix = Matrix[1:, 1:]
     subb = b[1:]
-    # values = getomega(subMatrix)
-    # solucionsis = SOR(subMatrix, subb, values[0])
-    solucionsis = np.linalg.solve(subMatrix, subb)
-    resGauss = [0]  # [0]
+    values = getomega(subMatrix)
+    values = [value for value in values if not np.isnan(value)]
+    solucionsis = SOR(subMatrix, subb, values[0])[0]
+    resGauss = [0]
     for element in solucionsis:
         resGauss.append(element)
     xvals = np.linspace(0, 1, 2 * E + 1)
@@ -191,6 +176,17 @@ def apartadoC():
     errors = [abs(yanal-ysim) for yanal, ysim in zip(yvals, resGauss)]
     df = pd.DataFrame({'xvalues': xvals, 'Y sim': resGauss, 'Y real': yvals, 'Error': errors})
     print(df)
+    df.to_csv('apartadoC.txt', sep='\t', index=False)
+    print('Error apartado C: {}'.format(sum(errors)))
+    plt.plot(xvals, yvals, label='Sol. Anal')
+    plt.plot(xvals, resGauss, '--', label='Sol. Sim')
+    plt.title('Interpolación cuadrática con 2 elementos finitos')
+    plt.xlabel('X Range')
+    plt.ylabel('Y Range')
+    plt.legend()
+    plt.text(0.75, 0.05, 'Error {:.2e}'.format(sum(errors)/len(errors)), bbox=dict(facecolor='red', alpha=0.5))
+    plt.savefig('apartadoC.jpeg')
+    plt.show()
 
 
 def apartadoD():
@@ -201,10 +197,10 @@ def apartadoD():
 
     subMatrix = Matrix[1:, 1:]
     subb = b[1:]
-    # values = getomega(subMatrix)
-    # solucionsis = SOR(subMatrix, subb, values[0])
-    solucionsis = np.linalg.solve(subMatrix, subb)
-    resGauss = [0]  # [0]
+    values = getomega(subMatrix)
+    values = [value for value in values if not np.isnan(value)]
+    solucionsis = SOR(subMatrix, subb, values[0])[0]
+    resGauss = [0]
     for element in solucionsis:
         resGauss.append(element)
     xvals = np.linspace(0, 1, 2 * E + 1)
@@ -212,13 +208,29 @@ def apartadoD():
     errors = [abs(yanal-ysim) for yanal, ysim in zip(yvals, resGauss)]
     df = pd.DataFrame({'xvalues': xvals, 'Y sim': resGauss, 'Y real': yvals, 'Error': errors})
     print(df)
+    df.to_csv('apartadoD.txt', sep='\t', index=False)
+    print('Error apartado D: {}'.format(sum(errors)))
+    plt.plot(xvals, yvals, label='Sol. Anal')
+    plt.plot(xvals, resGauss, '--', label='Sol. Sim')
+    plt.title('Interpolación cuadrática con 4 elementos finitos')
+    plt.xlabel('X Range')
+    plt.ylabel('Y Range')
+    plt.legend()
+    plt.text(0.75, 0.05, 'Error {:.2e}'.format(sum(errors)/len(errors)), bbox=dict(facecolor='red', alpha=0.5))
+    plt.savefig('apartadoD.jpeg')
+    plt.show()
 
 
 if __name__ == '__main__':
+
+    print('Apartado A')
     apartadoA()
-    # apartadoB()
-    # apartadoC()
-    # apartadoD()
+    print('\n\nApartado B')
+    apartadoB()
+    print('\n\nApartado C')
+    apartadoC()
+    print('\n\nApartado D')
+    apartadoD()
     f=1
 
 

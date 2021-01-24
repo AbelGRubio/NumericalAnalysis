@@ -6,7 +6,7 @@
 import numpy as np
 
 
-def SOR(*argvs, TOL: float = 1e-9, N: int = 500) -> list:
+def SOR(*argvs, TOL: float = 1e-4, N: int = 2500) -> list:
     """
 
     :parameter argvs: argumentos variables donde indicaremos, como mínimo, la matrix A y la matriz b del sistema a resolver
